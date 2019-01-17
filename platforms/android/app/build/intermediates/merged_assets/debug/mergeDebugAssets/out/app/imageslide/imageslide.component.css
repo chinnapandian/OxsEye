@@ -1,0 +1,13 @@
+.bordered {
+    border-width: 2; 
+    border-color: red;
+}
+@keyframes example {
+    from { background-color: red; }
+    to { background-color: green; }
+}
+.view {
+    animation-name: example;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+}

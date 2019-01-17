@@ -1,0 +1,64 @@
+<!--<Page.actionBar>-->
+    <ActionBar title="Image Gallery" class="action-bar">
+
+        <ActionBar.titleView>
+            <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-back">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span> 
+					</FormattedString>
+				</Button>
+
+        </ActionBar.titleView>
+
+        <ActionItem (tap)="onShare()"  visibility="{{ isSharing ? 'visible' : 'collapse' }}">
+            <Button horizontalAlignment="left" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-share">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 
+					</FormattedString>
+				</Button>
+        </ActionItem>
+        <ActionItem  (tap)="onDelete()"  visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
+            <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn p-l-15 img-gallery-delete">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize"  text="&#xf1f8;"></Span> 
+					</FormattedString>
+				</Button>
+        </ActionItem>
+    </ActionBar>
+<!--</Page.actionBar>-->
+
+<!--<RadListView [items]="imageList">
+        <ng-template let-i="index" let-item="item">
+            <GridLayout orientation="horizontal" class="item-template-style  p-5">
+                <Image height="100" decodeWidth="400" decodeHeight="400" loadMode="async" class="img-rounded bordered" (doubleTap)="goImageSlide(item.filePath)"
+                    useCache="true" stretch="aspectFill" [src]="item.filePath"></Image>
+                <StackLayout>
+                    <CheckBox (checkedChange)="isChecked($event, item.filePath, i)" fillColor="red" text=""></CheckBox>
+                </StackLayout>
+            </GridLayout>
+        </ng-template>
+
+        <ListViewGridLayout tkListViewLayout scrollDirection="Vertical" spanCount="3"></ListViewGridLayout>
+    </RadListView>-->
+<Page (loaded)="onPageLoaded($event)" xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <ScrollView>
+        <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">
+            <ng-template ngFor let-i="index" let-image [ngForOf]="imageList">
+                <GridLayout  class="bg-primary p-5 m-5 bordered img-rounded" width="30%" height="30%" horizontalAlignment="center" verticalAlignment="center" backgroundColor="Black">
+                    <!--<Image height="100" loadMode="async" class="img-rounded" (doubleTap)="goImageSlide(image.filePath, $event)"
+                        useCache="true" stretch="aspectFill" [src]="image.thumbnailPath"></Image>-->
+                          <Image src="{{ image.thumbnailPath }}"  loadMode="async" stretch="aspectFill" (doubleTap)="goImageSlide(image.filePath,i, $event)" class="img-height img-gallery-image" (longPress)="selectImage()"></Image>
+     
+                    <StackLayout [visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'" >
+                        <!--<StackLayout>-->
+                        <CheckBox (checkedChange)="isChecked($event, image.filePath, i)" fillColor="red" text="" class="img-gallery-checkbox"></CheckBox>
+                    </StackLayout>
+                </GridLayout>
+            </ng-template>
+            <!--<ActivityIndicator id="myIndicator" busy="{{isBusy}}" backgroundColor="lightgray" borderRadius="50" color="blue" width="50"
+                height="50">
+            </ActivityIndicator>-->
+        </WrapLayout>
+    </ScrollView>
+</Page>

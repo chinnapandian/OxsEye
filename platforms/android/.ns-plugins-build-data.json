@@ -1,0 +1,42 @@
+{
+	"@nstudio/nativescript-camera-plus": {
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/@nstudio/nativescript-camera-plus/platforms/android/include.gradle": "82c4e892ed7cabf56a8c9216f5ea887e03d018c2",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/@nstudio/nativescript-camera-plus/platforms/android/nativescript-camera-plus.aar": "16f117e9ec3dbaac0cf1b163168470aa71a5235b",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/@nstudio/nativescript-camera-plus/platforms/android/nativescript_camera_plus.aar": "3df13e6b4a0b695459c0b4411424e315bc0fbbf5"
+	},
+	"nativescript-opencv-plugin": {
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/.DS_Store": "dfcab1d47ebd5422b0457e50f3b4ca8ec5262225",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/.DS_Store": "23b9489d8473aef64a1d307fea6f1e03bc26d7a3",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/AndroidManifest.xml": "a1c759afcd0c7b05c5719c9bd66b42aa2b82d8e9",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/.DS_Store": "cc887fd679fc8dbd6fc581c239076edfd58aaab5",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/activation.jar": "d1257cbff6faa44c1f325ae0d9413522d4644383",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/BuildConfig.class": "21eba9ca054a22fc210e9d620c0b81a94a8f7c02",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/additionnal.jar": "bd9e8dc422bb8c8405359947fe9f4282b49f57f4",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/ImageUtils.class": "92eb8e306280e356068f8061b8d013979485fcb6",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/OpenCVUtils$2.class": "768dfdb85005997697c72a4d0284c41fae77cd96",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/GeomUtils.class": "47ac7a54d268e680c18eddc7498ad263acf6e0e6",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/OpenCVUtils$1.class": "4cc3788c8d445cf9ea58cd7e51d09fd287251305",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/RectFinder$1.class": "6b0717b0d6ed89875261ed055e9a3a62b2824c2c",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/PerspectiveTransformation.class": "9fc54cde1eda8c6ac1f8369662ccf315b7e59eab",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/RectFinder.class": "bf86d5e7dbd22cb2e862e9ae632065e284e9e49e",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/OpenCVUtils.class": "7f5b01b126cb5a0f555a923c384fa41862215285",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/com/maas/opencv4nativescript/OpenCVUtils$RetreiveFeedTask.class": "cf44dabe5e4d38085f238f6d7c1c732e8dc461d6",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/opencvPlugin.jar": "080ee6c9f769b730866a22cb981142914563ebbc",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/nativescript_opencv_plugin.aar": "b4dd4804bfebd5a8535e282c70023e0b6b4366dc",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/nativescript_toaster.aar": "8a0171ba651317043f4be5472bcd7474e673a525",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/opencv341libs.jar": "8e2c2cc2c051a24a242d004e10a278749be652cf",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-opencv-plugin/platforms/android/libs/mail.jar": "428e267abff0d10802ccde86b915da2c20471160"
+	},
+	"nativescript-ui-listview": {
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-ui-listview/platforms/android/include.gradle": "748fea0533b6b3cab801289b88f7a01de2cb8680",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-ui-listview/platforms/android/typings/listview.d.ts": "e5cb786b04a720aa5f9069bdc019f91a5fd2769a",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-ui-listview/platforms/android/TNSListView-release.aar": "ccc9f754342343f0ed19aebb4483897700c3ac11"
+	},
+	"nativescript-ui-core": {
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-ui-core/platforms/android/TNSCore-release.aar": "cce16a86c2a6f56ca7243ed8db86b004ecb0016e",
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/nativescript-ui-core/platforms/android/typings/core.d.ts": "5c032652edfa1719ef8c8190fc0f66d3b1c313c2"
+	},
+	"tns-core-modules-widgets": {
+		"/Users/chinna/MAAS/NS/BSApp/node_modules/tns-core-modules-widgets/platforms/android/widgets-release.aar": "e926037162f17e77024b1d8c0c2b439f0247c903"
+	}
+}

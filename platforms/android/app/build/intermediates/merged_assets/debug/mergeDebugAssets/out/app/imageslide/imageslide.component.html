@@ -1,0 +1,74 @@
+
+    <!--<ActionBar title="Image List" class="action-bar">
+        <NavigationButton android.systemIcon="ic_menu_back" text="Back" (tap)="goBack()"></NavigationButton>
+
+        <ActionItem tap="onShare" ios.systemIcon="9" ios.position="left" android.systemIcon="ic_menu_share" android.position="actionBar"></ActionItem>
+        <ActionItem (tap)="onDelete()" ios.systemIcon="16" ios.position="right" android.systemIcon="ic_menu_delete" android.position="actionBar"></ActionItem>
+    </ActionBar>-->
+    <Page.actionBar>
+        <ActionBar title="Image Gallery" class="action-bar">
+            <!--<Label text="&#xf177;" class="fa p-5 m-3"></Label>-->
+            <ActionBar.titleView>
+                <!--<Label (tap)="goBack()" text="&#xf104;" class="fa"></Label>-->
+                <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-back">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span> 
+					</FormattedString>
+				</Button>
+            </ActionBar.titleView>
+            <!--<NavigationButton (tap)="goBack()" visibility="{{ isBack ? 'visible' : 'collapse' }}">
+                 
+            </NavigationButton>-->
+            <ActionItem (tap)="onShare()" android.position="actionBar" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
+                <!--<Label text="&#xf1e1;" class="fa p-5 m-3"></Label>-->
+                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-share">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 
+					</FormattedString>
+				</Button>
+            </ActionItem>
+            <ActionItem (tap)="onDelete($event)" android.position="actionBar" visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
+                <!--<Label text="&#xf1f8;" class="fa p-5 m-3 btn-active"></Label>-->
+                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-delete">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize" text="&#xf1f8;"></Span> 
+					</FormattedString>
+				</Button>
+            </ActionItem>
+        </ActionBar>
+    </Page.actionBar>
+
+    <!--<StackLayout orientation="horizontal"    horizontalAlignment="center" verticalAlignment="center">-->
+    <!--<ScrollView orientation="horizontal">-->
+    <!--<StackLayout  backgroundColor="lightgray"  orientation="horizontal" margin="20" horizontalAlignment="center" verticalAlignment="center">-->
+    <!--<ng-template ngFor let-image [ngForOf]="imageFileList">-->
+    <!--<StackLayout backgroundColor="lightgray"  orientation="horizontal" margin="20">-->
+    <!--<GridLayout width="50%" height="50%">-->
+    <!--<StackLayout width="50%" height="100%" borderLeftWidth="1" borderBottomWidth="1" borderRightWidth="1" borderTopWidth="1">-->
+
+    <!--<ImageZoom  stretch="apectFill" [src]="image.filePath" maxZoom="5" minZoom="1"></ImageZoom>-->
+    <!--</GridLayout>-->
+    <!--</StackLayout>-->
+    <!--</StackLayout>-->
+    <!--</ng-template>-->
+    <!--</StackLayout>-->
+
+    <!--</ScrollView>-->
+    <!--<ScrollView orientation="horizontal" (loaded)="onScrollLoaded($event)" (scroll)="onScroll($event)">
+    <StackLayout orientation="horizontal" class="list-group">
+        <GridLayout *ngFor="let image of imageFileList" id="{{ 'id' + image.fileName}}" (tap)="onTap($event)" rows="*, auto" columns="*" class="list-group-item m-15 active"> 
+                     <ImageZoom class="bordered" width="80%" height="100%" row="0" rowSpan="2"  [src]="image.filePath" maxZoom="5" minZoom="1"></ImageZoom>
+            <StackLayout horizontalAlignment="center" verticalAlignment="center">
+                        <CheckBox  (tap)="isChecked($event,image.filePath)" v-model="myCheckedProp" fillColor="red" text=""></CheckBox>
+             </StackLayout>
+        </GridLayout> 
+    </StackLayout>
+</ScrollView>-->
+    <!--<GridLayout #gridLayout (swipe)="onSwipe($event)" class="bg-primary p-15 m-15">
+    <ImageZoom     src="{{ imageSrc }}" maxZoom="5" minZoom="1"></ImageZoom>
+</GridLayout>-->
+<Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">
+    <GridLayout (swipe)="onSwipe($event)" (pan)="onPan($event)" (pinch)="onPinch($event)" (doubleTap)="onDoubleTap($event)">
+        <Image src="{{ imageSource }}"  stretch="aspectFill" id="imgSlideId" backgroundColor="Green"></Image>  
+    </GridLayout>
+</Page>
