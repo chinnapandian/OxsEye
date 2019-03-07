@@ -11,6 +11,7 @@ import { ImageSlideComponent } from "./imageslide/imageslide.component";
 import { PagerModule } from "nativescript-pager/angular";
 import { NativeScriptUIListViewModule } from "nativescript-ui-listview/angular";
 import { TransformedImageProvider, ActivityLoader } from './providers/transformedimage.provider';
+import { NativeScriptUISideDrawerModule } from "nativescript-ui-sidedrawer/angular";
 @NgModule({
     bootstrap: [
         AppComponent
@@ -19,7 +20,8 @@ import { TransformedImageProvider, ActivityLoader } from './providers/transforme
         NativeScriptModule,
         AppRoutingModule,
         PagerModule,
-        NativeScriptUIListViewModule
+        NativeScriptUIListViewModule,
+        NativeScriptUISideDrawerModule
 
     ],
     declarations: [

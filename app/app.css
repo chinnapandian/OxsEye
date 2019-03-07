@@ -46,5 +46,17 @@ refer to http://docs.nativescript.org/ui/theme.
      margin-left: 10;
       margin-right: 10;
 }
+.circle {
+    width: 35;
+    height: 35;
+    border-radius: 17;
+    border-width: 2;
+    border-color: red;  
+}
+.circle-plus
+{
+    font-size: 10;
+    color: red; 
+}
 /*.Grid-Layout { font-size: 12; color: red; }
 .landscape .Grid-Layout { font-size: 20; color: green; }*/

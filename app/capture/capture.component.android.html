@@ -1,0 +1,48 @@
+<Page.actionBar>
+	<ActionBar class="action-bar action-bar-height">
+		<StackLayout class="action-bar-title">
+			<Label text="Oxs &#xf06e; Eye" class="fa action-bar-fontsize"></Label>
+		</StackLayout>
+	</ActionBar>
+</Page.actionBar>
+<Page class="page">
+
+	<GridLayout orientation="vertical">
+		<CameraPlus [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
+		 showToggleIcon="true" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"
+		 (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"
+		 (imagesSelectedEvent)="imagesSelectedEvent($event)">
+		</CameraPlus>
+	</GridLayout>
+
+</Page>
+
+<RadSideDrawer tkExampleTitle tkToggleNavButton>
+	<StackLayout tkDrawerContent class="sideStackLayout">
+		<StackLayout class="sideTitleStackLayout">
+			<Label text="Settings Menu"></Label>
+		</StackLayout>
+		<ScrollView>
+			<StackLayout class="sideStackLayout">
+				<Label text="Perspective Correction" class="sideLabel sideLightGrayLabel"></Label>
+				<StackLayout orientation="horizontal">
+					<Label class="h3 m-15" text="Automatic" textWrap="true" row="0" col="0"></Label>
+
+					<Switch class="m-15" checked="true" (checkedChange)="onAutomaticChecked($event)" row="0" col="1"></Switch>
+				</StackLayout>
+				<!--<Label text="Social" class="sideLabel"></Label>
+                <Label text="Promotions" class="sideLabel"></Label>
+                <Label text="Labels" class="sideLabel sideLightGrayLabel"></Label>
+                <Label text="Important" class="sideLabel"></Label>
+                <Label text="Starred" class="sideLabel"></Label>
+                <Label text="Sent Mail" class="sideLabel"></Label>
+                <Label text="Drafts" class="sideLabel"></Label>
+                <Label text="Close Drawer" color="lightgray" padding="10" style="horizontal-align: center" (tap)="onCloseDrawerTap()"></Label>-->
+			</StackLayout>
+		</ScrollView>
+	</StackLayout>
+	<!--<StackLayout tkMainContent>
+        <Label [text]="mainContentText" textWrap="true" class="drawerContentText"></Label>
+        <Button text="OPEN DRAWER" (tap)="openDrawer()" class="drawerContentButton"></Button>
+    </StackLayout>-->
+</RadSideDrawer>
