@@ -38,7 +38,7 @@
                 <GridLayout class="bg-primary p-5 m-5 bordered img-rounded" width="30%" height="30%" horizontalAlignment="center" verticalAlignment="center"
                     backgroundColor="Black">
                     <Image src="{{ image.thumbnailPath }}" loadMode="async" stretch="aspectFill" (doubleTap)="goImageSlide(image.filePath,i, $event)"
-                        class="img-height img-gallery-image" (longPress)="selectImage()"></Image>
+                        class="img-height img-gallery-image" (longPress)="setCheckboxVisible()"></Image>
 
                     <StackLayout [visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'">
                         <CheckBox id="checkbox-{{i}}" checked={{image.isSelected}} (checkedChange)="isChecked($event, image.filePath, i)" fillColor="red" text="" class="img-gallery-checkbox"></CheckBox>
