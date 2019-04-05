@@ -1,7 +1,0 @@
-android {
-    
-}
-
-dependencies {
-    compile "com.android.support:exifinterface:+"
-}
