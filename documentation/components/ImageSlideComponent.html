@@ -1,0 +1,2143 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Application documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Application documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+<ol class="breadcrumb">
+  <li>Components</li>
+  <li>ImageSlideComponent</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li >
+            <a href="#templateData" role="tab" id="templateData-tab" data-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li >
+            <a href="#styleData" role="tab" id="styleData-tab" data-toggle="tab" data-link="style">Styles</a>
+        </li>
+        <li >
+            <a href="#tree" role="tab" id="tree-tab" data-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>app/imageslide/imageslide.component.android.ts</code>
+</p>
+
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>ImageSlideComponent Component.</p>
+
+    </p>
+
+
+    <p class="comment">
+        <h3>Implements</h3>
+    </p>
+    <p class="comment">
+                    <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
+    </p>
+
+
+<section>
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover">
+        <tbody>
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">moduleId</td>
+                <td class="col-md-9"><code>module.id</code></td>
+            </tr>
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>ns-imageslide</code></td>
+            </tr>
+
+            <tr>
+                <td class="col-md-3">styleUrls</td>
+                <td class="col-md-9"><code>./imageslide.component.css</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./imageslide.component.html</code></td>
+            </tr>
+
+
+
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_defaultScreenLocation">_defaultScreenLocation</a>
+                            </li>
+                            <li>
+                                <a href="#_dragImage">_dragImage</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_dragImageItem">_dragImageItem</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_imageFileList">_imageFileList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_imgIndex">_imgIndex</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_imgNext">_imgNext</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_imgURI">_imgURI</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_isGotDefaultLocation">_isGotDefaultLocation</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_isPinchSelected">_isPinchSelected</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_newScale">_newScale</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_oldTranslateX">_oldTranslateX</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_oldTranslateY">_oldTranslateY</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_prevDeltaX">_prevDeltaX</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_prevDeltaY">_prevDeltaY</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#_startScale">_startScale</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageSource">imageSource</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isDeleting">isDeleting</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#isSharing">isSharing</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#goBack">goBack</a>
+                            </li>
+                            <li>
+                                <a href="#ngOnInit">ngOnInit</a>
+                            </li>
+                            <li>
+                                <a href="#onDelete">onDelete</a>
+                            </li>
+                            <li>
+                                <a href="#onDoubleTap">onDoubleTap</a>
+                            </li>
+                            <li>
+                                <a href="#onPan">onPan</a>
+                            </li>
+                            <li>
+                                <a href="#onPinch">onPinch</a>
+                            </li>
+                            <li>
+                                <a href="#onShare">onShare</a>
+                            </li>
+                            <li>
+                                <a href="#onSwipe">onSwipe</a>
+                            </li>
+                            <li>
+                                <a href="#pageLoaded">pageLoaded</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(page: Page, routerExtensions: RouterExtensions, route: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, transformedImageProvider: <a href="../injectables/TransformedImageProvider.html">TransformedImageProvider</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">app/imageslide/imageslide.component.android.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>ImageSlideComponent constructor.</p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                                    <td>Description</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>page</td>
+                                                  
+                                                        <td>
+                                                                    <code>Page</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>Page</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>routerExtensions</td>
+                                                  
+                                                        <td>
+                                                                    <code>RouterExtensions</code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>RouterExtensions</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>route</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="https://angular.io/api/router/ActivatedRoute" target="_blank" >ActivatedRoute</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>ActivatedRoute</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>transformedImageProvider</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/TransformedImageProvider.html" target="_self" >TransformedImageProvider</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                                <code><p>TransformedImageProvider</p>
+</code>
+                                                        </td>
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+
+
+
+
+    <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="goBack"></a>
+                    <span class="name">
+                        <b>
+                            goBack
+                        </b>
+                        <a href="#goBack"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>goBack()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:99</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Go back to previous page</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="ngOnInit"></a>
+                    <span class="name">
+                        <b>
+                            ngOnInit
+                        </b>
+                        <a href="#ngOnInit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>ngOnInit()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="84"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:84</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Angular initialization.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDelete"></a>
+                    <span class="name">
+                        <b>
+                            onDelete
+                        </b>
+                        <a href="#onDelete"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDelete(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="324"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:324</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delete selected image.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>any boject</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onDoubleTap"></a>
+                    <span class="name">
+                        <b>
+                            onDoubleTap
+                        </b>
+                        <a href="#onDoubleTap"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onDoubleTap(args: GestureEventData)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="202"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:202</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Resets image position while double tap with single fingure.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                            <code>GestureEventData</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>GestureEventData</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPan"></a>
+                    <span class="name">
+                        <b>
+                            onPan
+                        </b>
+                        <a href="#onPan"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPan(args: PanGestureEventData)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="127"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:127</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Moves images while move with a finger.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                            <code>PanGestureEventData</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>PanGestureEventData</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onPinch"></a>
+                    <span class="name">
+                        <b>
+                            onPinch
+                        </b>
+                        <a href="#onPinch"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onPinch(args: PinchGestureEventData)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="106"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:106</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Triggers while pinch with two fingers.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                            <code>PinchGestureEventData</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>PinchGestureEventData</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onShare"></a>
+                    <span class="name">
+                        <b>
+                            onShare
+                        </b>
+                        <a href="#onShare"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onShare()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="275"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:275</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Shares image(s) while on share.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="onSwipe"></a>
+                    <span class="name">
+                        <b>
+                            onSwipe
+                        </b>
+                        <a href="#onSwipe"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>onSwipe(args: SwipeGestureEventData)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="228"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:228</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Move image left/right while on swipe with fingure.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                            <code>SwipeGestureEventData</code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>SwipeGestureEventData</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="pageLoaded"></a>
+                    <span class="name">
+                        <b>
+                            pageLoaded
+                        </b>
+                        <a href="#pageLoaded"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>pageLoaded(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="217"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:217</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Sets the selected image in the image source while page loaded.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                    <td>Description</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>args</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                    <td>
+                                        <p>any object</p>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_defaultScreenLocation"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _defaultScreenLocation</b>
+                            <a href="#_defaultScreenLocation"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">app/imageslide/imageslide.component.android.ts:62</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains image default screen location </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_dragImage"></a>
+                        <span class="name">
+                            <b>
+                            _dragImage</b>
+                            <a href="#_dragImage"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://angular.io/api/core/ElementRef" target="_blank" >ElementRef</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <b>Decorators : </b>
+                            <br />
+                            <code>
+                                @ViewChild(&#x27;imgSlideId&#x27;)<br />
+                            </code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">app/imageslide/imageslide.component.android.ts:34</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Child element referrence </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_dragImageItem"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _dragImageItem</b>
+                            <a href="#_dragImageItem"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>Image</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">app/imageslide/imageslide.component.android.ts:40</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Image referrence from _dragImage </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_imageFileList"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _imageFileList</b>
+                            <a href="#_imageFileList"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>any[]</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">app/imageslide/imageslide.component.android.ts:46</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains list of image file path information </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_imgIndex"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _imgIndex</b>
+                            <a href="#_imgIndex"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">app/imageslide/imageslide.component.android.ts:38</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Image index being used to get an image for the given index </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_imgNext"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _imgNext</b>
+                            <a href="#_imgNext"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">app/imageslide/imageslide.component.android.ts:48</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains image next index value </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_imgURI"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _imgURI</b>
+                            <a href="#_imgURI"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">app/imageslide/imageslide.component.android.ts:36</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Image URI </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_isGotDefaultLocation"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _isGotDefaultLocation</b>
+                            <a href="#_isGotDefaultLocation"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">app/imageslide/imageslide.component.android.ts:60</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates whether the image got default screen location or not </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_isPinchSelected"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _isPinchSelected</b>
+                            <a href="#_isPinchSelected"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>false</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">app/imageslide/imageslide.component.android.ts:54</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>To indicate whether pinch is trigger or not </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_newScale"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _newScale</b>
+                            <a href="#_newScale"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>1</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">app/imageslide/imageslide.component.android.ts:52</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains new scale value while moving the image </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_oldTranslateX"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _oldTranslateX</b>
+                            <a href="#_oldTranslateX"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/imageslide/imageslide.component.android.ts:56</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>To store old TranslateX value of image </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_oldTranslateY"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _oldTranslateY</b>
+                            <a href="#_oldTranslateY"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>0</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">app/imageslide/imageslide.component.android.ts:58</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>To store old TranslateY value of image </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_prevDeltaX"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _prevDeltaX</b>
+                            <a href="#_prevDeltaX"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">app/imageslide/imageslide.component.android.ts:42</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains previous deltaX value </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_prevDeltaY"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _prevDeltaY</b>
+                            <a href="#_prevDeltaY"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">app/imageslide/imageslide.component.android.ts:44</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains previous deltaY value </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="_startScale"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            _startScale</b>
+                            <a href="#_startScale"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>1</code>
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">app/imageslide/imageslide.component.android.ts:50</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains initial scale value </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="imageSource"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            imageSource</b>
+                            <a href="#imageSource"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>    <code>ImageSource</code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">app/imageslide/imageslide.component.android.ts:28</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Used to store image source and also used in GUI </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isDeleting"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            isDeleting</b>
+                            <a href="#isDeleting"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">app/imageslide/imageslide.component.android.ts:32</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>To indicate the deleting menu is visible or not </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isSharing"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            isSharing</b>
+                            <a href="#isSharing"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">app/imageslide/imageslide.component.android.ts:30</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>To indicate the sharing menu is visible or not </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ElementRef, OnInit, ViewChild } from &#x27;@angular/core&#x27;;
+import { File } from &#x27;tns-core-modules/file-system&#x27;;
+import { RouterExtensions } from &#x27;nativescript-angular/router&#x27;;
+import { EventData } from &#x27;tns-core-modules/data/observable&#x27;;
+import { SwipeGestureEventData } from &#x27;tns-core-modules/ui/gestures&#x27;;
+import { Page } from &#x27;tns-core-modules/ui/page&#x27;;
+import { GestureEventData, PanGestureEventData, PinchGestureEventData } from &#x27;ui/gestures&#x27;;
+import { ActivatedRoute } from &#x27;@angular/router&#x27;;
+import { SendBroadcastImage, TransformedImageProvider } from &#x27;../providers/transformedimage.provider&#x27;;
+import { ImageSource } from &#x27;tns-core-modules/image-source&#x27;;
+import { Image } from &#x27;ui/image&#x27;;
+import * as application from &#x27;tns-core-modules/application&#x27;;
+import * as dialogs from &#x27;tns-core-modules/ui/dialogs&#x27;;
+import * as Toast from &#x27;nativescript-toast&#x27;;
+import * as Permissions from &#x27;nativescript-permissions&#x27;;
+
+/**
+ * ImageSlideComponent Component.
+ */
+@Component({
+    selector: &#x27;ns-imageslide&#x27;,
+    moduleId: module.id,
+    styleUrls: [&#x27;./imageslide.component.css&#x27;],
+    templateUrl: &#x27;./imageslide.component.html&#x27;,
+})
+export class ImageSlideComponent implements OnInit {
+    /**  Used to store image source and also used in GUI */
+    public imageSource: ImageSource;
+    /**  To indicate the sharing menu is visible or not */
+    public isSharing: boolean;
+    /** To indicate the deleting menu is visible or not */
+    public isDeleting: boolean;
+    /** Child element referrence */
+    @ViewChild(&#x27;imgSlideId&#x27;) _dragImage: ElementRef;
+    /** Image URI */
+    private _imgURI: string;
+    /** Image index being used to get an image for the given index */
+    private _imgIndex: number;
+    /** Image referrence from _dragImage */
+    private _dragImageItem: Image;
+    /** Contains previous deltaX value */
+    private _prevDeltaX: number;
+    /** Contains previous deltaY value */
+    private _prevDeltaY: number;
+    /** Contains list of image file path information */
+    private _imageFileList: any[];
+    /** Contains image next index value */
+    private _imgNext: number;
+    /** Contains initial scale value */
+    private _startScale &#x3D; 1;
+    /** Contains new scale value while moving the image */
+    private _newScale &#x3D; 1;
+    /** To indicate whether pinch is trigger or not */
+    private _isPinchSelected &#x3D; false;
+    /** To store old TranslateX value of image */
+    private _oldTranslateX &#x3D; 0;
+     /** To store old TranslateY value of image */
+    private _oldTranslateY &#x3D; 0;
+     /** Indicates whether the image got default screen location or not */
+    private _isGotDefaultLocation &#x3D; false;
+     /** Contains image default screen location */
+    private _defaultScreenLocation: any;
+    
+    /**
+     * ImageSlideComponent constructor.
+     * @param page Page
+     * @param routerExtensions RouterExtensions
+     * @param route ActivatedRoute
+     * @param transformedImageProvider TransformedImageProvider
+     */
+    constructor(
+        private page: Page,
+        private routerExtensions: RouterExtensions,
+        private route: ActivatedRoute,
+        private transformedImageProvider: TransformedImageProvider) {
+        this.route.queryParams.subscribe((params) &#x3D;&gt; {
+            this._imgURI &#x3D; params[&#x27;imgURI&#x27;];
+            this._imgIndex &#x3D; params[&#x27;imgIndex&#x27;];
+        });
+    }
+    /**
+     * Angular initialization.
+     */
+    ngOnInit(): void {
+        this._imgNext &#x3D; this._imgIndex;
+        this.isDeleting &#x3D; true;
+        this.isSharing &#x3D; true;
+        this.imageSource &#x3D; new ImageSource();
+        this._imageFileList &#x3D; this.transformedImageProvider.imageList;
+        this._dragImageItem &#x3D; this._dragImage.nativeElement as Image;
+        this._dragImageItem.translateX &#x3D; 0;
+        this._dragImageItem.translateY &#x3D; 0;
+        this._dragImageItem.scaleX &#x3D; 1;
+        this._dragImageItem.scaleY &#x3D; 1;
+    }
+    /**
+     * Go back to previous page
+     */
+    goBack() {
+        this.routerExtensions.back();
+    }
+    /**
+     * Triggers while pinch with two fingers.
+     * @param args PinchGestureEventData
+     */
+    onPinch(args: PinchGestureEventData) {
+
+        if (args.state &#x3D;&#x3D;&#x3D; 1) {
+            this._startScale &#x3D; this._dragImageItem.scaleX;
+            this._isPinchSelected &#x3D; true;
+
+        } else if (args.scale &amp;&amp; args.scale !&#x3D;&#x3D; 1) {
+            this._newScale &#x3D; this._startScale * args.scale;
+            this._newScale &#x3D; Math.min(15, this._newScale);
+            this._newScale &#x3D; Math.max(0.1, this._newScale);
+            this._dragImageItem.scaleX &#x3D; this._newScale;
+            this._dragImageItem.scaleY &#x3D; this._newScale;
+
+            this._dragImageItem.width &#x3D; this._dragImageItem.getMeasuredWidth() * this._newScale;
+            this._dragImageItem.height &#x3D; this._dragImageItem.getMeasuredHeight() * this._newScale;
+        }
+    }
+    /**
+     * Moves images while move with a finger.
+     * @param args PanGestureEventData
+     */
+    onPan(args: PanGestureEventData) {
+        const screenLocation &#x3D; this._dragImageItem.getLocationOnScreen();
+        let centerPointX &#x3D; (this._dragImageItem.getMeasuredWidth() / 4) * (this._newScale);
+        let centerPointY &#x3D; (this._dragImageItem.getMeasuredHeight() / 4) * (this._newScale);
+        const imageViewWidth &#x3D; this._dragImageItem.getMeasuredWidth() * this._dragImageItem.originX;
+        const imageViewHeight &#x3D; this._dragImageItem.getMeasuredHeight() * this._dragImageItem.originY;
+
+        if (args.state &#x3D;&#x3D;&#x3D; 1) {
+            this._prevDeltaX &#x3D; 0;
+            this._prevDeltaY &#x3D; 0;
+        } else if (args.state &#x3D;&#x3D;&#x3D; 2) {
+            centerPointX &#x3D; (centerPointX * 2);
+            centerPointY &#x3D; (centerPointY * 2);
+            // let screenLocation &#x3D; this._dragImageItem.getLocationOnScreen();
+
+            if (this._newScale &lt; 15) {
+                if (!this._isGotDefaultLocation) {
+                    this._defaultScreenLocation &#x3D; screenLocation;
+                    this._isGotDefaultLocation &#x3D; true;
+                }
+                if (this._newScale &gt; 1) {
+                    if ((screenLocation.x - this._defaultScreenLocation.x) &lt;&#x3D; 0
+                        &amp;&amp; (centerPointX - imageViewWidth) &gt; Math.abs(screenLocation.x - this._defaultScreenLocation.x)
+                    ) {
+                        this._dragImageItem.translateX +&#x3D; args.deltaX - this._prevDeltaX;
+                        this._oldTranslateX &#x3D; this._dragImageItem.translateX;
+                    } else {
+                        if (this._oldTranslateX &gt; 0) {
+                            this._oldTranslateX--;
+                        } else {
+                            this._oldTranslateX++;
+                        }
+                        this._dragImageItem.translateX &#x3D; this._oldTranslateX;
+                    }
+                    if ((screenLocation.y - this._defaultScreenLocation.y) &lt;&#x3D; 0
+                        &amp;&amp; (centerPointY - imageViewHeight) &gt; Math.abs(screenLocation.y - this._defaultScreenLocation.y)
+                    ) {
+                        this._dragImageItem.translateY +&#x3D; args.deltaY - this._prevDeltaY;
+                        this._oldTranslateY &#x3D; this._dragImageItem.translateY;
+                    } else {
+                        if (this._oldTranslateY &gt; 0) {
+                            this._oldTranslateY--;
+                        } else {
+                            this._oldTranslateY++;
+                        }
+                        this._dragImageItem.translateY &#x3D; this._oldTranslateY;
+                    }
+                }
+            }
+            if (this._newScale &gt;&#x3D; 15) {
+                const translateXTemp &#x3D; this._dragImageItem.translateX + args.deltaX - this._prevDeltaX;
+                const translateYTemp &#x3D; this._dragImageItem.translateY + args.deltaY - this._prevDeltaY;
+                if (this._oldTranslateX &lt; translateXTemp) {
+                    this._dragImageItem.translateX &#x3D; this._oldTranslateX;
+                } else {
+                    this._dragImageItem.translateX &#x3D; translateXTemp;
+                }
+                if (this._oldTranslateY &lt; translateYTemp) {
+                    this._dragImageItem.translateY &#x3D; this._oldTranslateY;
+                } else {
+                    this._dragImageItem.translateY &#x3D; translateYTemp;
+                }
+            }
+
+            this._prevDeltaX &#x3D; args.deltaX;
+            this._prevDeltaY &#x3D; args.deltaY;
+
+        } else if (args.state &#x3D;&#x3D;&#x3D; 3) {
+            this._isPinchSelected &#x3D; false;
+        }
+    }
+    /**
+     * Resets image position while double tap with single fingure.
+     * @param args GestureEventData
+     */
+    onDoubleTap(args: GestureEventData) {
+        this._dragImageItem.animate({
+            translate: { x: 0, y: 0 },
+            scale: { x: 1, y: 1 },
+            curve: &#x27;easeIn&#x27;,
+            duration: 10,
+        });
+        this._newScale &#x3D; 1;
+        this._oldTranslateY &#x3D; 0;
+        this._oldTranslateX &#x3D; 0;
+    }
+    /**
+     * Sets the selected image in the image source while page loaded.
+     * @param args any object
+     */
+    pageLoaded(args: any) {
+        if (this._imageFileList.length &gt; 0) {
+            this.imageSource &#x3D; this._imageFileList[this._imgIndex].filePath;
+        }
+        this._oldTranslateY &#x3D; 0;
+        this._oldTranslateX &#x3D; 0;
+    }
+    /**
+     * Move image left/right while on swipe with fingure.
+     * @param args SwipeGestureEventData
+     */
+    onSwipe(args: SwipeGestureEventData) {
+        if (this._dragImageItem.scaleX &#x3D;&#x3D;&#x3D; 1 &amp;&amp; this._dragImageItem.scaleY &#x3D;&#x3D;&#x3D; 1) {
+            if (args.direction &#x3D;&#x3D;&#x3D; 2 || !args.direction) {
+                this._imgNext++;
+                if (this._imgNext &lt;&#x3D; 0 || this._imgNext &gt;&#x3D; this._imageFileList.length) {
+                    this._imgNext &#x3D; 0;
+                }
+
+            } else if (args.direction &#x3D;&#x3D;&#x3D; 1) {
+                this._imgNext--;
+                if (this._imgNext &lt; 0 || this._imgNext &gt;&#x3D; this._imageFileList.length) {
+                    this._imgNext &#x3D; (this._imageFileList.length - 1);
+                }
+
+            }
+            this._imgIndex &#x3D; this._imgNext;
+            if (this._imageFileList.length &gt; 0) {
+                this.imageSource &#x3D; this._imageFileList[this._imgNext].filePath;
+            } else {
+                this.imageSource &#x3D; null;
+                this.isDeleting &#x3D; false;
+                this.isSharing &#x3D; false;
+                Toast.makeText(&#x27;No image available.&#x27;).show();
+            }
+            this.onDoubleTap(args);
+        }
+    }
+    // /**
+    //  * Gets original image.
+    //  * @param transformedImage 
+    //  * 
+    //  * @returns image uri
+    //  */
+    // private getOriginalImage(transformedImage: string): any {
+    //     const imagePath &#x3D; new java.io.File(android.os.Environment.getExternalStorageDirectory() + &#x27;/DCIM/CAMERA&#x27;, &#x27;.&#x27;);
+
+    //     let imgFileNameOrg &#x3D; transformedImage.replace(&#x27;PT_IMG&#x27;, &#x27;IMG&#x27;);
+    //     imgFileNameOrg &#x3D; imgFileNameOrg.substring(0, imgFileNameOrg.indexOf(&#x27;_transformed&#x27;)) + &#x27;.jpg&#x27;;
+    //     const newFile &#x3D; new java.io.File(imagePath, imgFileNameOrg);
+    //     const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
+    //     application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     return uri;
+    // }
+
+    /**
+     * Shares image(s) while on share.
+     */
+    onShare() {
+        Permissions.requestPermission(
+            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.INTERNET],
+            &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
+                try {
+                    const uris &#x3D; new java.util.ArrayList&lt;android.net.Uri&gt;();
+                    let filesToBeAttached &#x3D; &#x27;&#x27;;
+                    const imagePath &#x3D; new java.io.File(android.os.Environment.getExternalStorageDirectory() + &#x27;/DCIM&#x27;, &#x27;.&#x27;);
+                    let imgFileNameOrg &#x3D; this._imageFileList[this._imgNext].fileName;
+                    imgFileNameOrg &#x3D; imgFileNameOrg.replace(&#x27;thumb_PT_IMG&#x27;, &#x27;PT_IMG&#x27;);
+                    const newFile &#x3D; new java.io.File(imagePath, imgFileNameOrg);
+                    // const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(
+                    //     application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
+                    // application.android.context.grantUriPermission(
+                    //     &#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    const uri &#x3D; this.transformedImageProvider.getURIForFile(newFile);
+                    uris.add(uri);
+                    uris.add(this.transformedImageProvider.getOriginalImage(imgFileNameOrg));
+                    uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
+
+                    filesToBeAttached &#x3D; filesToBeAttached.concat(&#x27;,&#x27; + this._imageFileList[this._imgNext].filePath);
+                    if (uris.size() &gt; 0) {
+                        const intent &#x3D; new android.content.Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+                        intent.setType(&#x27;image/jpeg&#x27;);
+                        const message &#x3D; &#x27;Perspective correction pictures : &#x27; + filesToBeAttached + &#x27;.&#x27;;
+                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, &#x27;Perspective correction pictures...&#x27;);
+
+                        intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, uris);
+                        intent.putExtra(android.content.Intent.EXTRA_TEXT, message);
+                        intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        intent.addFlags(android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+                        application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, &#x27;Send mail...&#x27;));
+                    }
+                } catch (e) {
+                    Toast.makeText(&#x27;Error while sending mail.&#x27; + e).show();
+                    console.log(&#x27;is exception raises during sending mail &#x27; + e);
+                }
+            }).catch(() &#x3D;&gt; {
+                Toast.makeText(&#x27;Error in giving permission.&#x27;).show();
+                console.log(&#x27;Permission is not granted (sadface)&#x27;);
+            });
+    }
+    /**
+     * Delete selected image.
+     * @param args any boject
+     */
+    onDelete(args: any) {
+        dialogs.confirm({
+            title: &#x27;Delete&#x27;,
+            message: &#x27;Deleting selected item(s)...&#x27;,
+            okButtonText: &#x27;Ok&#x27;,
+            cancelButtonText: &#x27;Cancel&#x27;,
+        }).then((result) &#x3D;&gt; {
+            if (result) {
+                if (this._imageFileList.length &gt; 0) {
+                    this._dragImageItem.translateX &#x3D; 0;
+                    this._dragImageItem.translateY &#x3D; 0;
+                    this._dragImageItem.scaleX &#x3D; 1;
+                    this._dragImageItem.scaleY &#x3D; 1;
+                    const file: File &#x3D; File.fromPath(this._imageFileList[this._imgNext].filePath);
+                    file.remove()
+                        .then(() &#x3D;&gt; {
+                            const thumbnailFile: File &#x3D; File.fromPath(this._imageFileList[this._imgNext].thumbnailPath);
+                            thumbnailFile.remove()
+                                .then(() &#x3D;&gt; {
+                                    SendBroadcastImage(this._imageFileList[this._imgNext].thumbnailPath);
+                                    this._imageFileList.splice(this._imgNext, 1);
+                                    Toast.makeText(&#x27;Selected image deleted.&#x27;).show();
+                                    if (this._imageFileList.length &gt; 0) {
+                                        if (this._imageFileList.length &#x3D;&#x3D; this._imgNext.valueOf()) {
+                                            this._imgNext &#x3D; 0;
+                                        }
+                                        this.imageSource &#x3D; this._imageFileList[this._imgNext].filePath;
+                                    } else {
+                                        this.imageSource &#x3D; null;
+                                        this.isDeleting &#x3D; false;
+                                        this.isSharing &#x3D; false;
+                                        Toast.makeText(&#x27;No image available.&#x27;).show();
+                                    }
+                                    // this.onSwipe(args);
+                                }).catch((err) &#x3D;&gt; {
+                                    console.log(&#x27;Error while deleting thumbnail image. &#x27; + err.stack);
+                                });
+                        }).catch((err) &#x3D;&gt; {
+                            console.log(&#x27;Error while deleting original image. &#x27; + err.stack);
+                        });
+                } else {
+                    this.imageSource &#x3D; null;
+                    this.isDeleting &#x3D; false;
+                    this.isSharing &#x3D; false;
+                    Toast.makeText(&#x27;No image available.&#x27;).show();
+                }
+            }
+        });
+    }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-templateData">
+        <pre class="line-numbers"><code class="language-html">
+    &lt;!--&lt;ActionBar title&#x3D;&quot;Image List&quot; class&#x3D;&quot;action-bar&quot;&gt;
+        &lt;NavigationButton android.systemIcon&#x3D;&quot;ic_menu_back&quot; text&#x3D;&quot;Back&quot; (tap)&#x3D;&quot;goBack()&quot;&gt;&lt;/NavigationButton&gt;
+
+        &lt;ActionItem tap&#x3D;&quot;onShare&quot; ios.systemIcon&#x3D;&quot;9&quot; ios.position&#x3D;&quot;left&quot; android.systemIcon&#x3D;&quot;ic_menu_share&quot; android.position&#x3D;&quot;actionBar&quot;&gt;&lt;/ActionItem&gt;
+        &lt;ActionItem (tap)&#x3D;&quot;onDelete()&quot; ios.systemIcon&#x3D;&quot;16&quot; ios.position&#x3D;&quot;right&quot; android.systemIcon&#x3D;&quot;ic_menu_delete&quot; android.position&#x3D;&quot;actionBar&quot;&gt;&lt;/ActionItem&gt;
+    &lt;/ActionBar&gt;--&gt;
+    &lt;Page.actionBar&gt;
+        &lt;ActionBar title&#x3D;&quot;Image Gallery&quot; class&#x3D;&quot;action-bar&quot;&gt;
+            &lt;!--&lt;Label text&#x3D;&quot;&amp;#xf177;&quot; class&#x3D;&quot;fa p-5 m-3&quot;&gt;&lt;/Label&gt;--&gt;
+            &lt;ActionBar.titleView&gt;
+                &lt;!--&lt;Label (tap)&#x3D;&quot;goBack()&quot; text&#x3D;&quot;&amp;#xf104;&quot; class&#x3D;&quot;fa&quot;&gt;&lt;/Label&gt;--&gt;
+                &lt;Button horizontalAlignment&#x3D;&quot;left&quot; verticalAlignment&#x3D;&quot;center&quot; (tap)&#x3D;&quot;goBack()&quot; class&#x3D;&quot;btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-back&quot;&gt;
+					&lt;FormattedString&gt;
+						&lt;Span class&#x3D;&quot;fa action-item-icon-fontsize&quot; text&#x3D;&quot;&amp;#xf104;&quot;&gt;&lt;/Span&gt; 
+					&lt;/FormattedString&gt;
+				&lt;/Button&gt;
+            &lt;/ActionBar.titleView&gt;
+
+            &lt;ActionItem (tap)&#x3D;&quot;onShare()&quot; android.position&#x3D;&quot;actionBar&quot; visibility&#x3D;&quot;{{ isSharing ? &#x27;visible&#x27; : &#x27;collapse&#x27; }}&quot;&gt;
+                &lt;!--&lt;Label text&#x3D;&quot;&amp;#xf1e1;&quot; class&#x3D;&quot;fa p-5 m-3&quot;&gt;&lt;/Label&gt;--&gt;
+                &lt;Button horizontalAlignment&#x3D;&quot;center&quot; verticalAlignment&#x3D;&quot;center&quot; class&#x3D;&quot;btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-share&quot;&gt;
+					&lt;FormattedString&gt;
+						&lt;Span class&#x3D;&quot;fa action-item-icon-fontsize&quot; text&#x3D;&quot;&amp;#xf1e1;&quot;&gt;&lt;/Span&gt; 
+					&lt;/FormattedString&gt;
+				&lt;/Button&gt;
+            &lt;/ActionItem&gt;
+            &lt;ActionItem (tap)&#x3D;&quot;onDelete($event)&quot; android.position&#x3D;&quot;actionBar&quot; visibility&#x3D;&quot;{{ isDeleting ? &#x27;visible&#x27; : &#x27;collapse&#x27; }}&quot;&gt;
+                &lt;!--&lt;Label text&#x3D;&quot;&amp;#xf1f8;&quot; class&#x3D;&quot;fa p-5 m-3 btn-active&quot;&gt;&lt;/Label&gt;--&gt;
+                &lt;Button horizontalAlignment&#x3D;&quot;center&quot; verticalAlignment&#x3D;&quot;center&quot; class&#x3D;&quot;btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-delete&quot;&gt;
+					&lt;FormattedString&gt;
+						&lt;Span class&#x3D;&quot;fa action-item-icon-fontsize&quot; text&#x3D;&quot;&amp;#xf1f8;&quot;&gt;&lt;/Span&gt; 
+					&lt;/FormattedString&gt;
+				&lt;/Button&gt;
+            &lt;/ActionItem&gt;
+        &lt;/ActionBar&gt;
+    &lt;/Page.actionBar&gt;
+    
+&lt;Page xmlns&#x3D;&quot;http://schemas.nativescript.org/tns.xsd&quot; (loaded)&#x3D;&quot;pageLoaded($event)&quot;&gt;
+    &lt;GridLayout #container horizontalAlignment&#x3D;&quot;center&quot; verticalAlignment&#x3D;&quot;center&quot;  (swipe)&#x3D;&quot;onSwipe($event)&quot; (doubleTap)&#x3D;&quot;onDoubleTap($event)&quot;    backgroundColor&#x3D;&quot;gray&quot;&gt;
+        &lt;Image src&#x3D;&quot;{{ imageSource }}&quot;  #imgSlideId  (pan)&#x3D;&quot;onPan($event)&quot; (pinch)&#x3D;&quot;onPinch($event)&quot; backgroundColor&#x3D;&quot;gray&quot;&gt;&lt;/Image&gt;  
+    &lt;/GridLayout&gt;
+&lt;/Page&gt;</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-styleData">
+                <p class="comment">
+                    <code>./imageslide.component.css</code>
+                </p>
+                <pre class="line-numbers"><code class="language-scss">.bordered {
+    border-width: 2; 
+    border-color: red;
+}
+
+#imgSlideId, .imgSlideId {
+    vertical-align: top;
+    /*horizontal-align: left;*/
+}</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="c-tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div>    <!--<ActionBar title="Image List" class="action-bar">        <NavigationButton android.systemIcon="ic_menu_back" text="Back" (tap)="goBack()"></NavigationButton>        <ActionItem tap="onShare" ios.systemIcon="9" ios.position="left" android.systemIcon="ic_menu_share" android.position="actionBar"></ActionItem>        <ActionItem (tap)="onDelete()" ios.systemIcon="16" ios.position="right" android.systemIcon="ic_menu_delete" android.position="actionBar"></ActionItem>    </ActionBar>-->    <Page.actionBar>        <ActionBar title="Image Gallery" class="action-bar">            <!--<Label text="&#xf177;" class="fa p-5 m-3"></Label>-->            <ActionBar.titleView>                <!--<Label (tap)="goBack()" text="&#xf104;" class="fa"></Label>-->                <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-back">					<FormattedString>						<Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span> 					</FormattedString>				</Button>            </ActionBar.titleView>            <ActionItem (tap)="onShare()" android.position="actionBar" visibility="{{ isSharing ? \'visible\' : \'collapse\' }}">                <!--<Label text="&#xf1e1;" class="fa p-5 m-3"></Label>-->                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-share">					<FormattedString>						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 					</FormattedString>				</Button>            </ActionItem>            <ActionItem (tap)="onDelete($event)" android.position="actionBar" visibility="{{ isDeleting ? \'visible\' : \'collapse\' }}">                <!--<Label text="&#xf1f8;" class="fa p-5 m-3 btn-active"></Label>-->                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-delete">					<FormattedString>						<Span class="fa action-item-icon-fontsize" text="&#xf1f8;"></Span> 					</FormattedString>				</Button>            </ActionItem>        </ActionBar>    </Page.actionBar>    <Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">    <GridLayout #container horizontalAlignment="center" verticalAlignment="center"  (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap($event)"    backgroundColor="gray">        <Image src="{{ imageSource }}"  #imgSlideId  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>      </GridLayout></Page></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'ns-app'},{'name': 'CaptureComponent', 'selector': 'ns-capture'},{'name': 'DialogContent', 'selector': 'modal-content'},{'name': 'ImageGalleryComponent', 'selector': 'ns-imagegallery'},{'name': 'ImageSlideComponent', 'selector': 'ns-imageslide'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'ImageSlideComponent'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'ImageSlideComponent.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

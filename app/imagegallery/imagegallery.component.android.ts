@@ -15,30 +15,58 @@ import * as dialogs from 'tns-core-modules/ui/dialogs';
 import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
 
+
+/**
+ * ImageGalleryComponent class.
+ */
 @Component({
     selector: 'ns-imagegallery',
     moduleId: module.id,
     styleUrls: ['./imagegallery.component.css'],
     templateUrl: './imagegallery.component.html',
 })
-
-/**
- * ImageGalleryComponent class.
- */
 export class ImageGalleryComponent implements OnInit {
+    /** Boolean value to make the sharing menu visible or not. */
     public isSharing: boolean;
+    /** Boolean value to make the deleting menu visible or not. */
     public isDeleting: boolean;
+    /** Boolean value to make the popup menu visible or not. */
     public isPopUpMenu: boolean;
+    /** Boolean value to make the SortByDate menu visible or not. */
     public isSortByDateMenu: boolean;
+    /** Boolean value to make the checkbox visible or not. */
     public isCheckBoxVisible: boolean;
+    /** Indicates checkbox selected count. */
     private _selectedCount: number;
+    /** Boolean value to make the Select/UnselectAll menu visible or not */
     private _isSelectUnselectAll: boolean;
+    /** Stores orderBy value 'Asc'/'Desc' */
     private _orderByAscDesc: string;
+    /** Stores page referrence. */
     private _page;
 
     /**
-     * Angular initialize method.
+     * Constructor for ImageGalleryComponent
+     * @param routerExtensions 
+     * @param modalService 
+     * @param viewContainerRef 
+     * @param _changeDetectionRef 
+     * @param router 
+     * @param transformedImageProvider 
+     * @param activityLoader 
      */
+    constructor(
+        private routerExtensions: RouterExtensions,
+        private modalService: ModalDialogService,
+        private viewContainerRef: ViewContainerRef,
+        private _changeDetectionRef: ChangeDetectorRef,
+        private router: Router,
+        private transformedImageProvider: TransformedImageProvider,
+        private activityLoader: ActivityLoader) {
+    }
+    /**
+   * Angular initialize method.
+   */
     ngOnInit(): void {
         this.activityLoader.show();
         this.isCheckBoxVisible = false;
@@ -58,25 +86,6 @@ export class ImageGalleryComponent implements OnInit {
      */
     get imageList(): TransformedImage[] {
         return this.transformedImageProvider.imageList;
-    }
-    /**
-     * Constructor for ImageGalleryComponent
-     * @param routerExtensions 
-     * @param modalService 
-     * @param viewContainerRef 
-     * @param _changeDetectionRef 
-     * @param router 
-     * @param transformedImageProvider 
-     * @param activityLoader 
-     */
-    constructor(
-        private routerExtensions: RouterExtensions,
-        private modalService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef,
-        private _changeDetectionRef: ChangeDetectorRef,
-        private router: Router,
-        private transformedImageProvider: TransformedImageProvider,
-        private activityLoader: ActivityLoader) {
     }
     /**
      * Set checkbox visible.
@@ -110,6 +119,9 @@ export class ImageGalleryComponent implements OnInit {
      * Go back
      */
     goBack() {
+        for (const image in this.imageList) {
+            this.imageList[image].isSelected = false;
+        }
         this.routerExtensions.back();
     }
     /**
@@ -207,12 +219,14 @@ export class ImageGalleryComponent implements OnInit {
                             const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
                             const imgFileNameOrg = image.fileName.replace('thumb_PT_IMG', 'PT_IMG');
                             const newFile = new java.io.File(imagePath, imgFileNameOrg);
-                            const uri = android.support.v4.content.FileProvider.getUriForFile(
-                                application.android.context, 'oxs.eye.fileprovider', newFile);
-                            application.android.context.grantUriPermission(
-                                'oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            // const uri = android.support.v4.content.FileProvider.getUriForFile(
+                            //     application.android.context, 'oxs.eye.fileprovider', newFile);
+                            // application.android.context.grantUriPermission(
+                            //     'oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            const uri = this.transformedImageProvider.getURIForFile(newFile);
                             uris.add(uri);
-                            uris.add(this.getOriginalImage(imgFileNameOrg));
+                            uris.add(this.transformedImageProvider.getOriginalImage(imgFileNameOrg));
+                            uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
                         }
                     });
                     if (uris.size() > 0) {
@@ -295,20 +309,47 @@ export class ImageGalleryComponent implements OnInit {
         }
         this._isSelectUnselectAll = !value;
     }
-    /**
-     * Get original image
-     * @param transformedImage 
-     */
-    private getOriginalImage(transformedImage: string): any {
-        const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM/CAMERA', '.');
+    // /**
+    //  * Get original image
+    //  * @param transformedImage 
+    //  */
+    // private getOriginalImage(transformedImage: string): any {
+    //     const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM/CAMERA', '.');
 
-        let imgFileNameOrg = transformedImage.replace('PT_IMG', 'IMG');
-        imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
-        const newFile = new java.io.File(imagePath, imgFileNameOrg);
-        const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
-        application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        return uri;
-    }
+    //     let imgFileNameOrg = transformedImage.replace('PT_IMG', 'IMG');
+    //     imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
+    //     const newFile = new java.io.File(imagePath, imgFileNameOrg);
+    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     // return uri;
+    //     return this.transformedImageProvider.getURIForFile(newFile);
+    // }
+    // /**
+    //  * Get original image
+    //  * @param transformedImage 
+    //  */
+    // private getOriginalImageWithRectangle(transformedImage: string): any {
+    //     const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
+
+    //     let imgFileNameOrg = transformedImage.substring(0, transformedImage.indexOf('_transformed')) + '_contour.jpg';
+    //     const newFile = new java.io.File(imagePath, imgFileNameOrg);
+    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     // return uri;
+    //     return this.transformedImageProvider.getURIForFile(newFile);
+    // }
+
+    // /**
+    //  * Get URI for file.
+    //  * @param newFile 
+    //  * @returns URI
+    //  */
+    // private getURIForFile(newFile: any): any {
+    //     const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+    //     application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     return uri;
+    // }
+
     /**
      * Load thumbnail images by content resolver.
      * @param orderByAscDescParam 

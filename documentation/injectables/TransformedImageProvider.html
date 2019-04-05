@@ -1,0 +1,1111 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Application documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	      <link rel="stylesheet" href="../styles/style.css">
+    </head>
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top visible-xs">
+            <a href="../" class="navbar-brand">Application documentation</a>
+            <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="hidden-xs menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content injectable">
+                   <div class="content-data">
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li>Injectables</li>
+  <li>TransformedImageProvider</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="active">
+            <a href="#info" role="tab" id="info-tab" data-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li >
+            <a href="#source" role="tab" id="source-tab" data-toggle="tab" data-link="source">Source</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="c-info">
+        <p class="comment">
+            <h3>File</h3>
+        </p>
+        <p class="comment">
+            <code>app/providers/transformedimage.provider.android.ts</code>
+        </p>
+
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>TransformedImageProvider class.</p>
+
+            </p>
+
+
+
+            <section>
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#contourImageList">contourImageList</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#imageList">imageList</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#deleteFile">deleteFile</a>
+                            </li>
+                            <li>
+                                <a href="#DeleteFiles">DeleteFiles</a>
+                            </li>
+                            <li>
+                                <a href="#getOriginalImage">getOriginalImage</a>
+                            </li>
+                            <li>
+                                <a href="#getOriginalImageWithRectangle">getOriginalImageWithRectangle</a>
+                            </li>
+                            <li>
+                                <a href="#getURIForFile">getURIForFile</a>
+                            </li>
+                            <li>
+                                <a href="#LoadPossibleContourImages">LoadPossibleContourImages</a>
+                            </li>
+                            <li>
+                                <a href="#loadThumbnailImagesByContentResolver">loadThumbnailImagesByContentResolver</a>
+                            </li>
+                            <li>
+                                <a href="#renameFile">renameFile</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor()</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">app/providers/transformedimage.provider.android.ts:19</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Constructor for TransformedImageProvider</p>
+</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
+
+            <section>
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="deleteFile"></a>
+                    <span class="name">
+                        <b>
+                            deleteFile
+                        </b>
+                        <a href="#deleteFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>deleteFile(fileURI: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="177"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:177</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delete a selected image file from the disk.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fileURI</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="DeleteFiles"></a>
+                    <span class="name">
+                        <b>
+                            DeleteFiles
+                        </b>
+                        <a href="#DeleteFiles"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>DeleteFiles()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="131"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:131</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Delete all temporary files used to perform transformation.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOriginalImage"></a>
+                    <span class="name">
+                        <b>
+                            getOriginalImage
+                        </b>
+                        <a href="#getOriginalImage"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOriginalImage(transformedImage: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="223"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:223</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get original image</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>transformedImage</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getOriginalImageWithRectangle"></a>
+                    <span class="name">
+                        <b>
+                            getOriginalImageWithRectangle
+                        </b>
+                        <a href="#getOriginalImageWithRectangle"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getOriginalImageWithRectangle(transformedImage: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="208"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:208</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get original image</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>transformedImage</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="getURIForFile"></a>
+                    <span class="name">
+                        <b>
+                            getURIForFile
+                        </b>
+                        <a href="#getURIForFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>getURIForFile(newFile: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="240"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:240</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Get URI for file.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>newFile</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        <p>URI</p>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="LoadPossibleContourImages"></a>
+                    <span class="name">
+                        <b>
+                            LoadPossibleContourImages
+                        </b>
+                        <a href="#LoadPossibleContourImages"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>LoadPossibleContourImages()</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="81"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:81</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Load possible contour images</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="loadThumbnailImagesByContentResolver"></a>
+                    <span class="name">
+                        <b>
+                            loadThumbnailImagesByContentResolver
+                        </b>
+                        <a href="#loadThumbnailImagesByContentResolver"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>loadThumbnailImagesByContentResolver(orderByAscDesc: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, activityLoader: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="33"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:33</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Load thumbnail images by content resolver.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>orderByAscDesc</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>activityLoader</td>
+                                    <td>
+                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="renameFile"></a>
+                    <span class="name">
+                        <b>
+                            renameFile
+                        </b>
+                        <a href="#renameFile"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>renameFile(fileURI: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, renameFileto: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-line">Defined in <a href="" data-line="192"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:192</a></div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Rename a fila name to given name.</p>
+</div>
+
+                    <div class="io-description">
+                        <b>Parameters :</b>
+                        <table class="params">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>Type</td>
+                                    <td>Optional</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>fileURI</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                                <tr>
+                                    <td>renameFileto</td>
+                                    <td>
+                                                <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                    </td>
+
+                                    <td>
+                                        No
+                                    </td>
+
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                    </div>
+                    <div class="io-description">
+                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                    </div>
+                    <div class="io-description">
+                        
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+            <section>
+    
+        <h3 id="inputs">
+            Properties
+        </h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="contourImageList"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            contourImageList</b>
+                            <a href="#contourImageList"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">app/providers/transformedimage.provider.android.ts:19</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains list of contour images captured while performing transformation. 
+Currently this is not been used.</p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="imageList"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Public</span>
+                            imageList</b>
+                            <a href="#imageList"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">app/providers/transformedimage.provider.android.ts:15</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Contains list of image </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+</section>
+
+    </div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="c-source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
+import { File, path } from &#x27;tns-core-modules/file-system&#x27;;
+import { TransformedImage } from &#x27;./transformedimage.common&#x27;;
+import * as application from &#x27;tns-core-modules/application&#x27;;
+import * as dialogs from &#x27;tns-core-modules/ui/dialogs&#x27;;
+import * as Toast from &#x27;nativescript-toast&#x27;;
+import * as Permissions from &#x27;nativescript-permissions&#x27;;
+
+/**
+ * TransformedImageProvider class.
+ */
+@Injectable()
+export class TransformedImageProvider {
+    /** Contains list of image */
+    public imageList: any;
+    /** Contains list of contour images captured while performing transformation. 
+     * Currently this is not been used.
+     */
+    public contourImageList: any;
+
+    /**
+     * Constructor for TransformedImageProvider
+     */
+    constructor() {
+        this.imageList &#x3D; [];
+        this.contourImageList &#x3D; [];
+    }
+    /**
+     * Load thumbnail images by content resolver.
+     * @param orderByAscDesc 
+     * @param activityLoader 
+     */
+    loadThumbnailImagesByContentResolver(orderByAscDesc: string, activityLoader: any) {
+        Permissions.requestPermission(
+            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+            &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
+                const MediaStore &#x3D; android.provider.MediaStore;
+                this.imageList &#x3D; [];
+                let cursor &#x3D; null;
+                try {
+                    const context &#x3D; application.android.context;
+                    const columns &#x3D; [MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DATE_ADDED];
+                    const orderBy &#x3D; MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc;
+                    const uri &#x3D; MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    const where &#x3D; MediaStore.MediaColumns.DATA + &#x27; like &quot;%thumb_PT_IMG%&quot;&#x27;;
+                    cursor &#x3D; context.getContentResolver().query(uri, columns, where, null, orderBy);
+                    if (cursor &amp;&amp; cursor.getCount() &gt; 0) {
+                        while (cursor.moveToNext()) {
+                            const columnIndex &#x3D; cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
+                            const imageUri &#x3D; cursor.getString(columnIndex) + &#x27;&#x27;;
+                            const name &#x3D; imageUri.substring(imageUri.lastIndexOf(&#x27;thumb_PT_IMG&#x27;));
+                            // let image &#x3D; { fileUri: imageUri, text: name };
+                            //  if (imageUri.indexOf(&#x27;PT_IMG&#x27;) &gt; 0 &amp;&amp; imageUri.endsWith(&#x27;.png&#x27;)) {
+                            const thumnailOrgPath &#x3D; imageUri.replace(&#x27;thumb_PT_IMG&#x27;, &#x27;PT_IMG&#x27;);
+                            this.imageList.push(new TransformedImage(
+                                name,
+                                thumnailOrgPath,
+                                imageUri,
+                                false,
+                            ));
+
+                            //   }
+                        }
+                    }
+                    activityLoader.hide();
+                } catch (error) {
+                    activityLoader.hide();
+                    Toast.makeText(&#x27;Error while loading gallery images.&#x27;, &#x27;long&#x27;).show();
+                    console.log(&#x27;getGalleryPhotos&#x3D;&gt;&#x27;, JSON.stringify(error));
+                }
+            }).catch(() &#x3D;&gt; {
+                activityLoader.hide();
+                Toast.makeText(&#x27;Error in giving permission.&#x27;, &#x27;long&#x27;).show();
+                console.log(&#x27;Permission is not granted (sadface)&#x27;);
+            });
+    }
+    /**
+     * Load possible contour images
+     */
+    LoadPossibleContourImages() {
+
+        this.contourImageList &#x3D; [];
+        Permissions.requestPermission(
+            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+            &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
+                const MediaStore &#x3D; android.provider.MediaStore;
+                let cursor &#x3D; null;
+                try {
+                    const context &#x3D; application.android.context;
+                    const columns &#x3D; [MediaStore.MediaColumns.DATA];
+                    //      let orderBy &#x3D; MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
+                    const uri &#x3D; MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    const where &#x3D; MediaStore.MediaColumns.DATA + &#x27; like &quot;%contourImage%&quot;&#x27;;
+                    cursor &#x3D; context.getContentResolver().query(uri, columns, where, null, null);
+                    if (cursor &amp;&amp; cursor.getCount() &gt; 0) {
+                        while (cursor.moveToNext()) {
+                            const columnIndex &#x3D; cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
+                            const imageUri &#x3D; cursor.getString(columnIndex) + &#x27;&#x27;;
+                            const name &#x3D; imageUri.substring(imageUri.lastIndexOf(&#x27;contourImage&#x27;));
+                            // let image &#x3D; { fileUri: imageUri, text: name };
+                            //  if (imageUri.indexOf(&#x27;PT_IMG&#x27;) &gt; 0 &amp;&amp; imageUri.endsWith(&#x27;.png&#x27;)) {
+                            //   let thumnailOrgPath &#x3D; imageUri.replace(&#x27;thumb_PT_IMG&#x27;, &#x27;PT_IMG&#x27;);
+                            this.contourImageList.push(new TransformedImage(
+                                name,
+                                imageUri,
+                                imageUri,
+                                false,
+                            ));
+
+                            //   }
+                        }
+                    }
+                    //         activityLoader.hide();
+                } catch (error) {
+                    //           activityLoader.hide();
+                    Toast.makeText(&#x27;Error while loading contour images.&#x27;, &#x27;long&#x27;).show();
+                    console.log(&#x27;getcontourImages&#x3D;&gt;&#x27;, JSON.stringify(error));
+                }
+
+            }).catch(() &#x3D;&gt; {
+                //   activityLoader.hide();
+                Toast.makeText(&#x27;Error in giving permission.&#x27;, &#x27;long&#x27;).show();
+                console.log(&#x27;Permission is not granted (sadface)&#x27;);
+            });
+    }
+    /**
+     * Delete all temporary files used to perform transformation.
+     */
+    DeleteFiles() {
+
+        this.contourImageList &#x3D; [];
+        Permissions.requestPermission(
+            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+            &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
+                const MediaStore &#x3D; android.provider.MediaStore;
+                let cursor &#x3D; null;
+                try {
+                    const context &#x3D; application.android.context;
+                    const columns &#x3D; [MediaStore.MediaColumns.DATA];
+                    //      let orderBy &#x3D; MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
+                    const uri &#x3D; MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    const where &#x3D; MediaStore.MediaColumns.DATA + &#x27; like &quot;%_TEMP%&quot;&#x27;;
+                    cursor &#x3D; context.getContentResolver().query(uri, columns, where, null, null);
+                    if (cursor &amp;&amp; cursor.getCount() &gt; 0) {
+                        while (cursor.moveToNext()) {
+                            const columnIndex &#x3D; cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
+                            const imageUri &#x3D; cursor.getString(columnIndex) + &#x27;&#x27;;
+                            const tempFile: File &#x3D; File.fromPath(imageUri);
+                            tempFile.remove()
+                                .then(() &#x3D;&gt; {
+                                    SendBroadcastImage(imageUri);
+                                }).catch((err) &#x3D;&gt; {
+                                    Toast.makeText(&#x27;Error while deleting temporary images&#x27;).show();
+                                    console.log(err.stack);
+                                });
+                        }
+                    }
+                } catch (error) {
+                    //           activityLoader.hide();
+                    Toast.makeText(&#x27;Error while loading temporary images.&#x27;, &#x27;long&#x27;).show();
+                    console.log(&#x27;Temporary files &#x3D;&gt;&#x27;, JSON.stringify(error));
+                }
+
+            }).catch(() &#x3D;&gt; {
+                //   activityLoader.hide();
+                Toast.makeText(&#x27;Error in giving permission.&#x27;, &#x27;long&#x27;).show();
+                console.log(&#x27;Permission is not granted (sadface)&#x27;);
+            });
+    }
+    /**
+     * Delete a selected image file from the disk.
+     * @param fileURI 
+     */
+    deleteFile(fileURI: string) {
+        const tempFile: File &#x3D; File.fromPath(fileURI);
+        tempFile.remove()
+            .then(() &#x3D;&gt; {
+                SendBroadcastImage(fileURI);
+            }).catch((err) &#x3D;&gt; {
+                Toast.makeText(&#x27;deleteFile: Error while deleting temporary files&#x27;).show();
+                console.log(err.stack);
+            });
+    }
+    /**
+     * Rename a fila name to given name.
+     * @param fileURI 
+     * @param renameFileto 
+     */
+    renameFile(fileURI: string, renameFileto: string) {
+        const tempFile: File &#x3D; File.fromPath(fileURI);
+        tempFile.rename(renameFileto)
+            .then(() &#x3D;&gt; {
+                SendBroadcastImage(fileURI);
+                SendBroadcastImage(renameFileto);
+            }).catch((err) &#x3D;&gt; {
+                Toast.makeText(&#x27;renameFile: Error while renaming temporary file&#x27;).show();
+                console.log(err.stack);
+            });
+    }
+
+    /**
+     * Get original image
+     * @param transformedImage 
+     */
+    getOriginalImageWithRectangle(transformedImage: string): any {
+        const imagePath &#x3D; new java.io.File(android.os.Environment.getExternalStorageDirectory() + &#x27;/DCIM&#x27;, &#x27;.&#x27;);
+
+        let imgFileNameOrg &#x3D; transformedImage.substring(0, transformedImage.indexOf(&#x27;_transformed&#x27;)) + &#x27;_contour.jpg&#x27;;
+        const newFile &#x3D; new java.io.File(imagePath, imgFileNameOrg);
+        // const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
+        // application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // return uri;
+        return this.getURIForFile(newFile);
+    }
+
+    /**
+     * Get original image
+     * @param transformedImage 
+     */
+    getOriginalImage(transformedImage: string): any {
+        const imagePath &#x3D; new java.io.File(android.os.Environment.getExternalStorageDirectory() + &#x27;/DCIM/CAMERA&#x27;, &#x27;.&#x27;);
+
+        let imgFileNameOrg &#x3D; transformedImage.replace(&#x27;PT_IMG&#x27;, &#x27;IMG&#x27;);
+        imgFileNameOrg &#x3D; imgFileNameOrg.substring(0, imgFileNameOrg.indexOf(&#x27;_transformed&#x27;)) + &#x27;.jpg&#x27;;
+        const newFile &#x3D; new java.io.File(imagePath, imgFileNameOrg);
+        // const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
+        // application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // return uri;
+        return this.getURIForFile(newFile);
+    }
+
+    /**
+     * Get URI for file.
+     * @param newFile 
+     * @returns URI
+     */
+    getURIForFile(newFile: any): any {
+        const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
+        application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        return uri;
+    }
+
+}
+/**
+ * Broadcast image to access publicly, so that it will be available to any app.
+ * @param imgURI 
+ */
+export function SendBroadcastImage(imgURI) {
+    const imageFile &#x3D; new java.io.File(imgURI);
+    const contentUri &#x3D; android.net.Uri.fromFile(imageFile);
+    const mediaScanIntent &#x3D; new android.content.Intent(&#x27;android.intent.action.MEDIA_SCANNER_SCAN_FILE&#x27;, contentUri);
+    application.android.context.sendBroadcast(mediaScanIntent);
+}
+
+
+</code></pre>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> result-matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
+            var COMPODOC_CURRENT_PAGE_URL = 'TransformedImageProvider.html';
+       </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+       <!-- Required to polyfill modern browsers as code is ES5 for IE... -->
+       <script src="../js/libs/custom-elements-es5-adapter.js" charset="utf-8" defer></script>
+       <script src="../js/menu-wc.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+       <script src="../js/libs/zepto.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

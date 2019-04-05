@@ -37,7 +37,7 @@
     </Page.actionBar>
     
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">
-    <GridLayout #container horizontalAlignment="center" verticalAlignment="center"  (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap($event)"    backgroundColor="green">
-        <Image src="{{ imageSource }}"  #imgSlideId   (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>  
+    <GridLayout #container horizontalAlignment="center" verticalAlignment="center"  (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap($event)"    backgroundColor="gray">
+        <Image src="{{ imageSource }}"  #imgSlideId  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>  
     </GridLayout>
 </Page>

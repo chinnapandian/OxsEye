@@ -4,7 +4,9 @@ import { platformNativeScriptDynamic } from'nativescript-angular/platform';
 import { AppModule } from'./app.module';
 import * as application from'tns-core-modules/application';
 import * as traceModule from'tns-core-modules/trace';
-
+/**
+ * Error handler variable to handle error across system.
+ */
 const errorHandler: traceModule.ErrorHandler = {
     handlerError(err) {
         //option 1 (development) - throw the error

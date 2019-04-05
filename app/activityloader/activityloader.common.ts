@@ -1,11 +1,17 @@
+/**
+ * LoadingIndicator Instance variable.
+ */
 const LoadingIndicator = require('nativescript-loading-indicator').LoadingIndicator;
 /**
  * Activity loader class.
  */
 export class ActivityLoader {
+    /** LoadingIndicator Instance variable. */
     private _loader = new LoadingIndicator();
-
-    // android and ios have some platform specific options
+    /**
+     * Gets LoadingIndicator options for both android and ios.
+     * @returns options
+     */
     private getOptions(): any {
         const options = {
             message: 'Loading...',

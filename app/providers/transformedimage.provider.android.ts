@@ -11,15 +11,19 @@ import * as Permissions from 'nativescript-permissions';
  */
 @Injectable()
 export class TransformedImageProvider {
-    private _imageList: any;
-    private _contourImageList: any;
+    /** Contains list of image */
+    public imageList: any;
+    /** Contains list of contour images captured while performing transformation. 
+     * Currently this is not been used.
+     */
+    public contourImageList: any;
 
     /**
      * Constructor for TransformedImageProvider
      */
     constructor() {
-        this._imageList = [];
-        this._contourImageList = [];
+        this.imageList = [];
+        this.contourImageList = [];
     }
     /**
      * Load thumbnail images by content resolver.
@@ -32,7 +36,7 @@ export class TransformedImageProvider {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
             'Needed for sharing files').then(() => {
                 const MediaStore = android.provider.MediaStore;
-                this._imageList = [];
+                this.imageList = [];
                 let cursor = null;
                 try {
                     const context = application.android.context;
@@ -49,7 +53,7 @@ export class TransformedImageProvider {
                             // let image = { fileUri: imageUri, text: name };
                             //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
                             const thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
-                            this._imageList.push(new TransformedImage(
+                            this.imageList.push(new TransformedImage(
                                 name,
                                 thumnailOrgPath,
                                 imageUri,
@@ -76,7 +80,7 @@ export class TransformedImageProvider {
      */
     LoadPossibleContourImages() {
 
-        this._contourImageList = [];
+        this.contourImageList = [];
         Permissions.requestPermission(
             [android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
@@ -98,7 +102,7 @@ export class TransformedImageProvider {
                             // let image = { fileUri: imageUri, text: name };
                             //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
                             //   let thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
-                            this._contourImageList.push(new TransformedImage(
+                            this.contourImageList.push(new TransformedImage(
                                 name,
                                 imageUri,
                                 imageUri,
@@ -126,7 +130,7 @@ export class TransformedImageProvider {
      */
     DeleteFiles() {
 
-        this._contourImageList = [];
+        this.contourImageList = [];
         Permissions.requestPermission(
             [android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
@@ -195,6 +199,48 @@ export class TransformedImageProvider {
                 Toast.makeText('renameFile: Error while renaming temporary file').show();
                 console.log(err.stack);
             });
+    }
+
+    /**
+     * Get original image
+     * @param transformedImage 
+     */
+    getOriginalImageWithRectangle(transformedImage: string): any {
+        const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
+
+        let imgFileNameOrg = transformedImage.substring(0, transformedImage.indexOf('_transformed')) + '_contour.jpg';
+        const newFile = new java.io.File(imagePath, imgFileNameOrg);
+        // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+        // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // return uri;
+        return this.getURIForFile(newFile);
+    }
+
+    /**
+     * Get original image
+     * @param transformedImage 
+     */
+    getOriginalImage(transformedImage: string): any {
+        const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM/CAMERA', '.');
+
+        let imgFileNameOrg = transformedImage.replace('PT_IMG', 'IMG');
+        imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
+        const newFile = new java.io.File(imagePath, imgFileNameOrg);
+        // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+        // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // return uri;
+        return this.getURIForFile(newFile);
+    }
+
+    /**
+     * Get URI for file.
+     * @param newFile 
+     * @returns URI
+     */
+    getURIForFile(newFile: any): any {
+        const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+        application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        return uri;
     }
 
 }

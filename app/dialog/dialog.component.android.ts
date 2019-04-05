@@ -18,42 +18,62 @@ import * as orientation from 'nativescript-orientation';
 import * as buttons from 'ui/button';
 import * as formattedStringModule from 'text/formatted-string';
 
+/**
+ * Dialog content class.
+ */
 @Component({
     selector: 'modal-content',
     moduleId: module.id,
     styleUrls: ['./dialog.component.css'],
     templateUrl: './dialog.component.html',
 })
-
-/**
- * Dialog content class.
- */
 export class DialogContent {
+    /** Transformed Image source. */
     public imageSource: any;
+    /** Original Image source. */
     public imageSourceOrg: any;
-    public contourList: any;
+    /** Contains true/false to perform transformation automatically or not. */
     public isAutoCorrection = false;
-    public imageSourceOldToThumbnail: any;
+    /** Contains button label name either 'Manual'/ 'Perform' */
     public manualBtnText: string;
-
+    /** Contains list of four points of the images. */
     private _points: any;
+    /** Indicates the number of points. */
     private _pointsCounter: number;
+    /** Stores previous original Image source. */
     private _imageSourceOrgOld: any;
+    /** Stores previous transformed image source. */
     private _imageSourceOld: any;
+    /** Contains transformed image actual size. */
     private _imageActualSize: any;
+    /** List of circle buttons */
     private _circleBtnList: any;
+    /** Stores transformed image referrence. */
     private _imgView: any;
+    /** Image grid id. */
     private _imgGridId: any;
+    /** Transformed Image previous deltaX. */
     private _prevDeltaX: number;
+    /** Transformed Image previous deltaY. */
     private _prevDeltaY: number;
+    /** Transformed Image starting scale. */
     private _startScale = 1;
+    /** Transformed Image center pointX. */
     private _centerPointX: any;
+    /** Transformed Image center pointY. */
     private _centerPointY: any;
+    /** Transformed Image new scale while moving around. */
     private _newScale = 1;
+    /** Stores old TranslateX value of transformed Image. */
     private _oldTranslateX = 0;
+    /** Stores old translateY value of transformed Image. */
     private _oldTranslateY = 0;
+    /** Boolean value to indicate whether the image got default screen location or not. */
     private _isGotDefaultLocation = false;
+    /** Stores transformed image's screen location. */
     private _defaultScreenLocation: any;
+    /** Stores rectangle points to be used in the OpenCV API call. */
+    private _rectanglePoints: any;
     // private _dragImageItem: Image;
     // @ViewChild('imgViewId') _dragImage: ElementRef;
 
@@ -61,8 +81,8 @@ export class DialogContent {
 
     /**
      * Constructor for DialogContent class.
-     * @param params 
-     * @param transformedImageProvider 
+     * @param params contains captured image file information
+     * @param transformedImageProvider transformed image provider instance
      */
     constructor(private params: ModalDialogParams,
         private transformedImageProvider: TransformedImageProvider) {
@@ -91,18 +111,27 @@ export class DialogContent {
                 pointsCount++;
             }
         });
+
+        //To get accurate position, need to adjust the radius value;
+        let circleRadius = 17;
+        // this._points[0].y = +this._points[0].y - circleRadius;
+        // this._points[1].y = +this._points[1].y - circleRadius;
+        // this._points[2].y = +this._points[2].y + circleRadius;
+        // this._points[3].y = +this._points[3].y + circleRadius;
+
         if (pointsCount !== 4) {
             alert('Please select only four _points.');
         } else {
-            const rectanglePoints = this._points[0].x + '-' + this._points[0].y + '#'
-                + this._points[1].x + '-' + this._points[1].y + '#'
-                + this._points[2].x + '-' + this._points[2].y + '#'
-                + this._points[3].x + '-' + this._points[3].y;
-
+            const rectanglePoints = this._points[0].x + '-' + (+this._points[0].y - circleRadius) + '#'
+                + this._points[1].x + '-' + (+this._points[1].y - circleRadius) + '#'
+                + this._points[2].x + '-' + (+this._points[2].y + circleRadius) + '#'
+                + this._points[3].x + '-' + (+this._points[3].y + circleRadius);
+            console.log(rectanglePoints);
+            console.log(this.imageSourceOrg);
+            console.log(this._imageActualSize.width + '-' + this._imageActualSize.height);
             this._imageSourceOld = this.imageSource;
             this.imageSource = opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
                 this._imageActualSize.width + '-' + this._imageActualSize.height);
-
             SendBroadcastImage(this.imageSource);
             setTimeout(() => {
                 this.transformedImageProvider.deleteFile(this._imageSourceOld);
@@ -252,7 +281,7 @@ export class DialogContent {
             this._oldTranslateY = 0;
             this._oldTranslateX = 0;
         } else {
-            this.initPoints();
+            // this.initPoints();
             this.removeCircles();
             this.addCircles();
         }
@@ -267,8 +296,11 @@ export class DialogContent {
         this._imageSourceOrgOld = this.params.context.imageSourceOrg;
         this.isAutoCorrection = this.params.context.isAutoCorrection;
         this._imageSourceOld = this.params.context.imageSource;
-        this.imageSourceOldToThumbnail = this.params.context.imageSource;
+        let recPointsStrTemp = this.params.context.rectanglePoints;
 
+        this._rectanglePoints = recPointsStrTemp.split('#');
+        this._rectanglePoints.shift(); // remove first element
+        this._rectanglePoints.pop(); // remove last element
         const page = args.object;
         this._imgView = page.getViewById('imgViewId');
         this._imgGridId = page.getViewById('imgGridId');
@@ -308,14 +340,30 @@ export class DialogContent {
         this._centerPointX = (this._imgGridId.getMeasuredWidth() / 2) / scale;
         this._centerPointY = (this._imgGridId.getMeasuredHeight() / 2) / scale;
 
-        let actualPoint = { x: this._centerPointX - 75, y: this._centerPointY - 75, id: this._pointsCounter };
-        this.createCircle(actualPoint);
-        actualPoint = { x: this._centerPointX + 75, y: this._centerPointY - 75, id: this._pointsCounter };
-        this.createCircle(actualPoint);
-        actualPoint = { x: this._centerPointX - 75, y: this._centerPointY + 75, id: this._pointsCounter };
-        this.createCircle(actualPoint);
-        actualPoint = { x: this._centerPointX + 75, y: this._centerPointY + 75, id: this._pointsCounter };
-        this.createCircle(actualPoint);
+        if (this._rectanglePoints.length > 0) {
+            let pointIndex = 1;
+            this._rectanglePoints.forEach((point) => {
+                let points = point.split('%');
+                let circleRadius = 17;
+                if (pointIndex++ > 2) { // For checking botton points
+                    circleRadius = circleRadius * -1;
+                }
+                let actualPoint = { x: +points[0] * (this._imgGridId.getMeasuredWidth() / scale), y: (+points[1] * (this._imgGridId.getMeasuredHeight() / scale)) + circleRadius, id: this._pointsCounter };
+                this.createCircle(actualPoint);
+            });
+        }
+        // else {
+
+
+        //     let actualPoint = { x: this._centerPointX - 75, y: this._centerPointY - 75, id: this._pointsCounter };
+        //     this.createCircle(actualPoint);
+        //     actualPoint = { x: this._centerPointX + 75, y: this._centerPointY - 75, id: this._pointsCounter };
+        //     this.createCircle(actualPoint);
+        //     actualPoint = { x: this._centerPointX - 75, y: this._centerPointY + 75, id: this._pointsCounter };
+        //     this.createCircle(actualPoint);
+        //     actualPoint = { x: this._centerPointX + 75, y: this._centerPointY + 75, id: this._pointsCounter };
+        //     this.createCircle(actualPoint);
+        // }
     }
     /**
      * Create circles.
@@ -350,14 +398,14 @@ export class DialogContent {
                     circleBtn.translateY += -30;
                 } else {
                     if (circleBtn.translateX < 0) {
-                        circleBtn.translateX += +5;
+                        circleBtn.translateX += +10;
                     } else {
-                        circleBtn.translateX += -5;
+                        circleBtn.translateX += -10;
                     }
                     if (circleBtn.translateY < 0) {
-                        circleBtn.translateY += +5;
+                        circleBtn.translateY += +10;
                     } else {
-                        circleBtn.translateY += -5;
+                        circleBtn.translateY += -10;
                     }
                 }
             } else if (args.state === 2) {
@@ -384,10 +432,25 @@ export class DialogContent {
         // center of the image (which is (0,0)), so need to select
         // top-left, top-right & bottom-left, for which the actualPointDeltaX/actualPointDeltaY
         // are used.
-        const actualPointInScreenX = actualPoint.x + actualPointDeltaX;
-        const actualPointInScreenY = actualPoint.y + actualPointDeltaY;
-        circleBtn.translateX = actualPointInScreenX;
-        circleBtn.translateY = actualPointInScreenY;
+        circleBtn.translateX = actualPoint.x + actualPointDeltaX;
+        circleBtn.translateY = actualPoint.y + actualPointDeltaY;
+        if (circleBtn.translateX > 0 &&
+            circleBtn.translateX > this._centerPointX) {
+            circleBtn.translateX = this._centerPointX;
+        }
+        if (circleBtn.translateX < 0 &&
+            (circleBtn.translateX * -1) > this._centerPointX) {
+            circleBtn.translateX = this._centerPointX * -1;
+        }
+        if (circleBtn.translateY > 0 &&
+            circleBtn.translateY > this._centerPointY) {
+            circleBtn.translateY = this._centerPointY;
+        }
+        if (circleBtn.translateY < 0 &&
+            (circleBtn.translateY * -1) > this._centerPointY) {
+            circleBtn.translateY = this._centerPointY * -1;
+        }
+
         this._circleBtnList.push(circleBtn);
         this._points.push(actualPoint);
         return circleBtn;
@@ -398,10 +461,11 @@ export class DialogContent {
      * @param translateY 
      */
     private checkBoundary(translateX: any, translateY: any): any {
-        if (translateX < (this._centerPointX - 10) &&
-            translateY < (this._centerPointY - 10) &&
-            (translateX * -1) < (this._centerPointX - 10) &&
-            (translateY * -1) < (this._centerPointY - 10)) {
+        const pointAdjustment = 5; // Need to adjust the center point value to check the boundary
+        if (translateX < (this._centerPointX - pointAdjustment) &&
+            translateY < (this._centerPointY - pointAdjustment) &&
+            (translateX * -1) < (this._centerPointX - pointAdjustment) &&
+            (translateY * -1) < (this._centerPointY - pointAdjustment)) {
             return true;
         } else {
             return false;

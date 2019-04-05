@@ -17,40 +17,43 @@ import * as Toast from 'nativescript-toast';
 import * as application from 'tns-core-modules/application';
 import * as fs from 'file-system';
 
+/**
+ * Capture component class
+ */
 @Component({
     selector: 'ns-capture',
     moduleId: module.id,
     styleUrls: ['./capture.component.css'],
     templateUrl: './capture.component.html',
 })
-
-/**
- * Capture component class
- */
 export class CaptureComponent implements OnInit, OnDestroy {
+    /** Camera instance variable. */
     private _cam: any;
-    private _isImageBtnVisible: any;
-    private _transformedFilePath: any;
-    private _page: any;
+    /** Gallery button. */
     private _galleryBtn: any;
+    /** Take picture button. */
     private _takePicBtn: any;
+    /** Auto focus button. */
     private _autofocusBtn: any;
+    /** Paramaters used to display Gallery button. */
     private _galleryParams: any;
+    /** Paramaters used to display Take picture button. */
     private _takePicParams: any;
+    /** Paramaters used to display auto focus button. */
     private _autofocusParams: any;
-    private _isAutomaticChecked = false;
+    /** Empty string variable */
     private _empty: any = null;
-
+    
+    /** Boolean value to check the camera is visible or not. */
     public isCameraVisible: any;
+    /** Transformed Image source */
     public imageSource: ImageSource = new ImageSource();
+    /** Original Image source. */
     public imageSourceOrg: any;
+    /** Transformed Image URI */
     public imgURI: any;
-    public wrappedImage: any;
-    public fileName: any;
+    /** OpenCV instance variable. */
     public opencvInstance: any;
-    public imgEmpty: any;
-    public isBusy: any;
-    public screenHeight: any;
 
     /**
      * Constructor for CaptureComponent.
@@ -76,12 +79,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         console.log('Initializing OpenCV...');
         this.opencvInstance = opencv.initOpenCV();
-
         this.isCameraVisible = true;
-        this._isImageBtnVisible = false;
-        this.isBusy = false;
-        this._isAutomaticChecked = true;
-
+        // this._isImageBtnVisible = false;
         this.createTakePictureButton();
         this.createImageGalleryButton();
         this.createAutoFocusImage();
@@ -100,7 +99,6 @@ export class CaptureComponent implements OnInit, OnDestroy {
      */
     camLoaded(args: any): void {
         console.log('***** _cam loaded *****');
-        this.isBusy = false;
         this._cam = args.object as CameraPlus;
 
         const flashMode = this._cam.getFlashMode();
@@ -359,7 +357,6 @@ export class CaptureComponent implements OnInit, OnDestroy {
      * @param thisParam 
      */
     takePicFromCam(thisParam: any): void {
-        thisParam.isBusy = true;
         thisParam.activityLoader.show();
         thisParam._cam.takePicture({ saveToGallery: true });
         this.imgURI = '';
@@ -377,12 +374,13 @@ export class CaptureComponent implements OnInit, OnDestroy {
      * @param filePathOrg 
      * @param imgURI 
      */
-    showCapturedPictureDialog(fullScreen: boolean, filePathOrg: string, imgURI: string) {
+    showCapturedPictureDialog(fullScreen: boolean, filePathOrg: string, imgURI: string, recPointsStr) {
         const options: ModalDialogOptions = {
             context: {
                 imageSource: imgURI,
                 imageSourceOrg: filePathOrg,
                 isAutoCorrection: true,
+                rectanglePoints: recPointsStr,
             },
             fullscreen: fullScreen,
             viewContainerRef: this.viewContainerRef,
@@ -411,6 +409,15 @@ export class CaptureComponent implements OnInit, OnDestroy {
                         if (imgURIFile) {
                             imgURIFile.remove();
                         }
+                        // Todo : to be removed later
+                        const imgUriContourPath = imgURI.substring(0, imgURI.indexOf('_transformed')) + '_contour.jpg';
+                        const imgURIContourFile: fs.File = fs.File.fromPath(imgUriContourPath);
+                        if (imgURIContourFile) {
+                            imgURIContourFile.remove();
+                            SendBroadcastImage(imgUriContourPath);
+                        }
+                        // Todo - End
+
                         this.refreshCapturedImagesinMediaStore(filePathOrg, imgURI, 'Remove');
                     } catch (e) {
                         alert('Couldnot delete the file');
@@ -425,7 +432,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     setTransformedImage(imgURIParam: any) {
         if (imgURIParam) {
             try {
-                this._isImageBtnVisible = true;
+                // this._isImageBtnVisible = true;
                 this.imgURI = imgURIParam;
                 this.imageSource = imgURIParam;
                 SendBroadcastImage(this.imgURI);
@@ -439,7 +446,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
      * @param args 
      */
     onPageLoaded(args: any) {
-        this._page = args.object as Page;
+        // this._page = args.object as Page;
     }
     /**
      * Create take picture params.
@@ -522,34 +529,36 @@ export class CaptureComponent implements OnInit, OnDestroy {
             console.log('Error while creating thumbnail image. ' + e);
         }
     }
-    /**
-     * Perform adaptive threshold.
-     * @param thresholdValue 
-     * @param sargs 
-     */
-    private performAdaptiveThreshold(thresholdValue: any, sargs: any): void {
-        this.zone.run(() => {
-            this.imgEmpty = this.imgURI + '?ts=' + new Date().getTime();
-            this.imageSource = this.imgEmpty;
-        });
-        this.zone.run(() => {
-            this.imgURI = opencv.performAdaptiveThreshold(this.wrappedImage, this.fileName, thresholdValue);
-            this._isImageBtnVisible = true;
-            this.imageSource = this.imgURI;
-        });
-    }
+
+    // /**
+    //  * Perform adaptive threshold.
+    //  * @param thresholdValue 
+    //  * @param sargs 
+    //  */
+    // private performAdaptiveThreshold(thresholdValue: any, sargs: any): void {
+    //     this.zone.run(() => {
+    //         this.imgEmpty = this.imgURI + '?ts=' + new Date().getTime();
+    //         this.imageSource = this.imgEmpty;
+    //     });
+    //     this.zone.run(() => {
+    //         this.imgURI = opencv.performAdaptiveThreshold(this.wrappedImage, this.fileName, thresholdValue);
+    //         // this._isImageBtnVisible = true;
+    //         this.imageSource = this.imgURI;
+    //     });
+    // }
+
     /**
      * Perform perspective transformation.
      * @param filePath 
      */
     private performPerspectiveTransformation(filePath: any): void {
         try {
-            this.imgURI = opencv.performPerspectiveTransformation(filePath, '');
-            this.isBusy = false;
-            this.showCapturedPictureDialog(true, filePath, this.imgURI);
+            const imgURITemp = opencv.performPerspectiveTransformation(filePath, '');
+            this.imgURI = imgURITemp.substring(0, imgURITemp.indexOf('RPTSTR'));
+            const rectanglePointsStr = imgURITemp.substring(imgURITemp.indexOf('RPTSTR'));
+            this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
         } catch (err) {
             console.log(err);
-            this.isBusy = false;
             this.activityLoader.hide();
             alert('Error while performing perspective transformation process. Please retake picture');
         }
