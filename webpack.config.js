@@ -146,6 +146,17 @@ module.exports = env => {
             ],
         },
         module: {
+             loaders: [
+            // ...
+            {
+                test: /\.ts$/,
+                include: [
+                    path.resolve(__dirname, "/Users/chinna/MAAS/NS/BSApp")
+                ],
+                loader: 'eslint',
+                exclude: /node_modules/
+            },
+            1],
             rules: [
                 {
                     test: new RegExp(entryPath),
