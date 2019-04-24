@@ -65,7 +65,7 @@
         <h3>Description</h3>
     </p>
     <p class="comment">
-        <p>This is the application component layout 
+        <p>This is the application component layout
 where all other component(s) will be used.</p>
 
     </p>
@@ -127,16 +127,16 @@ where all other component(s) will be used.</p>
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { CameraPlus } from &#x27;@nstudio/nativescript-camera-plus&#x27;;
 import { registerElement } from &#x27;nativescript-angular/element-registry&#x27;;
-registerElement(&#x27;CameraPlus&#x27;, () &#x3D;&gt; &lt;any&gt;CameraPlus);
+registerElement(&#x27;CameraPlus&#x27;, () &#x3D;&gt; CameraPlus as any);
 registerElement(&#x27;CheckBox&#x27;, () &#x3D;&gt; require(&#x27;nativescript-checkbox&#x27;).CheckBox);
 registerElement(&#x27;ImageZoom&#x27;, () &#x3D;&gt; require(&#x27;nativescript-image-zoom&#x27;).ImageZoom);
 /**
- * This is the application component layout 
+ * This is the application component layout
  * where all other component(s) will be used.
  */
 @Component({
   selector: &#x27;ns-app&#x27;,
-  templateUrl: &#x27;app.component.html&#x27;
+  templateUrl: &#x27;app.component.html&#x27;,
 })
 export class AppComponent { }
 </code></pre>

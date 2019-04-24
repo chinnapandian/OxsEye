@@ -1,20 +1,23 @@
-import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { File, Folder } from 'tns-core-modules/file-system';
-import { RouterExtensions } from 'nativescript-angular/router';
+import {Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular/modal-dialog';
-import { DialogContent } from '../dialog/dialog.component';
-import { ImageSource } from 'tns-core-modules/image-source';
+
+import { File, Folder } from 'tns-core-modules/file-system';
 import { Page } from 'tns-core-modules/ui/page';
+
+import { RouterExtensions } from 'nativescript-angular/router';
+
 import { CheckBox } from 'nativescript-checkbox';
-import { TransformedImage } from '../providers/transformedimage.common';
+
 import { ActivityLoader } from '../activityloader/activityloader.common';
+import { TransformedImage } from '../providers/transformedimage.common';
+
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
+
 import * as application from 'tns-core-modules/application';
 import * as dialogs from 'tns-core-modules/ui/dialogs';
+
 import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
-
 
 /**
  * ImageGalleryComponent class.
@@ -37,48 +40,43 @@ export class ImageGalleryComponent implements OnInit {
     /** Boolean value to make the checkbox visible or not. */
     public isCheckBoxVisible: boolean;
     /** Indicates checkbox selected count. */
-    private _selectedCount: number;
+    private selectedCount: number;
     /** Boolean value to make the Select/UnselectAll menu visible or not */
-    private _isSelectUnselectAll: boolean;
+    private isSelectUnselectAll: boolean;
     /** Stores orderBy value 'Asc'/'Desc' */
-    private _orderByAscDesc: string;
+    private orderByAscDesc: string;
     /** Stores page referrence. */
-    private _page;
+    private page;
 
     /**
      * Constructor for ImageGalleryComponent
-     * @param routerExtensions 
-     * @param modalService 
-     * @param viewContainerRef 
-     * @param _changeDetectionRef 
-     * @param router 
-     * @param transformedImageProvider 
-     * @param activityLoader 
+     * @param routerExtensions Router extension instance
+     * @param router Router instance
+     * @param transformedImageProvider Transformed image provider instance
+     * @param activityLoader Activity loader instance
      */
     constructor(
         private routerExtensions: RouterExtensions,
-        private modalService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef,
-        private _changeDetectionRef: ChangeDetectorRef,
         private router: Router,
         private transformedImageProvider: TransformedImageProvider,
         private activityLoader: ActivityLoader) {
     }
+
     /**
-   * Angular initialize method.
-   */
+     * Angular initialize method.
+     */
     ngOnInit(): void {
         this.activityLoader.show();
         this.isCheckBoxVisible = false;
-        this._selectedCount = 0;
+        this.selectedCount = 0;
         this.isDeleting = false;
         this.isSharing = false;
         this.isPopUpMenu = false;
         this.isSortByDateMenu = true;
-        this._isSelectUnselectAll = true;
+        this.isSelectUnselectAll = true;
         // this.loadThumbnailImages();
-        this._orderByAscDesc = ' DESC';
-        this.loadThumbnailImagesByContentResolver(this._orderByAscDesc);
+        this.orderByAscDesc = ' DESC';
+        this.loadThumbnailImagesByContentResolver(this.orderByAscDesc);
     }
     /**
      * Get image list.
@@ -96,12 +94,12 @@ export class ImageGalleryComponent implements OnInit {
     }
     /**
      * On page loaded
-     * @param args 
+     * @param args Page loaded event data
      */
     onPageLoaded(args) {
-        this._page = (args !== this._page) ? args.object as Page : args;
-        const selectedCountTemp = this._selectedCount;
-        this._selectedCount = 0;
+        this.page = (args !== this.page) ? args.object as Page : args;
+        const selectedCountTemp = this.selectedCount;
+        this.selectedCount = 0;
         this.isDeleting = false;
         this.isSharing = false;
         this.isPopUpMenu = (this.imageList.length > 0) ? this.isPopUpMenu : false;
@@ -110,7 +108,7 @@ export class ImageGalleryComponent implements OnInit {
             if (this.imageList[image].isSelected) {
                 this.isDeleting = true;
                 this.isSharing = true;
-                this._selectedCount = selectedCountTemp;
+                this.selectedCount = selectedCountTemp;
                 break;
             }
         }
@@ -120,17 +118,18 @@ export class ImageGalleryComponent implements OnInit {
      */
     goBack() {
         for (const image in this.imageList) {
-            this.imageList[image].isSelected = false;
+            if (this.imageList[image].isSelected) {
+                this.imageList[image].isSelected = false;
+            }
         }
         this.routerExtensions.back();
     }
     /**
      * Go to Image slide page
-     * @param imgURIParam 
-     * @param imgIndexParam 
-     * @param args 
+     * @param imgURIParam Transformed image file URI
+     * @param imgIndexParam  image index
      */
-    goImageSlide(imgURIParam, imgIndexParam, args) {
+    goImageSlide(imgURIParam, imgIndexParam) {
         const navigationExtras: NavigationExtras = {
             queryParams: {
                 imgURI: imgURIParam,
@@ -141,17 +140,17 @@ export class ImageGalleryComponent implements OnInit {
     }
     /**
      * Is checkBox checked or not.
-     * @param event 
-     * @param imagePath 
-     * @param index 
+     * @param event Checkbox event data
+     * @param imagePath transformed image file path
+     * @param index image index in the list
      */
     isChecked(event, imagePath, index) {
         if (event.value) {
-            this._selectedCount++;
+            this.selectedCount++;
         } else {
-            this._selectedCount--;
+            this.selectedCount--;
         }
-        if (this._selectedCount > 0) {
+        if (this.selectedCount > 0) {
             this.isDeleting = true;
             this.isSharing = true;
         } else {
@@ -164,30 +163,30 @@ export class ImageGalleryComponent implements OnInit {
      * Select/Unselect all checkbox
      */
     onSelectUnSelectAllCheckBox() {
-        if (this._selectedCount !== this.imageList.length && this._selectedCount > 0) {
+        if (this.selectedCount !== this.imageList.length && this.selectedCount > 0) {
             dialogs.action({
                 message: 'Patially selected. Do you want to perform one of the below?',
                 cancelButtonText: 'Cancel',
                 actions: ['Select All', 'Unselect All'],
             }).then((result) => {
                 if (result === 'Select All') {
-                    this._isSelectUnselectAll = true;
-                    this.performSelectUnselectAll(this._isSelectUnselectAll);
+                    this.isSelectUnselectAll = true;
+                    this.performSelectUnselectAll(this.isSelectUnselectAll);
                 } else if (result === 'Unselect All') {
-                    this._isSelectUnselectAll = false;
-                    this.performSelectUnselectAll(this._isSelectUnselectAll);
+                    this.isSelectUnselectAll = false;
+                    this.performSelectUnselectAll(this.isSelectUnselectAll);
                 }
             });
         } else {
-            this._isSelectUnselectAll = (this._selectedCount === this.imageList.length) ? false : true;
-            this.performSelectUnselectAll(this._isSelectUnselectAll);
+            this.isSelectUnselectAll = (this.selectedCount === this.imageList.length) ? false : true;
+            this.performSelectUnselectAll(this.isSelectUnselectAll);
         }
     }
     /**
      * Sort images by date.
      */
     onSortByDate() {
-        this._selectedCount = 0;
+        this.selectedCount = 0;
         this.isDeleting = false;
         this.isSharing = false;
         const clonedImageList = Object.assign([], this.imageList);
@@ -241,7 +240,8 @@ export class ImageGalleryComponent implements OnInit {
                         intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         intent.addFlags(android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                         intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-                        application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, 'Share images...'));
+                        application.android.foregroundActivity.startActivity(
+                            android.content.Intent.createChooser(intent, 'Share images...'));
                     }
                 } catch (e) {
                     Toast.makeText('Error while sharing images.' + e).show();
@@ -256,7 +256,7 @@ export class ImageGalleryComponent implements OnInit {
      * Delete selected image(s)
      */
     onDelete() {
-        if (this._selectedCount > 0) {
+        if (this.selectedCount > 0) {
             dialogs.confirm({
                 title: 'Delete',
                 message: 'Deleting selected item(s)?',
@@ -264,7 +264,7 @@ export class ImageGalleryComponent implements OnInit {
                 cancelButtonText: 'Cancel',
             }).then((result) => {
                 if (result) {
-                    this._selectedCount = 0;
+                    this.selectedCount = 0;
                     this.isDeleting = false;
                     this.isSharing = false;
                     this.imageList.forEach((image) => {
@@ -280,7 +280,7 @@ export class ImageGalleryComponent implements OnInit {
                                             if (imgIdx >= 0) {
                                                 this.imageList.splice(imgIdx, 1);
                                             }
-                                            this.onPageLoaded(this._page);
+                                            this.onPageLoaded(this.page);
                                         }).catch((err) => {
                                             Toast.makeText('Error while deleting thumbnail images').show();
                                             console.log(err.stack);
@@ -300,18 +300,18 @@ export class ImageGalleryComponent implements OnInit {
     }
     /**
      * Perform select/unselect all checkbox.
-     * @param value 
+     * @param value Checkbox value
      */
     private performSelectUnselectAll(value: any) {
         for (let i = 0; i < this.imageList.length; i++) {
-            const checkBox = this._page.getViewById('checkbox-' + i) as CheckBox;
+            const checkBox = this.page.getViewById('checkbox-' + i) as CheckBox;
             checkBox.checked = value;
         }
-        this._isSelectUnselectAll = !value;
+        this.isSelectUnselectAll = !value;
     }
     // /**
     //  * Get original image
-    //  * @param transformedImage 
+    //  * @param transformedImage
     //  */
     // private getOriginalImage(transformedImage: string): any {
     //     const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM/CAMERA', '.');
@@ -319,40 +319,45 @@ export class ImageGalleryComponent implements OnInit {
     //     let imgFileNameOrg = transformedImage.replace('PT_IMG', 'IMG');
     //     imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
     //     const newFile = new java.io.File(imagePath, imgFileNameOrg);
-    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
-    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(
+    //     // application.android.context, 'oxs.eye.fileprovider', newFile);
+    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider',
+    //     // uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     //     // return uri;
     //     return this.transformedImageProvider.getURIForFile(newFile);
     // }
     // /**
     //  * Get original image
-    //  * @param transformedImage 
+    //  * @param transformedImage
     //  */
     // private getOriginalImageWithRectangle(transformedImage: string): any {
     //     const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
 
     //     let imgFileNameOrg = transformedImage.substring(0, transformedImage.indexOf('_transformed')) + '_contour.jpg';
     //     const newFile = new java.io.File(imagePath, imgFileNameOrg);
-    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
-    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(
+    //    // application.android.context, 'oxs.eye.fileprovider', newFile);
+    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider',
+    //     // uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     //     // return uri;
     //     return this.transformedImageProvider.getURIForFile(newFile);
     // }
 
     // /**
     //  * Get URI for file.
-    //  * @param newFile 
+    //  * @param newFile
     //  * @returns URI
     //  */
     // private getURIForFile(newFile: any): any {
     //     const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
-    //     application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     application.android.context.grantUriPermission('oxs.eye.fileprovider',
+    //     uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     //     return uri;
     // }
 
     /**
      * Load thumbnail images by content resolver.
-     * @param orderByAscDescParam 
+     * @param orderByAscDescParam OrderBy value 'Asc'/'Desc'
      */
     private loadThumbnailImagesByContentResolver(orderByAscDescParam: string) {
         this.transformedImageProvider.loadThumbnailImagesByContentResolver(orderByAscDescParam, this.activityLoader);

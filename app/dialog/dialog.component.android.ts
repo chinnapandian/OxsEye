@@ -1,23 +1,23 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
-import { View } from 'ui/core/view';
-import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'ui/gestures';
-import { TransformedImage } from '../providers/transformedimage.common';
-import { ActivityLoader } from '../activityloader/activityloader.common';
-import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
-import { Page } from 'tns-core-modules/ui/page';
+import * as application from 'tns-core-modules/application';
 import { File, path } from 'tns-core-modules/file-system';
 import { setTimeout } from 'tns-core-modules/timer';
-import { Image } from 'ui/image';
-import * as opencv from 'nativescript-opencv-plugin';
+import { View } from 'tns-core-modules/ui/core/view';
+import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'tns-core-modules/ui/gestures';
+import { Page } from 'tns-core-modules/ui/page';
+
+import { ActivityLoader } from '../activityloader/activityloader.common';
+import { TransformedImage } from '../providers/transformedimage.common';
+import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
+
+import * as orientation from 'nativescript-orientation';
 import * as Toast from 'nativescript-toast';
 import * as platform from 'platform';
-import * as application from 'tns-core-modules/application';
-import * as Permissions from 'nativescript-permissions';
-import * as orientation from 'nativescript-orientation';
-import * as buttons from 'ui/button';
 import * as formattedStringModule from 'text/formatted-string';
+import * as buttons from 'ui/button';
 
+import * as opencv from 'nativescript-opencv-plugin';
 /**
  * Dialog content class.
  */
@@ -37,47 +37,49 @@ export class DialogContent {
     /** Contains button label name either 'Manual'/ 'Perform' */
     public manualBtnText: string;
     /** Contains list of four points of the images. */
-    private _points: any;
+    private points: any;
     /** Indicates the number of points. */
-    private _pointsCounter: number;
+    private pointsCounter: number;
     /** Stores previous original Image source. */
-    private _imageSourceOrgOld: any;
+    private imageSourceOrgOld: any;
     /** Stores previous transformed image source. */
-    private _imageSourceOld: any;
+    private imageSourceOld: any;
     /** Contains transformed image actual size. */
-    private _imageActualSize: any;
+    private imageActualSize: any;
     /** List of circle buttons */
-    private _circleBtnList: any;
+    private circleBtnList: any;
     /** Stores transformed image referrence. */
-    private _imgView: any;
+    private imgView: any;
     /** Image grid id. */
-    private _imgGridId: any;
+    private imgGridId: any;
     /** Transformed Image previous deltaX. */
-    private _prevDeltaX: number;
+    private prevDeltaX: number;
     /** Transformed Image previous deltaY. */
-    private _prevDeltaY: number;
+    private prevDeltaY: number;
     /** Transformed Image starting scale. */
-    private _startScale = 1;
+    private startScale = 1;
     /** Transformed Image center pointX. */
-    private _centerPointX: any;
+    private centerPointX: any;
     /** Transformed Image center pointY. */
-    private _centerPointY: any;
+    private centerPointY: any;
     /** Transformed Image new scale while moving around. */
-    private _newScale = 1;
+    private newScale = 1;
     /** Stores old TranslateX value of transformed Image. */
-    private _oldTranslateX = 0;
+    private oldTranslateX = 0;
     /** Stores old translateY value of transformed Image. */
-    private _oldTranslateY = 0;
+    private oldTranslateY = 0;
     /** Boolean value to indicate whether the image got default screen location or not. */
-    private _isGotDefaultLocation = false;
+    private isGotDefaultLocation = false;
     /** Stores transformed image's screen location. */
-    private _defaultScreenLocation: any;
+    private defaultScreenLocation: any;
     /** Stores rectangle points to be used in the OpenCV API call. */
-    private _rectanglePoints: any;
+    private rectanglePoints: any;
+    /** To get accurate position, need to adjust the radius value */
+    private circleRadius = 17;
     // private _dragImageItem: Image;
     // @ViewChild('imgViewId') _dragImage: ElementRef;
 
-    // private _points = new ObservableArray();
+    // private points = new ObservableArray();
 
     /**
      * Constructor for DialogContent class.
@@ -85,68 +87,65 @@ export class DialogContent {
      * @param transformedImageProvider transformed image provider instance
      */
     constructor(private params: ModalDialogParams,
-        private transformedImageProvider: TransformedImageProvider) {
+                private transformedImageProvider: TransformedImageProvider) {
         this.manualBtnText = 'Manual';
-        this._points = [];
-        this._pointsCounter = 0;
-        this._circleBtnList = [];
+        this.points = [];
+        this.pointsCounter = 0;
+        this.circleBtnList = [];
         // this._dragImageItem = <Image>this._dragImage.nativeElement;
     }
     /**
      * Close
-     * @param result 
+     * @param result Which is nothing but empty string or transformed image URI string
      */
     close(result: string) {
         orientation.enableRotation();
         this.params.closeCallback(result);
     }
-    /**
-     * Perform manual correction.
-     * @param btnText 
-     */
-    performManualCorrection(btnText: string) {
+
+    performManualCorrection() {
         let pointsCount = 0;
-        this._points.forEach((point: any) => {
+        this.points.forEach((point: any) => {
             if (point) {
                 pointsCount++;
             }
         });
 
-        //To get accurate position, need to adjust the radius value;
-        let circleRadius = 17;
-        // this._points[0].y = +this._points[0].y - circleRadius;
-        // this._points[1].y = +this._points[1].y - circleRadius;
-        // this._points[2].y = +this._points[2].y + circleRadius;
-        // this._points[3].y = +this._points[3].y + circleRadius;
+        // To get accurate position, need to adjust the radius value;
+        // const circleRadius = 17;
+        // this.points[0].y = +this.points[0].y - circleRadius;
+        // this.points[1].y = +this.points[1].y - circleRadius;
+        // this.points[2].y = +this.points[2].y + circleRadius;
+        // this.points[3].y = +this.points[3].y + circleRadius;
 
         if (pointsCount !== 4) {
-            alert('Please select only four _points.');
+            alert('Please select only four points.');
         } else {
-            const rectanglePoints = this._points[0].x + '-' + (+this._points[0].y - circleRadius) + '#'
-                + this._points[1].x + '-' + (+this._points[1].y - circleRadius) + '#'
-                + this._points[2].x + '-' + (+this._points[2].y + circleRadius) + '#'
-                + this._points[3].x + '-' + (+this._points[3].y + circleRadius);
+            const rectanglePoints = this.points[0].x + '-' + (+this.points[0].y - this.circleRadius) + '#'
+                + this.points[1].x + '-' + (+this.points[1].y - this.circleRadius) + '#'
+                + this.points[2].x + '-' + (+this.points[2].y + this.circleRadius) + '#'
+                + this.points[3].x + '-' + (+this.points[3].y + this.circleRadius);
             console.log(rectanglePoints);
             console.log(this.imageSourceOrg);
-            console.log(this._imageActualSize.width + '-' + this._imageActualSize.height);
-            this._imageSourceOld = this.imageSource;
+            console.log(this.imageActualSize.width + '-' + this.imageActualSize.height);
+            this.imageSourceOld = this.imageSource;
             this.imageSource = opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
-                this._imageActualSize.width + '-' + this._imageActualSize.height);
+                this.imageActualSize.width + '-' + this.imageActualSize.height);
             SendBroadcastImage(this.imageSource);
             setTimeout(() => {
-                this.transformedImageProvider.deleteFile(this._imageSourceOld);
+                this.transformedImageProvider.deleteFile(this.imageSourceOld);
             }, 1000);
-            this.imageSourceOrg = this._imageSourceOrgOld;
+            this.imageSourceOrg = this.imageSourceOrgOld;
             this.isAutoCorrection = true;
             this.manualBtnText = 'Manual';
             this.removeCircles();
-            // this._pointsCounter = 0;
+            // this.pointsCounter = 0;
             this.transformedImageProvider.DeleteFiles();
         }
     }
     /**
      * Gets rectangle points.
-     * @param event 
+     * @param event Gesture event data
      */
     getPoints(event: GestureEventData) {
         try {
@@ -154,16 +153,16 @@ export class DialogContent {
                 // This is the density of your screen, so we can divide the measured width/height by it.
                 const scale: number = platform.screen.mainScreen.scale;
 
-                this._imageActualSize = this._imgView.getActualSize();
+                this.imageActualSize = this.imgView.getActualSize();
                 const pointX = event.android.getX() / scale;
                 const pointY = event.android.getY() / scale;
 
-                const actualPoint = { x: pointX, y: pointY, id: this._pointsCounter };
+                const actualPoint = { x: pointX, y: pointY, id: this.pointsCounter };
 
-                if (this._points.length >= 4) {
-                    Toast.makeText('Please select only four _points.', 'long').show();
+                if (this.points.length >= 4) {
+                    Toast.makeText('Please select only four points.', 'long').show();
                 } else {
-                    this._imgGridId.addChild(this.createCircle(actualPoint));
+                    this.imgGridId.addChild(this.createCircle(actualPoint));
                 }
             }
         } catch (e) {
@@ -175,111 +174,108 @@ export class DialogContent {
      */
     showOriginalImage() {
 
-        this.onDoubleTap(null);
-        if (this._circleBtnList.length === 0) {
+        this.onDoubleTap();
+        if (this.circleBtnList.length === 0) {
             this.initPoints();
             Toast.makeText('Please move around the four red circle(s) on image if needed and click "Perform" button.', 'long').show();
         }
         this.isAutoCorrection = false;
         this.manualBtnText = 'Perform';
-        this._pointsCounter = 0;
+        this.pointsCounter = 0;
         this.addCircles();
     }
     /**
      * On event pinch
-     * @param args 
+     * @param args PinchGesture event data
      */
     onPinch(args: PinchGestureEventData) {
         if (args.state === 1) {
-            // let newOriginX = args.getFocusX() - this._imgView.translateX;
-            // let newOriginY = args.getFocusY() - this._imgView.translateY;
+            // let newOriginX = args.getFocusX() - this.imgView.translateX;
+            // let newOriginY = args.getFocusY() - this.imgView.translateY;
 
-            // let oldOriginX = this._imgView.originX * this._imgView.getMeasuredWidth();
-            // let oldOriginY = this._imgView.originY * this._imgView.getMeasuredHeight();
-            this._startScale = this._imgView.scaleX;
+            // let oldOriginX = this.imgView.originX * this.imgView.getMeasuredWidth();
+            // let oldOriginY = this.imgView.originY * this.imgView.getMeasuredHeight();
+            this.startScale = this.imgView.scaleX;
         } else if (args.scale && args.scale !== 1) {
-            this._newScale = this._startScale * args.scale;
-            this._newScale = Math.min(8, this._newScale);
-            this._newScale = Math.max(0.125, this._newScale);
+            this.newScale = this.startScale * args.scale;
+            this.newScale = Math.min(8, this.newScale);
+            this.newScale = Math.max(0.125, this.newScale);
 
-            this._imgView.scaleX = this._newScale;
-            this._imgView.scaleY = this._newScale;
-            this._imgView.width = this._imgView.getMeasuredWidth() * this._newScale;
-            this._imgView.height = this._imgView.getMeasuredHeight() * this._newScale;
+            this.imgView.scaleX = this.newScale;
+            this.imgView.scaleY = this.newScale;
+            this.imgView.width = this.imgView.getMeasuredWidth() * this.newScale;
+            this.imgView.height = this.imgView.getMeasuredHeight() * this.newScale;
         }
     }
     /**
      * On event pan/move
-     * @param args 
+     * @param args PanGesture event data
      */
     onPan(args: PanGestureEventData) {
-        const screenLocation = this._imgView.getLocationOnScreen();
+        const screenLocation = this.imgView.getLocationOnScreen();
         if (this.manualBtnText !== 'Perform') {
-            let centerPointX = (this._imgView.getMeasuredWidth() / 4) * (this._newScale);
-            let centerPointY = (this._imgView.getMeasuredHeight() / 4) * (this._newScale);
-            const imageViewWidth = this._imgView.getMeasuredWidth() * this._imgView.originX;
-            const imageViewHeight = this._imgView.getMeasuredHeight() * this._imgView.originY;
+            let centerPointX = (this.imgView.getMeasuredWidth() / 4) * (this.newScale);
+            let centerPointY = (this.imgView.getMeasuredHeight() / 4) * (this.newScale);
+            const imageViewWidth = this.imgView.getMeasuredWidth() * this.imgView.originX;
+            const imageViewHeight = this.imgView.getMeasuredHeight() * this.imgView.originY;
 
             if (args.state === 1) {
-                this._prevDeltaX = 0;
-                this._prevDeltaY = 0;
+                this.prevDeltaX = 0;
+                this.prevDeltaY = 0;
             } else if (args.state === 2) {
                 centerPointX = (centerPointX * 2);
                 centerPointY = (centerPointY * 2);
 
-                // let screenLocation = this._imgView.getLocationOnScreen();
-                if (!this._isGotDefaultLocation) {
-                    this._defaultScreenLocation = screenLocation;
-                    this._isGotDefaultLocation = true;
+                // let screenLocation = this.imgView.getLocationOnScreen();
+                if (!this.isGotDefaultLocation) {
+                    this.defaultScreenLocation = screenLocation;
+                    this.isGotDefaultLocation = true;
                 }
-                if (this._newScale > 1) {
-                    if ((screenLocation.x - this._defaultScreenLocation.x) <= 0
-                        && (centerPointX - imageViewWidth) > Math.abs(screenLocation.x - this._defaultScreenLocation.x)
+                if (this.newScale > 1) {
+                    if ((screenLocation.x - this.defaultScreenLocation.x) <= 0
+                        && (centerPointX - imageViewWidth) > Math.abs(screenLocation.x - this.defaultScreenLocation.x)
                     ) {
-                        this._imgView.translateX += args.deltaX - this._prevDeltaX;
-                        this._oldTranslateX = this._imgView.translateX;
+                        this.imgView.translateX += args.deltaX - this.prevDeltaX;
+                        this.oldTranslateX = this.imgView.translateX;
                     } else {
-                        if (this._oldTranslateX > 0) {
-                            this._oldTranslateX--;
+                        if (this.oldTranslateX > 0) {
+                            this.oldTranslateX--;
                         } else {
-                            this._oldTranslateX++;
+                            this.oldTranslateX++;
                         }
-                        this._imgView.translateX = this._oldTranslateX;
+                        this.imgView.translateX = this.oldTranslateX;
                     }
-                    if ((screenLocation.y - this._defaultScreenLocation.y) <= 0
-                        && (centerPointY - imageViewHeight) > Math.abs(screenLocation.y - this._defaultScreenLocation.y)
+                    if ((screenLocation.y - this.defaultScreenLocation.y) <= 0
+                        && (centerPointY - imageViewHeight) > Math.abs(screenLocation.y - this.defaultScreenLocation.y)
                     ) {
-                        this._imgView.translateY += args.deltaY - this._prevDeltaY;
-                        this._oldTranslateY = this._imgView.translateY;
+                        this.imgView.translateY += args.deltaY - this.prevDeltaY;
+                        this.oldTranslateY = this.imgView.translateY;
                     } else {
-                        if (this._oldTranslateY > 0) {
-                            this._oldTranslateY--;
+                        if (this.oldTranslateY > 0) {
+                            this.oldTranslateY--;
                         } else {
-                            this._oldTranslateY++;
+                            this.oldTranslateY++;
                         }
-                        this._imgView.translateY = this._oldTranslateY;
+                        this.imgView.translateY = this.oldTranslateY;
                     }
                 }
-                this._prevDeltaX = args.deltaX;
-                this._prevDeltaY = args.deltaY;
+                this.prevDeltaX = args.deltaX;
+                this.prevDeltaY = args.deltaY;
             }
         }
     }
-    /**
-     * On event double tap.
-     * @param args 
-     */
-    onDoubleTap(args: any) {
+
+    onDoubleTap() {
         if (this.manualBtnText !== 'Perform') {
-            this._imgView.animate({
+            this.imgView.animate({
                 translate: { x: 0, y: 0 },
                 scale: { x: 1, y: 1 },
                 curve: 'easeOut',
                 duration: 10,
             });
-            this._newScale = 1;
-            this._oldTranslateY = 0;
-            this._oldTranslateX = 0;
+            this.newScale = 1;
+            this.oldTranslateY = 0;
+            this.oldTranslateX = 0;
         } else {
             // this.initPoints();
             this.removeCircles();
@@ -288,94 +284,134 @@ export class DialogContent {
     }
     /**
      * On event page loaded.
-     * @param args 
+     * @param args Page loaded event data
      */
     pageLoaded(args: { object: any; }) {
         this.imageSource = this.params.context.imageSource;
         this.imageSourceOrg = this.params.context.imageSourceOrg;
-        this._imageSourceOrgOld = this.params.context.imageSourceOrg;
+        this.imageSourceOrgOld = this.params.context.imageSourceOrg;
         this.isAutoCorrection = this.params.context.isAutoCorrection;
-        this._imageSourceOld = this.params.context.imageSource;
-        let recPointsStrTemp = this.params.context.rectanglePoints;
+        this.imageSourceOld = this.params.context.imageSource;
+        const recPointsStrTemp = this.params.context.rectanglePoints;
 
-        this._rectanglePoints = recPointsStrTemp.split('#');
-        this._rectanglePoints.shift(); // remove first element
-        this._rectanglePoints.pop(); // remove last element
+        this.rectanglePoints = recPointsStrTemp.split('#');
+        this.rectanglePoints.shift(); // remove first element
+        this.rectanglePoints.pop(); // remove last element
         const page = args.object;
-        this._imgView = page.getViewById('imgViewId');
-        this._imgGridId = page.getViewById('imgGridId');
-        this._imgView.translateX = 0;
-        this._imgView.translateY = 0;
-        this._imgView.scaleX = 1;
-        this._imgView.scaleY = 1;
+        this.imgView = page.getViewById('imgViewId');
+        this.imgGridId = page.getViewById('imgGridId');
+        this.imgView.translateX = 0;
+        this.imgView.translateY = 0;
+        this.imgView.scaleX = 1;
+        this.imgView.scaleY = 1;
         orientation.setOrientation('portrait');
     }
     /**
      * Add circles.
      */
     private addCircles() {
-        this._circleBtnList.forEach((btn: any) => {
-            this._imgGridId.addChild(btn);
+        this.circleBtnList.forEach((btn: any) => {
+            this.imgGridId.addChild(btn);
         });
     }
     /**
      * Remove circles.
      */
     private removeCircles() {
-        const imgElement = this._imgGridId.getChildAt(0);
-        this._imgGridId.removeChildren();
-        this._imgGridId.addChild(imgElement);
+        const imgElement = this.imgGridId.getChildAt(0);
+        this.imgGridId.removeChildren();
+        this.imgGridId.addChild(imgElement);
     }
     /**
      * Initialize points
      */
     private initPoints() {
-        this._points = [];
-        this._pointsCounter = 0;
-        this._circleBtnList = [];
+        this.points = [];
+        this.pointsCounter = 0;
+        this.circleBtnList = [];
         // This is the density of your screen, so we can divide the measured width/height by it.
         const scale: number = platform.screen.mainScreen.scale;
 
-        this._imageActualSize = this._imgView.getActualSize();
-        this._centerPointX = (this._imgGridId.getMeasuredWidth() / 2) / scale;
-        this._centerPointY = (this._imgGridId.getMeasuredHeight() / 2) / scale;
+        this.imageActualSize = this.imgView.getActualSize();
+        this.centerPointX = (this.imgGridId.getMeasuredWidth() / 2) / scale;
+        this.centerPointY = (this.imgGridId.getMeasuredHeight() / 2) / scale;
 
-        if (this._rectanglePoints.length > 0) {
+        let actualPoint = {};
+        if (this.rectanglePoints.length > 0) {
             let pointIndex = 1;
-            this._rectanglePoints.forEach((point) => {
-                let points = point.split('%');
-                let circleRadius = 17;
+            console.log('this.rectanglePoints: ' + JSON.stringify(this.rectanglePoints));
+            this.rectanglePoints.forEach((point) => {
+                const points = point.split('%');
+                let bottomCircleRadius = this.circleRadius;
+                // let pointDiffX = 0;
+                // let pointDiffY = 0;
+                // if (pointIndex == 1) {
+                //     pointDiffX = -10;
+                //     pointDiffY = 10;
+                // } else if (pointIndex == 2) {
+                //     pointDiffX = 10;
+                //     pointDiffY = -10;
+                // } else if (pointIndex == 3) {
+                //     pointDiffX = 10;
+                //     pointDiffY = 10;
+                // } else if (pointIndex == 4) {
+                //     pointDiffX = -10;
+                //     pointDiffY = 10;
+                // }
                 if (pointIndex++ > 2) { // For checking botton points
-                    circleRadius = circleRadius * -1;
+                    bottomCircleRadius = bottomCircleRadius * -1;
                 }
-                let actualPoint = { x: +points[0] * (this._imgGridId.getMeasuredWidth() / scale), y: (+points[1] * (this._imgGridId.getMeasuredHeight() / scale)) + circleRadius, id: this._pointsCounter };
+
+                //                 topLeft.x = topLeft.x - 10;
+                // topLeft.y = topLeft.y - 10;
+                // topRight.x = topRight.x + 10;
+                // topRight.y = topRight.y - 10;
+                // bottomRight.x = bottomRight.x + 10;
+                // bottomRight.y = bottomRight.y + 10;
+                // bottomLeft.x = bottomLeft.x - 10;
+                // bottomLeft.y = bottomLeft.y + 10;
+                // let actualPoint = { x: (+points[0] + pointDiffX) * (this.imgGridId.getMeasuredWidth() / scale),
+                // y: ((+points[1]+pointDiffY) * (this.imgGridId.getMeasuredHeight() / scale))
+                // + circleRadius, id: this.pointsCounter };
+                actualPoint = {
+                    x: (+points[0]) * (this.imgGridId.getMeasuredWidth() / scale),
+                    y: ((+points[1]) * (this.imgGridId.getMeasuredHeight() / scale)) + bottomCircleRadius, id: this.pointsCounter,
+                };
+                console.log('actualPoint : ' + JSON.stringify(actualPoint));
                 this.createCircle(actualPoint);
             });
+        } else {
+
+            actualPoint = { x: 0, y: 0, id: this.pointsCounter };
+            this.createCircle(actualPoint);
+            actualPoint = { x: this.imageActualSize.width, y: 0, id: this.pointsCounter };
+            this.createCircle(actualPoint);
+            actualPoint = { x: this.imageActualSize.width, y: this.imageActualSize.height, id: this.pointsCounter };
+            this.createCircle(actualPoint);
+            actualPoint = { x: 0, y: this.imageActualSize.height, id: this.pointsCounter };
+            this.createCircle(actualPoint);
+
+            //     let actualPoint = { x: this.centerPointX - 75, y: this.centerPointY - 75, id: this.pointsCounter };
+            //     this.createCircle(actualPoint);
+            //     actualPoint = { x: this.centerPointX + 75, y: this.centerPointY - 75, id: this.pointsCounter };
+            //     this.createCircle(actualPoint);
+            //     actualPoint = { x: this.centerPointX - 75, y: this.centerPointY + 75, id: this.pointsCounter };
+            //     this.createCircle(actualPoint);
+            //     actualPoint = { x: this.centerPointX + 75, y: this.centerPointY + 75, id: this.pointsCounter };
+            //     this.createCircle(actualPoint);
         }
-        // else {
-
-
-        //     let actualPoint = { x: this._centerPointX - 75, y: this._centerPointY - 75, id: this._pointsCounter };
-        //     this.createCircle(actualPoint);
-        //     actualPoint = { x: this._centerPointX + 75, y: this._centerPointY - 75, id: this._pointsCounter };
-        //     this.createCircle(actualPoint);
-        //     actualPoint = { x: this._centerPointX - 75, y: this._centerPointY + 75, id: this._pointsCounter };
-        //     this.createCircle(actualPoint);
-        //     actualPoint = { x: this._centerPointX + 75, y: this._centerPointY + 75, id: this._pointsCounter };
-        //     this.createCircle(actualPoint);
-        // }
     }
     /**
      * Create circles.
-     * @param actualPoint 
+     * @param actualPoint Contains circle points(x,y)
      */
     private createCircle(actualPoint: any): any {
         // Since the selected point by user is always pointing to
         // center of the image (which is (0,0)), so need to select
         // top-left, top-right & bottom-left, for which the actualPointDeltaX/actualPointDeltaY
         // are used.
-        const actualPointDeltaX = (this._imageActualSize.width / 2) - this._imageActualSize.width;
-        const actualPointDeltaY = (this._imageActualSize.height / 2) - this._imageActualSize.height;
+        const actualPointDeltaX = (this.imageActualSize.width / 2) - this.imageActualSize.width;
+        const actualPointDeltaY = (this.imageActualSize.height / 2) - this.imageActualSize.height;
 
         const formattedString = new formattedStringModule.FormattedString();
         const iconSpan = new formattedStringModule.Span();
@@ -387,12 +423,12 @@ export class DialogContent {
         const circleBtn: any = new buttons.Button();
         circleBtn.cssClasses.add('circle');
 
-        circleBtn.id = this._pointsCounter++;
+        circleBtn.id = this.pointsCounter++;
         circleBtn.formattedText = formattedString;
         circleBtn.on('pan', (args: PanGestureEventData) => {
             if (args.state === 1) {
-                this._prevDeltaX = 0;
-                this._prevDeltaY = 0;
+                this.prevDeltaX = 0;
+                this.prevDeltaY = 0;
                 if (this.checkBoundary(circleBtn.translateX, circleBtn.translateY)) {
                     circleBtn.translateX += -15;
                     circleBtn.translateY += -30;
@@ -410,10 +446,10 @@ export class DialogContent {
                 }
             } else if (args.state === 2) {
                 if (this.checkBoundary(circleBtn.translateX, circleBtn.translateY)) {
-                    circleBtn.translateX += args.deltaX - this._prevDeltaX;
-                    circleBtn.translateY += args.deltaY - this._prevDeltaY;
+                    circleBtn.translateX += args.deltaX - this.prevDeltaX;
+                    circleBtn.translateY += args.deltaY - this.prevDeltaY;
 
-                    this._points.forEach((point: any) => {
+                    this.points.forEach((point: any) => {
                         if (point) {
                             if (point.id === circleBtn.id) {
                                 point.x = circleBtn.translateX - actualPointDeltaX;
@@ -421,8 +457,8 @@ export class DialogContent {
                             }
                         }
                     });
-                    this._prevDeltaX = args.deltaX;
-                    this._prevDeltaY = args.deltaY;
+                    this.prevDeltaX = args.deltaX;
+                    this.prevDeltaY = args.deltaY;
                 }
             } else if (args.state === 3) {
             }
@@ -435,37 +471,37 @@ export class DialogContent {
         circleBtn.translateX = actualPoint.x + actualPointDeltaX;
         circleBtn.translateY = actualPoint.y + actualPointDeltaY;
         if (circleBtn.translateX > 0 &&
-            circleBtn.translateX > this._centerPointX) {
-            circleBtn.translateX = this._centerPointX;
+            circleBtn.translateX > this.centerPointX) {
+            circleBtn.translateX = this.centerPointX;
         }
         if (circleBtn.translateX < 0 &&
-            (circleBtn.translateX * -1) > this._centerPointX) {
-            circleBtn.translateX = this._centerPointX * -1;
+            (circleBtn.translateX * -1) > this.centerPointX) {
+            circleBtn.translateX = this.centerPointX * -1;
         }
         if (circleBtn.translateY > 0 &&
-            circleBtn.translateY > this._centerPointY) {
-            circleBtn.translateY = this._centerPointY;
+            circleBtn.translateY > this.centerPointY) {
+            circleBtn.translateY = this.centerPointY;
         }
         if (circleBtn.translateY < 0 &&
-            (circleBtn.translateY * -1) > this._centerPointY) {
-            circleBtn.translateY = this._centerPointY * -1;
+            (circleBtn.translateY * -1) > this.centerPointY) {
+            circleBtn.translateY = this.centerPointY * -1;
         }
 
-        this._circleBtnList.push(circleBtn);
-        this._points.push(actualPoint);
+        this.circleBtnList.push(circleBtn);
+        this.points.push(actualPoint);
         return circleBtn;
     }
     /**
      * Check screen boundary.
-     * @param translateX 
-     * @param translateY 
+     * @param translateX Image translateX
+     * @param translateY Image translateY
      */
     private checkBoundary(translateX: any, translateY: any): any {
         const pointAdjustment = 5; // Need to adjust the center point value to check the boundary
-        if (translateX < (this._centerPointX - pointAdjustment) &&
-            translateY < (this._centerPointY - pointAdjustment) &&
-            (translateX * -1) < (this._centerPointX - pointAdjustment) &&
-            (translateY * -1) < (this._centerPointY - pointAdjustment)) {
+        if (translateX < (this.centerPointX - pointAdjustment) &&
+            translateY < (this.centerPointY - pointAdjustment) &&
+            (translateX * -1) < (this.centerPointX - pointAdjustment) &&
+            (translateY * -1) < (this.centerPointY - pointAdjustment)) {
             return true;
         } else {
             return false;

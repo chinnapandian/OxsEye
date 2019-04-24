@@ -71,9 +71,8 @@
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { NgModule } from &#x27;@angular/core&#x27;;
-import { NativeScriptRouterModule } from &#x27;nativescript-angular/router&#x27;;
 import { Routes } from &#x27;@angular/router&#x27;;
-
+import { NativeScriptRouterModule } from &#x27;nativescript-angular/router&#x27;;
 import { CaptureComponent } from &#x27;./capture/capture.component&#x27;;
 import { ImageGalleryComponent } from &#x27;./imagegallery/imagegallery.component&#x27;;
 import { ImageSlideComponent } from &#x27;./imageslide/imageslide.component&#x27;;
@@ -82,14 +81,15 @@ const routes: Routes &#x3D; [
     { path: &#x27;&#x27;, redirectTo: &#x27;/capture&#x27;, pathMatch: &#x27;full&#x27; },
     { path: &#x27;capture&#x27;, component: CaptureComponent },
     { path: &#x27;imagegallery&#x27;, component: ImageGalleryComponent},
-    { path: &#x27;imageslide&#x27;, component: ImageSlideComponent}
+    { path: &#x27;imageslide&#x27;, component: ImageSlideComponent},
 ];
 
 @NgModule({
     imports: [NativeScriptRouterModule.forRoot(routes)],
-    exports: [NativeScriptRouterModule]
+    exports: [NativeScriptRouterModule],
 })
-export class AppRoutingModule { }</code></pre>
+export class AppRoutingModule { }
+</code></pre>
     </div>
 </div>
 

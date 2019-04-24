@@ -1,21 +1,21 @@
 import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { Page } from 'tns-core-modules/ui/page';
+import { Router } from '@angular/router';
 import { CameraPlus } from '@nstudio/nativescript-camera-plus';
-import { ImageSource } from 'tns-core-modules/image-source';
-import { ImageAsset } from 'tns-core-modules/image-asset';
-import { Image } from 'tns-core-modules/ui/image';
-import { View } from 'tns-core-modules/ui/core/view';
+import * as fs from 'file-system';
 import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular/modal-dialog';
+import { ImageAsset } from 'tns-core-modules/image-asset';
+import { ImageSource } from 'tns-core-modules/image-source';
+import { View } from 'tns-core-modules/ui/core/view';
+import { Image } from 'tns-core-modules/ui/image';
+import { Page } from 'tns-core-modules/ui/page';
+import { ActivityLoader } from '../activityloader/activityloader.common';
 import { DialogContent } from '../dialog/dialog.component';
 import { ImageGalleryComponent } from '../imagegallery/imagegallery.component';
-import { File } from 'tns-core-modules/file-system';
-import { ActivityLoader } from '../activityloader/activityloader.common';
 import { SendBroadcastImage } from '../providers/transformedimage.provider';
-import { Router } from '@angular/router';
+
 import * as opencv from 'nativescript-opencv-plugin';
 import * as Toast from 'nativescript-toast';
 import * as application from 'tns-core-modules/application';
-import * as fs from 'file-system';
 
 /**
  * Capture component class
@@ -28,22 +28,21 @@ import * as fs from 'file-system';
 })
 export class CaptureComponent implements OnInit, OnDestroy {
     /** Camera instance variable. */
-    private _cam: any;
+    private cam: any;
     /** Gallery button. */
-    private _galleryBtn: any;
+    private galleryBtn: any;
     /** Take picture button. */
-    private _takePicBtn: any;
+    private takePicBtn: any;
     /** Auto focus button. */
-    private _autofocusBtn: any;
+    private autofocusBtn: any;
     /** Paramaters used to display Gallery button. */
-    private _galleryParams: any;
+    private galleryParams: any;
     /** Paramaters used to display Take picture button. */
-    private _takePicParams: any;
+    private takePicParams: any;
     /** Paramaters used to display auto focus button. */
-    private _autofocusParams: any;
+    private autofocusParams: any;
     /** Empty string variable */
-    private _empty: any = null;
-    
+    private empty: any = null;
     /** Boolean value to check the camera is visible or not. */
     public isCameraVisible: any;
     /** Transformed Image source */
@@ -57,11 +56,11 @@ export class CaptureComponent implements OnInit, OnDestroy {
 
     /**
      * Constructor for CaptureComponent.
-     * @param zone 
-     * @param modalService 
-     * @param viewContainerRef 
-     * @param router 
-     * @param activityLoader 
+     * @param zone Angular zone to run a task asynchronously.
+     * @param modalService Service modal
+     * @param viewContainerRef View container referrence
+     * @param router Router
+     * @param activityLoader Activity loader indication
      */
     constructor(
         private zone: NgZone,
@@ -87,7 +86,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Destroy method called while angular destroys. 
+     * Destroy method called while angular destroys.
      */
     ngOnDestroy() {
         console.log('Destroy called...');
@@ -95,62 +94,61 @@ export class CaptureComponent implements OnInit, OnDestroy {
     /**
      * Method to check camera loaded or not along with some
      * camera settings initialization.
-     * @param args
+     * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
-        console.log('***** _cam loaded *****');
-        this._cam = args.object as CameraPlus;
-
-        const flashMode = this._cam.getFlashMode();
+        console.log('***** cam loaded *****');
+        this.cam = args.object as CameraPlus;
+        const flashMode = this.cam.getFlashMode();
 
         // Turn flash on at startup
-        if (flashMode === 'off') {
-            this._cam.toggleFlash();
+        if (flashMode === 'on') {
+            this.cam.toggleFlash();
         }
         const cb = new android.hardware.Camera.AutoFocusMoveCallback(
 
             {
                 _this: this,
                 onAutoFocusMoving(start: any, camera: any) {
-                    const animate = this._this._autofocusBtn.animate();
+                    const animate = this._this.autofocusBtn.animate();
                     if (!start) {
                         animate.scaleX(1);
                         animate.scaleY(1);
                         // Green color
                         const color = android.graphics.Color.parseColor('#008000');
-                        this._this._autofocusBtn.setColorFilter(color);
+                        this._this.autofocusBtn.setColorFilter(color);
                     } else {
                         animate.scaleX(0.50);
                         animate.scaleY(0.50);
                         animate.setDuration(100);
                         // Red color
                         const color = android.graphics.Color.parseColor('#ff0000');
-                        this._this._autofocusBtn.setColorFilter(color);
+                        this._this.autofocusBtn.setColorFilter(color);
 
                         animate.start();
                     }
                 },
             });
-        if (this._cam.camera) {
-            this._cam.camera.setAutoFocusMoveCallback(cb);
+        if (this.cam.camera) {
+            this.cam.camera.setAutoFocusMoveCallback(cb);
         }
         if (args.data) {
 
-            this._cam.showFlashIcon = true;
+            this.cam.showFlashIcon = true;
 
-            this._cam.showToggleIcon = true;
+            this.cam.showToggleIcon = true;
             try {
                 this.initImageGalleryButton();
                 this.initCameraButton();
                 this.initAutoFocusImageButton();
             } catch (e) {
-                this._takePicBtn = null;
-                this._galleryBtn = null;
-                this._autofocusBtn = null;
-                this._takePicParams = null;
-                this._galleryParams = null;
-                this._autofocusParams = null;
-                this._cam.showToggleIcon = true;
+                this.takePicBtn = null;
+                this.galleryBtn = null;
+                this.autofocusBtn = null;
+                this.takePicParams = null;
+                this.galleryParams = null;
+                this.autofocusParams = null;
+                this.cam.showToggleIcon = true;
 
                 this.createTakePictureButton();
                 this.createImageGalleryButton();
@@ -158,14 +156,14 @@ export class CaptureComponent implements OnInit, OnDestroy {
                 this.initImageGalleryButton();
                 this.initCameraButton();
                 this.initAutoFocusImageButton();
-                this._cam._initFlashButton();
-                this._cam._initToggleCameraButton();
+                this.cam._initFlashButton();
+                this.cam._initToggleCameraButton();
             }
         }
 
         // TEST THE ICONS SHOWING/HIDING
-        // this._cam.showCaptureIcon = true;
-        // this._cam.showFlashIcon = true;
+        // this.cam.showCaptureIcon = true;
+        // this.cam.showFlashIcon = true;
         // this.cameraPlus.showGalleryIcon = false;
         // this.cameraPlus.showToggleIcon = false;
     }
@@ -173,40 +171,40 @@ export class CaptureComponent implements OnInit, OnDestroy {
      * Initialize Camera Button.
      */
     initCameraButton() {
-        this._cam.nativeView.removeView(this._takePicBtn);
-        this._cam.nativeView.addView(this._takePicBtn, this._takePicParams);
+        this.cam.nativeView.removeView(this.takePicBtn);
+        this.cam.nativeView.addView(this.takePicBtn, this.takePicParams);
     }
     /**
      * initialize image gallery button.
      */
     initImageGalleryButton() {
-        this._cam.nativeView.removeView(this._galleryBtn);
-        this._cam.nativeView.addView(this._galleryBtn, this._galleryParams);
-        this.setImageResource(this._galleryBtn, 'ic_photo_library_white');
+        this.cam.nativeView.removeView(this.galleryBtn);
+        this.cam.nativeView.addView(this.galleryBtn, this.galleryParams);
+        this.setImageResource(this.galleryBtn, 'ic_photo_library_white');
     }
     /**
      * initialize auto focus image button.
      */
     initAutoFocusImageButton() {
-        this._cam.nativeView.removeView(this._autofocusBtn);
-        this._cam.nativeView.addView(this._autofocusBtn, this._autofocusParams);
+        this.cam.nativeView.removeView(this.autofocusBtn);
+        this.cam.nativeView.addView(this.autofocusBtn, this.autofocusParams);
     }
     /**
      * Create take picture button.
      */
     createTakePictureButton() {
         const _this = this;
-        this._takePicBtn = this.createImageButton();
-        this.setImageResource(this._takePicBtn, 'ic_camera');
+        this.takePicBtn = this.createImageButton();
+        this.setImageResource(this.takePicBtn, 'ic_camera');
         // let takePicDrawable = this.getImageDrawable('ic_camera');
-        // this._takePicBtn.setImageResource(takePicDrawable);
+        // this.takePicBtn.setImageResource(takePicDrawable);
         const shape = this.createTransparentCircleDrawable();
-        this._takePicBtn.setBackgroundDrawable(shape);
+        this.takePicBtn.setBackgroundDrawable(shape);
         const color = android.graphics.Color.parseColor('#ffffff'); // white color
-        this._takePicBtn.setColorFilter(color);
-        // this._takePicBtn.setScaleX(0.50);
-        // this._takePicBtn.setScaleY(0.50);
-        this._takePicBtn.setOnClickListener(new android.view.View.OnClickListener({
+        this.takePicBtn.setColorFilter(color);
+        // this.takePicBtn.setScaleX(0.50);
+        // this.takePicBtn.setScaleY(0.50);
+        this.takePicBtn.setOnClickListener(new android.view.View.OnClickListener({
             onClick(args: any) {
                 _this.takePicFromCam(_this);
             },
@@ -218,17 +216,18 @@ export class CaptureComponent implements OnInit, OnDestroy {
      */
     createAutoFocusImage() {
         const _this = this;
-        this._autofocusBtn = this.createAutoFocusImageButton();
-        this.setImageResource(this._autofocusBtn, 'ic_auto_focus_black');
+        this.autofocusBtn = this.createAutoFocusImageButton();
+        this.setImageResource(this.autofocusBtn, 'ic_auto_focus_black');
 
         // let openGalleryDrawable = this.getImageDrawable('ic_auto_focus_black');
-        // this._autofocusBtn.setImageResource(openGalleryDrawable);
+        // this.autofocusBtn.setImageResource(openGalleryDrawable);
         const shape = this.createAutofocusShape();
-        this._autofocusBtn.setBackgroundDrawable(shape);
+        this.autofocusBtn.setBackgroundDrawable(shape);
         this.createAutoFocusImageParams();
     }
     /**
      * Create auto focus image button.
+     * @returns Returns button object
      */
     createAutoFocusImageButton(): any {
         const btn = new android.widget.ImageView(application.android.context);
@@ -245,20 +244,20 @@ export class CaptureComponent implements OnInit, OnDestroy {
      */
     createImageGalleryButton() {
         const _this = this;
-        this._galleryBtn = this.createImageButton();
-        this.setImageResource(this._galleryBtn, 'ic_photo_library_white');
+        this.galleryBtn = this.createImageButton();
+        this.setImageResource(this.galleryBtn, 'ic_photo_library_white');
 
         // let openGalleryDrawable = this.getImageDrawable('ic_photo_library_white');
-        // this._galleryBtn.setImageResource(openGalleryDrawable);
+        // this.galleryBtn.setImageResource(openGalleryDrawable);
 
         const galleryBtnId = application.android.context.getResources()
             .getIdentifier('gallery_btn', 'id', application.android.context.getPackageName());
 
-        this._galleryBtn.setTag(galleryBtnId, 'gallery-btn-tag');
-        this._galleryBtn.setContentDescription('gallery-btn-dec');
+        this.galleryBtn.setTag(galleryBtnId, 'gallery-btn-tag');
+        this.galleryBtn.setContentDescription('gallery-btn-dec');
         const shape = this.createTransparentCircleDrawable();
-        this._galleryBtn.setBackgroundDrawable(shape);
-        this._galleryBtn.setOnClickListener(new android.view.View.OnClickListener({
+        this.galleryBtn.setBackgroundDrawable(shape);
+        this.galleryBtn.setOnClickListener(new android.view.View.OnClickListener({
             onClick(args: any) {
                 _this.goImageGallery();
             },
@@ -267,7 +266,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Gets image drawable image id
-     * @param iconName 
+     * @param iconName Icon Name
      */
     getImageDrawable(iconName: any): any {
         const drawableId = application.android.context
@@ -277,6 +276,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Create transparent circle shape.
+     * @returns Returns shape object
      */
     createTransparentCircleDrawable(): any {
         const shape = new android.graphics.drawable.GradientDrawable();
@@ -287,6 +287,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Create auto focus shape.
+     * @returns Returns shape object
      */
     createAutofocusShape(): any {
 
@@ -296,6 +297,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Create image button.
+     * @returns Returns button object
      */
     createImageButton(): any {
         const btn = new android.widget.ImageButton(application.android.context);
@@ -306,7 +308,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Image selected event.
-     * @param args
+     * @param args Image selected event data
      */
     imagesSelectedEvent(args: any): void {
         console.log('IMAGES SELECTED EVENT!!!');
@@ -314,7 +316,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Photo captured event.
-     * @param args 
+     * @param args Image captured event data
      */
     photoCapturedEvent(args: any): void {
         console.log('PHOTO CAPTURED EVENT!!!');
@@ -322,7 +324,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Toggle camera event.
-     * @param args 
+     * @param args Camera toggle event data
      */
     toggleCameraEvent(args: any): void {
         console.log('camera toggled');
@@ -331,34 +333,34 @@ export class CaptureComponent implements OnInit, OnDestroy {
      * Toggle flash on camera.
      */
     toggleFlashOnCam(): void {
-        this._cam.toggleFlash();
+        this.cam.toggleFlash();
     }
     /**
      * Toggle showing flash icon.
      */
     toggleShowingFlashIcon(): void {
-        console.log(`showFlashIcon = ${this._cam.showFlashIcon}`);
-        this._cam.showFlashIcon = !this._cam.showFlashIcon;
+        console.log(`showFlashIcon = ${this.cam.showFlashIcon}`);
+        this.cam.showFlashIcon = !this.cam.showFlashIcon;
     }
     /**
      * Toggle camera.
      */
     toggleTheCamera(): void {
-        this._cam.toggleCamera();
+        this.cam.toggleCamera();
     }
     /**
      * Open camera library.
      */
     openCamPlusLibrary(): void {
-        this._cam.chooseFromLibrary();
+        this.cam.chooseFromLibrary();
     }
     /**
      * Take picture from camera.
-     * @param thisParam 
+     * @param thisParam Contains cameraplus instance
      */
     takePicFromCam(thisParam: any): void {
         thisParam.activityLoader.show();
-        thisParam._cam.takePicture({ saveToGallery: true });
+        thisParam.cam.takePicture({ saveToGallery: true });
         this.imgURI = '';
         this.imageSource = this.imgURI;
     }
@@ -370,9 +372,10 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Show captured picture dialog
-     * @param fullScreen 
-     * @param filePathOrg 
-     * @param imgURI 
+     * @param fullScreen Option to show fullscreen dialog or not
+     * @param filePathOrg Captured image file path
+     * @param imgURI Transformed image file path
+     * @param recPointsStr Rectangle points in string
      */
     showCapturedPictureDialog(fullScreen: boolean, filePathOrg: string, imgURI: string, recPointsStr) {
         const options: ModalDialogOptions = {
@@ -427,7 +430,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Set transformed image.
-     * @param imgURIParam 
+     * @param imgURIParam Transformed image file URI
      */
     setTransformedImage(imgURIParam: any) {
         if (imgURIParam) {
@@ -441,41 +444,35 @@ export class CaptureComponent implements OnInit, OnDestroy {
             }
         }
     }
-    /**
-     * On page loaded.
-     * @param args 
-     */
-    onPageLoaded(args: any) {
-        // this._page = args.object as Page;
-    }
+
     /**
      * Create take picture params.
      */
     private createTakePictureParams() {
-        this._takePicParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
-        this._takePicParams.width = '100';
-        this._takePicParams.height = '100';
-        this._takePicParams.setMargins(8, 8, 8, 8);
+        this.takePicParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
+        this.takePicParams.width = '100';
+        this.takePicParams.height = '100';
+        this.takePicParams.setMargins(8, 8, 8, 8);
         // ALIGN_PARENT_BOTTOM
-        this._takePicParams.addRule(12);
+        this.takePicParams.addRule(12);
         // HORIZONTAL_CENTER
-        this._takePicParams.addRule(11);
+        this.takePicParams.addRule(11);
     }
     /**
      * Create auto focus image params.
      */
     private createAutoFocusImageParams() {
-        this._autofocusParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
-        this._autofocusParams.width = '300';
-        this._autofocusParams.height = '300';
-        this._autofocusParams.setMargins(8, 8, 8, 8);
+        this.autofocusParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
+        this.autofocusParams.width = '300';
+        this.autofocusParams.height = '300';
+        this.autofocusParams.setMargins(8, 8, 8, 8);
         // ALIGN_PARENT_CENTER
-        this._autofocusParams.addRule(13);
+        this.autofocusParams.addRule(13);
     }
     /**
      * Sets image resource.
-     * @param btn 
-     * @param iconName 
+     * @param btn Button image instance referrence
+     * @param iconName Icon name
      */
     private setImageResource(btn: any, iconName: any) {
         const openGalleryDrawable = this.getImageDrawable(iconName);
@@ -485,20 +482,20 @@ export class CaptureComponent implements OnInit, OnDestroy {
      * Create image gallery params.
      */
     private createImageGallerryParams() {
-        this._galleryParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
-        this._galleryParams.width = '100';
-        this._galleryParams.height = '100';
-        this._galleryParams.setMargins(8, 8, 8, 8);
+        this.galleryParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
+        this.galleryParams.width = '100';
+        this.galleryParams.height = '100';
+        this.galleryParams.setMargins(8, 8, 8, 8);
         // ALIGN_PARENT_BOTTOM
-        this._galleryParams.addRule(12);
+        this.galleryParams.addRule(12);
         // ALIGN_PARENT_LEFT
-        this._galleryParams.addRule(9);
+        this.galleryParams.addRule(9);
     }
     /**
      * Refresh captured images in media store.
-     * @param filePathOrg 
-     * @param imgURI 
-     * @param action 
+     * @param filePathOrg Captured Image file path
+     * @param imgURI Transformed Image file URI
+     * @param action Actions 'Add'/'Remove'
      */
     private refreshCapturedImagesinMediaStore(filePathOrg: string, imgURI: string, action: string) {
         try {
@@ -515,7 +512,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * Create thumbnail image.
-     * @param imgURI 
+     * @param imgURI Transformed image file path
      */
     private createThumbNailImage(imgURI: string): any {
         try {
@@ -524,7 +521,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
             // com.maas.opencv4nativescript.OpenCVUtils.createThumbnailImage(dstImgURI);
 
             const uri = android.net.Uri.parse('file://' + thumbnailImagePath);
-            this._galleryBtn.setImageURI(uri);
+            this.galleryBtn.setImageURI(uri);
         } catch (e) {
             console.log('Error while creating thumbnail image. ' + e);
         }
@@ -532,10 +529,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
 
     // /**
     //  * Perform adaptive threshold.
-    //  * @param thresholdValue 
-    //  * @param sargs 
+    //  * @param thresholdValue Threshold value
     //  */
-    // private performAdaptiveThreshold(thresholdValue: any, sargs: any): void {
+    // private performAdaptiveThreshold(thresholdValue: any): void {
     //     this.zone.run(() => {
     //         this.imgEmpty = this.imgURI + '?ts=' + new Date().getTime();
     //         this.imageSource = this.imgEmpty;
@@ -549,7 +545,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
 
     /**
      * Perform perspective transformation.
-     * @param filePath 
+     * @param filePath Captured image file path
      */
     private performPerspectiveTransformation(filePath: any): void {
         try {
@@ -565,7 +561,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
     /**
      * load images.
-     * @param imageAsset 
+     * @param imageAsset ImageAsset object instance referrence
      */
     private loadImage(imageAsset: ImageAsset): void {
         if (imageAsset) {
@@ -588,12 +584,12 @@ export class CaptureComponent implements OnInit, OnDestroy {
                             }
                         });
                     } else {
-                        this.imageSource = this._empty;
+                        this.imageSource = this.empty;
                         alert('Image source is bad.');
                     }
                 },
                 (err) => {
-                    this.imageSource = this._empty;
+                    this.imageSource = this.empty;
                     console.error(err);
                     alert('Error getting image source from asset');
                 },
@@ -601,7 +597,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
         } else {
             console.log('Image Asset was null');
             alert('Image Asset was null');
-            this.imageSource = this._empty;
+            this.imageSource = this.empty;
         }
     }
 }

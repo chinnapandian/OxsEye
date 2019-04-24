@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { File, path } from 'tns-core-modules/file-system';
+
 import { TransformedImage } from './transformedimage.common';
+
 import * as application from 'tns-core-modules/application';
-import * as dialogs from 'tns-core-modules/ui/dialogs';
+
 import * as Toast from 'nativescript-toast';
+
 import * as Permissions from 'nativescript-permissions';
 
 /**
@@ -13,7 +16,7 @@ import * as Permissions from 'nativescript-permissions';
 export class TransformedImageProvider {
     /** Contains list of image */
     public imageList: any;
-    /** Contains list of contour images captured while performing transformation. 
+    /** Contains list of contour images captured while performing transformation.
      * Currently this is not been used.
      */
     public contourImageList: any;
@@ -27,8 +30,8 @@ export class TransformedImageProvider {
     }
     /**
      * Load thumbnail images by content resolver.
-     * @param orderByAscDesc 
-     * @param activityLoader 
+     * @param orderByAscDesc Orderby value 'Asc'/'Desc'
+     * @param activityLoader ActivityLoader instance
      */
     loadThumbnailImagesByContentResolver(orderByAscDesc: string, activityLoader: any) {
         Permissions.requestPermission(
@@ -129,7 +132,6 @@ export class TransformedImageProvider {
      * Delete all temporary files used to perform transformation.
      */
     DeleteFiles() {
-
         this.contourImageList = [];
         Permissions.requestPermission(
             [android.Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -172,7 +174,7 @@ export class TransformedImageProvider {
     }
     /**
      * Delete a selected image file from the disk.
-     * @param fileURI 
+     * @param fileURI Image file path
      */
     deleteFile(fileURI: string) {
         const tempFile: File = File.fromPath(fileURI);
@@ -186,8 +188,8 @@ export class TransformedImageProvider {
     }
     /**
      * Rename a fila name to given name.
-     * @param fileURI 
-     * @param renameFileto 
+     * @param fileURI Image file path
+     * @param renameFileto Filename to be renamed to.
      */
     renameFile(fileURI: string, renameFileto: string) {
         const tempFile: File = File.fromPath(fileURI);
@@ -203,22 +205,23 @@ export class TransformedImageProvider {
 
     /**
      * Get original image
-     * @param transformedImage 
+     * @param transformedImage Transformed image file path
      */
     getOriginalImageWithRectangle(transformedImage: string): any {
         const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
 
-        let imgFileNameOrg = transformedImage.substring(0, transformedImage.indexOf('_transformed')) + '_contour.jpg';
+        const imgFileNameOrg = transformedImage.substring(0, transformedImage.indexOf('_transformed')) + '_contour.jpg';
         const newFile = new java.io.File(imagePath, imgFileNameOrg);
         // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
-        // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // application.android.context.grantUriPermission('oxs.eye.fileprovider',
+        //  uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
         // return uri;
         return this.getURIForFile(newFile);
     }
 
     /**
      * Get original image
-     * @param transformedImage 
+     * @param transformedImage Transformed image file path
      */
     getOriginalImage(transformedImage: string): any {
         const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM/CAMERA', '.');
@@ -226,27 +229,28 @@ export class TransformedImageProvider {
         let imgFileNameOrg = transformedImage.replace('PT_IMG', 'IMG');
         imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
         const newFile = new java.io.File(imagePath, imgFileNameOrg);
-        // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
-        // application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context,
+        //  'oxs.eye.fileprovider', newFile);
+        // application.android.context.grantUriPermission('oxs.eye.fileprovider',
+        //  uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
         // return uri;
         return this.getURIForFile(newFile);
     }
 
     /**
      * Get URI for file.
-     * @param newFile 
-     * @returns URI
+     * @param newFile File name
+     * @returns URI Returns the URI of given file name
      */
     getURIForFile(newFile: any): any {
         const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
         application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
         return uri;
     }
-
 }
 /**
  * Broadcast image to access publicly, so that it will be available to any app.
- * @param imgURI 
+ * @param imgURI Image file URI
  */
 export function SendBroadcastImage(imgURI) {
     const imageFile = new java.io.File(imgURI);
@@ -254,5 +258,3 @@ export function SendBroadcastImage(imgURI) {
     const mediaScanIntent = new android.content.Intent('android.intent.action.MEDIA_SCANNER_SCAN_FILE', contentUri);
     application.android.context.sendBroadcast(mediaScanIntent);
 }
-
-

@@ -1,13 +1,13 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">
     <StackLayout orientation="vertical" margin="20" horizontalAlignment="center" verticalAlignment="center">
-        <GridLayout id="imgGridId" height="90%"  (doubleTap)="onDoubleTap($event)"
+        <GridLayout id="imgGridId" height="90%"  (doubleTap)="onDoubleTap()"
             borderLeftWidth="1" borderBottomWidth="1" borderRightWidth="1" borderTopWidth="1" backgroundColor="gray">
             <Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"    id="imgViewId"  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>
         </GridLayout>
         <StackLayout height="10%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="10">
             <Button class="btn-outline btn-active btn-rounded-lg" text="Retake" (tap)="close('')"></Button>
             <Button class="btn btn-outline btn-active btn-rounded-lg" text="Save" (tap)="close(imageSource)"></Button>
-            <Button class="btn-outline btn-active btn-rounded-lg" text="{{manualBtnText}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection(manualBtnText) : showOriginalImage()"></Button>
+            <Button class="btn-outline btn-active btn-rounded-lg" text="{{manualBtnText}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection() : showOriginalImage()"></Button>
         </StackLayout>
     </StackLayout>
 </Page>

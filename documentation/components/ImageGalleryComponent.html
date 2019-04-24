@@ -141,22 +141,6 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#_isSelectUnselectAll">_isSelectUnselectAll</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#_orderByAscDesc">_orderByAscDesc</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#_page">_page</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#_selectedCount">_selectedCount</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#isCheckBoxVisible">isCheckBoxVisible</a>
                             </li>
@@ -169,12 +153,28 @@
                                 <a href="#isPopUpMenu">isPopUpMenu</a>
                             </li>
                             <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#isSelectUnselectAll">isSelectUnselectAll</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#isSharing">isSharing</a>
                             </li>
                             <li>
                                     <span class="modifier">Public</span>
                                 <a href="#isSortByDateMenu">isSortByDateMenu</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#orderByAscDesc">orderByAscDesc</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#page">page</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#selectedCount">selectedCount</a>
                             </li>
                         </ul>
                     </td>
@@ -262,12 +262,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(routerExtensions: RouterExtensions, modalService: ModalDialogService, viewContainerRef: <a href="https://angular.io/api/core/ViewContainerRef" target="_blank">ViewContainerRef</a>, _changeDetectionRef: <a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank">ChangeDetectorRef</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, transformedImageProvider: <a href="../injectables/TransformedImageProvider.html">TransformedImageProvider</a>, activityLoader: <a href="../classes/ActivityLoader.html">ActivityLoader</a>)</code>
+<code>constructor(routerExtensions: RouterExtensions, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, transformedImageProvider: <a href="../injectables/TransformedImageProvider.html">TransformedImageProvider</a>, activityLoader: <a href="../classes/ActivityLoader.html">ActivityLoader</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:46</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:49</a></div>
                             </td>
                         </tr>
 
@@ -283,6 +283,7 @@
                                                 <td>Name</td>
                                                     <td>Type</td>
                                                 <td>Optional</td>
+                                                    <td>Description</td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -297,42 +298,10 @@
                                                             No
                                                     </td>
                                                     
-                                                </tr>
-                                                <tr>
-                                                        <td>modalService</td>
-                                                  
                                                         <td>
-                                                                    <code>ModalDialogService</code>
+                                                                <code><p>Router extension instance</p>
+</code>
                                                         </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>viewContainerRef</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="https://angular.io/api/core/ViewContainerRef" target="_blank" >ViewContainerRef</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <tr>
-                                                        <td>_changeDetectionRef</td>
-                                                  
-                                                        <td>
-                                                                        <code><a href="https://angular.io/api/core/ChangeDetectorRef" target="_blank" >ChangeDetectorRef</a></code>
-                                                        </td>
-                                                  
-                                                    <td>
-                                                            No
-                                                    </td>
-                                                    
                                                 </tr>
                                                 <tr>
                                                         <td>router</td>
@@ -345,6 +314,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>Router instance</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>transformedImageProvider</td>
@@ -357,6 +330,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>Transformed image provider instance</p>
+</code>
+                                                        </td>
                                                 </tr>
                                                 <tr>
                                                         <td>activityLoader</td>
@@ -369,6 +346,10 @@
                                                             No
                                                     </td>
                                                     
+                                                        <td>
+                                                                <code><p>Activity loader instance</p>
+</code>
+                                                        </td>
                                                 </tr>
                                         </tbody>
                                     </table>
@@ -410,8 +391,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="121"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:121</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="119"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:119</a></div>
                 </td>
             </tr>
 
@@ -444,15 +425,15 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>goImageSlide(imgURIParam, imgIndexParam, args)</code>
+<code>goImageSlide(imgURIParam, imgIndexParam)</code>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="133"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:133</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="132"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:132</a></div>
                 </td>
             </tr>
 
@@ -469,6 +450,7 @@
                                 <tr>
                                     <td>Name</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -480,6 +462,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>Transformed image file URI</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>imgIndexParam</td>
@@ -489,15 +475,10 @@
                                     </td>
 
 
-                                </tr>
-                                <tr>
-                                    <td>args</td>
-
                                     <td>
-                                        No
+                                        <p>image index</p>
+
                                     </td>
-
-
                                 </tr>
                             </tbody>
                         </table>
@@ -537,8 +518,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="148"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:148</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="147"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:147</a></div>
                 </td>
             </tr>
 
@@ -555,6 +536,7 @@
                                 <tr>
                                     <td>Name</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -566,6 +548,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>Checkbox event data</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>imagePath</td>
@@ -575,6 +561,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>transformed image file path</p>
+
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>index</td>
@@ -584,6 +574,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>image index in the list</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -625,8 +619,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="357"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:357</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="362"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:362</a></div>
                 </td>
             </tr>
 
@@ -644,6 +638,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -658,6 +653,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>OrderBy value &#39;Asc&#39;/&#39;Desc&#39;</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -699,8 +698,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="363"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:363</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="368"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:368</a></div>
                 </td>
             </tr>
 
@@ -740,8 +739,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="70"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:70</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="68"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:68</a></div>
                 </td>
             </tr>
 
@@ -822,8 +821,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="101"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:101</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="99"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:99</a></div>
                 </td>
             </tr>
 
@@ -840,6 +839,7 @@
                                 <tr>
                                     <td>Name</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -851,6 +851,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>Page loaded event data</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -890,8 +894,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="166"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:166</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="165"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:165</a></div>
                 </td>
             </tr>
 
@@ -931,8 +935,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="208"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:208</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="207"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:207</a></div>
                 </td>
             </tr>
 
@@ -972,8 +976,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="189"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:189</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="188"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:188</a></div>
                 </td>
             </tr>
 
@@ -1034,6 +1038,7 @@
                                     <td>Name</td>
                                     <td>Type</td>
                                     <td>Optional</td>
+                                    <td>Description</td>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1048,6 +1053,10 @@
                                     </td>
 
 
+                                    <td>
+                                        <p>Checkbox value</p>
+
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1087,8 +1096,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="93"
-                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:93</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="91"
+                            class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:91</a></div>
                 </td>
             </tr>
 
@@ -1116,136 +1125,6 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="_isSelectUnselectAll"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            _isSelectUnselectAll</b>
-                            <a href="#_isSelectUnselectAll"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:42</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Boolean value to make the Select/UnselectAll menu visible or not </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="_orderByAscDesc"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            _orderByAscDesc</b>
-                            <a href="#_orderByAscDesc"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:44</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Stores orderBy value &#39;Asc&#39;/&#39;Desc&#39; </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="_page"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            _page</b>
-                            <a href="#_page"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:46</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Stores page referrence. </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="_selectedCount"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            _selectedCount</b>
-                            <a href="#_selectedCount"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:40</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Indicates checkbox selected count. </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="isCheckBoxVisible"></a>
                         <span class="name">
                             <b>
@@ -1263,7 +1142,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:38</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -1297,7 +1176,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:35</a></div>
                             </td>
                         </tr>
 
@@ -1331,13 +1210,47 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:37</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>Boolean value to make the popup menu visible or not. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="isSelectUnselectAll"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            isSelectUnselectAll</b>
+                            <a href="#isSelectUnselectAll"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/boolean" target="_blank" >boolean</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:45</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Boolean value to make the Select/UnselectAll menu visible or not </p>
 </div>
                     </td>
                 </tr>
@@ -1365,7 +1278,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="30" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:30</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:33</a></div>
                             </td>
                         </tr>
 
@@ -1399,13 +1312,109 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:39</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>Boolean value to make the SortByDate menu visible or not. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="orderByAscDesc"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            orderByAscDesc</b>
+                            <a href="#orderByAscDesc"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:47</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Stores orderBy value &#39;Asc&#39;/&#39;Desc&#39; </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="page"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            page</b>
+                            <a href="#page"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:49</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Stores page referrence. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="selectedCount"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            selectedCount</b>
+                            <a href="#selectedCount"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:43</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Indicates checkbox selected count. </p>
 </div>
                     </td>
                 </tr>
@@ -1434,7 +1443,7 @@
                 </tr>
                             <tr>
                                 <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="87" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:87</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">app/imagegallery/imagegallery.component.android.ts:85</a></div>
                                 </td>
                             </tr>
                     <tr>
@@ -1458,23 +1467,26 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectorRef, Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, ViewContainerRef } from &#x27;@angular/core&#x27;;
-import { File, Folder } from &#x27;tns-core-modules/file-system&#x27;;
-import { RouterExtensions } from &#x27;nativescript-angular/router&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import {Component, OnInit } from &#x27;@angular/core&#x27;;
 import { NavigationExtras, Router } from &#x27;@angular/router&#x27;;
-import { ModalDialogOptions, ModalDialogService } from &#x27;nativescript-angular/modal-dialog&#x27;;
-import { DialogContent } from &#x27;../dialog/dialog.component&#x27;;
-import { ImageSource } from &#x27;tns-core-modules/image-source&#x27;;
+
+import { File, Folder } from &#x27;tns-core-modules/file-system&#x27;;
 import { Page } from &#x27;tns-core-modules/ui/page&#x27;;
+
+import { RouterExtensions } from &#x27;nativescript-angular/router&#x27;;
+
 import { CheckBox } from &#x27;nativescript-checkbox&#x27;;
-import { TransformedImage } from &#x27;../providers/transformedimage.common&#x27;;
+
 import { ActivityLoader } from &#x27;../activityloader/activityloader.common&#x27;;
+import { TransformedImage } from &#x27;../providers/transformedimage.common&#x27;;
+
 import { SendBroadcastImage, TransformedImageProvider } from &#x27;../providers/transformedimage.provider&#x27;;
+
 import * as application from &#x27;tns-core-modules/application&#x27;;
 import * as dialogs from &#x27;tns-core-modules/ui/dialogs&#x27;;
+
 import * as Permissions from &#x27;nativescript-permissions&#x27;;
 import * as Toast from &#x27;nativescript-toast&#x27;;
-
 
 /**
  * ImageGalleryComponent class.
@@ -1497,48 +1509,43 @@ export class ImageGalleryComponent implements OnInit {
     /** Boolean value to make the checkbox visible or not. */
     public isCheckBoxVisible: boolean;
     /** Indicates checkbox selected count. */
-    private _selectedCount: number;
+    private selectedCount: number;
     /** Boolean value to make the Select/UnselectAll menu visible or not */
-    private _isSelectUnselectAll: boolean;
+    private isSelectUnselectAll: boolean;
     /** Stores orderBy value &#x27;Asc&#x27;/&#x27;Desc&#x27; */
-    private _orderByAscDesc: string;
+    private orderByAscDesc: string;
     /** Stores page referrence. */
-    private _page;
+    private page;
 
     /**
      * Constructor for ImageGalleryComponent
-     * @param routerExtensions 
-     * @param modalService 
-     * @param viewContainerRef 
-     * @param _changeDetectionRef 
-     * @param router 
-     * @param transformedImageProvider 
-     * @param activityLoader 
+     * @param routerExtensions Router extension instance
+     * @param router Router instance
+     * @param transformedImageProvider Transformed image provider instance
+     * @param activityLoader Activity loader instance
      */
     constructor(
         private routerExtensions: RouterExtensions,
-        private modalService: ModalDialogService,
-        private viewContainerRef: ViewContainerRef,
-        private _changeDetectionRef: ChangeDetectorRef,
         private router: Router,
         private transformedImageProvider: TransformedImageProvider,
         private activityLoader: ActivityLoader) {
     }
+
     /**
-   * Angular initialize method.
-   */
+     * Angular initialize method.
+     */
     ngOnInit(): void {
         this.activityLoader.show();
         this.isCheckBoxVisible &#x3D; false;
-        this._selectedCount &#x3D; 0;
+        this.selectedCount &#x3D; 0;
         this.isDeleting &#x3D; false;
         this.isSharing &#x3D; false;
         this.isPopUpMenu &#x3D; false;
         this.isSortByDateMenu &#x3D; true;
-        this._isSelectUnselectAll &#x3D; true;
+        this.isSelectUnselectAll &#x3D; true;
         // this.loadThumbnailImages();
-        this._orderByAscDesc &#x3D; &#x27; DESC&#x27;;
-        this.loadThumbnailImagesByContentResolver(this._orderByAscDesc);
+        this.orderByAscDesc &#x3D; &#x27; DESC&#x27;;
+        this.loadThumbnailImagesByContentResolver(this.orderByAscDesc);
     }
     /**
      * Get image list.
@@ -1556,12 +1563,12 @@ export class ImageGalleryComponent implements OnInit {
     }
     /**
      * On page loaded
-     * @param args 
+     * @param args Page loaded event data
      */
     onPageLoaded(args) {
-        this._page &#x3D; (args !&#x3D;&#x3D; this._page) ? args.object as Page : args;
-        const selectedCountTemp &#x3D; this._selectedCount;
-        this._selectedCount &#x3D; 0;
+        this.page &#x3D; (args !&#x3D;&#x3D; this.page) ? args.object as Page : args;
+        const selectedCountTemp &#x3D; this.selectedCount;
+        this.selectedCount &#x3D; 0;
         this.isDeleting &#x3D; false;
         this.isSharing &#x3D; false;
         this.isPopUpMenu &#x3D; (this.imageList.length &gt; 0) ? this.isPopUpMenu : false;
@@ -1570,7 +1577,7 @@ export class ImageGalleryComponent implements OnInit {
             if (this.imageList[image].isSelected) {
                 this.isDeleting &#x3D; true;
                 this.isSharing &#x3D; true;
-                this._selectedCount &#x3D; selectedCountTemp;
+                this.selectedCount &#x3D; selectedCountTemp;
                 break;
             }
         }
@@ -1580,17 +1587,18 @@ export class ImageGalleryComponent implements OnInit {
      */
     goBack() {
         for (const image in this.imageList) {
-            this.imageList[image].isSelected &#x3D; false;
+            if (this.imageList[image].isSelected) {
+                this.imageList[image].isSelected &#x3D; false;
+            }
         }
         this.routerExtensions.back();
     }
     /**
      * Go to Image slide page
-     * @param imgURIParam 
-     * @param imgIndexParam 
-     * @param args 
+     * @param imgURIParam Transformed image file URI
+     * @param imgIndexParam  image index
      */
-    goImageSlide(imgURIParam, imgIndexParam, args) {
+    goImageSlide(imgURIParam, imgIndexParam) {
         const navigationExtras: NavigationExtras &#x3D; {
             queryParams: {
                 imgURI: imgURIParam,
@@ -1601,17 +1609,17 @@ export class ImageGalleryComponent implements OnInit {
     }
     /**
      * Is checkBox checked or not.
-     * @param event 
-     * @param imagePath 
-     * @param index 
+     * @param event Checkbox event data
+     * @param imagePath transformed image file path
+     * @param index image index in the list
      */
     isChecked(event, imagePath, index) {
         if (event.value) {
-            this._selectedCount++;
+            this.selectedCount++;
         } else {
-            this._selectedCount--;
+            this.selectedCount--;
         }
-        if (this._selectedCount &gt; 0) {
+        if (this.selectedCount &gt; 0) {
             this.isDeleting &#x3D; true;
             this.isSharing &#x3D; true;
         } else {
@@ -1624,30 +1632,30 @@ export class ImageGalleryComponent implements OnInit {
      * Select/Unselect all checkbox
      */
     onSelectUnSelectAllCheckBox() {
-        if (this._selectedCount !&#x3D;&#x3D; this.imageList.length &amp;&amp; this._selectedCount &gt; 0) {
+        if (this.selectedCount !&#x3D;&#x3D; this.imageList.length &amp;&amp; this.selectedCount &gt; 0) {
             dialogs.action({
                 message: &#x27;Patially selected. Do you want to perform one of the below?&#x27;,
                 cancelButtonText: &#x27;Cancel&#x27;,
                 actions: [&#x27;Select All&#x27;, &#x27;Unselect All&#x27;],
             }).then((result) &#x3D;&gt; {
                 if (result &#x3D;&#x3D;&#x3D; &#x27;Select All&#x27;) {
-                    this._isSelectUnselectAll &#x3D; true;
-                    this.performSelectUnselectAll(this._isSelectUnselectAll);
+                    this.isSelectUnselectAll &#x3D; true;
+                    this.performSelectUnselectAll(this.isSelectUnselectAll);
                 } else if (result &#x3D;&#x3D;&#x3D; &#x27;Unselect All&#x27;) {
-                    this._isSelectUnselectAll &#x3D; false;
-                    this.performSelectUnselectAll(this._isSelectUnselectAll);
+                    this.isSelectUnselectAll &#x3D; false;
+                    this.performSelectUnselectAll(this.isSelectUnselectAll);
                 }
             });
         } else {
-            this._isSelectUnselectAll &#x3D; (this._selectedCount &#x3D;&#x3D;&#x3D; this.imageList.length) ? false : true;
-            this.performSelectUnselectAll(this._isSelectUnselectAll);
+            this.isSelectUnselectAll &#x3D; (this.selectedCount &#x3D;&#x3D;&#x3D; this.imageList.length) ? false : true;
+            this.performSelectUnselectAll(this.isSelectUnselectAll);
         }
     }
     /**
      * Sort images by date.
      */
     onSortByDate() {
-        this._selectedCount &#x3D; 0;
+        this.selectedCount &#x3D; 0;
         this.isDeleting &#x3D; false;
         this.isSharing &#x3D; false;
         const clonedImageList &#x3D; Object.assign([], this.imageList);
@@ -1701,7 +1709,8 @@ export class ImageGalleryComponent implements OnInit {
                         intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
                         intent.addFlags(android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                         intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-                        application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, &#x27;Share images...&#x27;));
+                        application.android.foregroundActivity.startActivity(
+                            android.content.Intent.createChooser(intent, &#x27;Share images...&#x27;));
                     }
                 } catch (e) {
                     Toast.makeText(&#x27;Error while sharing images.&#x27; + e).show();
@@ -1716,7 +1725,7 @@ export class ImageGalleryComponent implements OnInit {
      * Delete selected image(s)
      */
     onDelete() {
-        if (this._selectedCount &gt; 0) {
+        if (this.selectedCount &gt; 0) {
             dialogs.confirm({
                 title: &#x27;Delete&#x27;,
                 message: &#x27;Deleting selected item(s)?&#x27;,
@@ -1724,7 +1733,7 @@ export class ImageGalleryComponent implements OnInit {
                 cancelButtonText: &#x27;Cancel&#x27;,
             }).then((result) &#x3D;&gt; {
                 if (result) {
-                    this._selectedCount &#x3D; 0;
+                    this.selectedCount &#x3D; 0;
                     this.isDeleting &#x3D; false;
                     this.isSharing &#x3D; false;
                     this.imageList.forEach((image) &#x3D;&gt; {
@@ -1740,7 +1749,7 @@ export class ImageGalleryComponent implements OnInit {
                                             if (imgIdx &gt;&#x3D; 0) {
                                                 this.imageList.splice(imgIdx, 1);
                                             }
-                                            this.onPageLoaded(this._page);
+                                            this.onPageLoaded(this.page);
                                         }).catch((err) &#x3D;&gt; {
                                             Toast.makeText(&#x27;Error while deleting thumbnail images&#x27;).show();
                                             console.log(err.stack);
@@ -1760,18 +1769,18 @@ export class ImageGalleryComponent implements OnInit {
     }
     /**
      * Perform select/unselect all checkbox.
-     * @param value 
+     * @param value Checkbox value
      */
     private performSelectUnselectAll(value: any) {
         for (let i &#x3D; 0; i &lt; this.imageList.length; i++) {
-            const checkBox &#x3D; this._page.getViewById(&#x27;checkbox-&#x27; + i) as CheckBox;
+            const checkBox &#x3D; this.page.getViewById(&#x27;checkbox-&#x27; + i) as CheckBox;
             checkBox.checked &#x3D; value;
         }
-        this._isSelectUnselectAll &#x3D; !value;
+        this.isSelectUnselectAll &#x3D; !value;
     }
     // /**
     //  * Get original image
-    //  * @param transformedImage 
+    //  * @param transformedImage
     //  */
     // private getOriginalImage(transformedImage: string): any {
     //     const imagePath &#x3D; new java.io.File(android.os.Environment.getExternalStorageDirectory() + &#x27;/DCIM/CAMERA&#x27;, &#x27;.&#x27;);
@@ -1779,40 +1788,45 @@ export class ImageGalleryComponent implements OnInit {
     //     let imgFileNameOrg &#x3D; transformedImage.replace(&#x27;PT_IMG&#x27;, &#x27;IMG&#x27;);
     //     imgFileNameOrg &#x3D; imgFileNameOrg.substring(0, imgFileNameOrg.indexOf(&#x27;_transformed&#x27;)) + &#x27;.jpg&#x27;;
     //     const newFile &#x3D; new java.io.File(imagePath, imgFileNameOrg);
-    //     // const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
-    //     // application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     // const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(
+    //     // application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
+    //     // application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;,
+    //     // uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     //     // return uri;
     //     return this.transformedImageProvider.getURIForFile(newFile);
     // }
     // /**
     //  * Get original image
-    //  * @param transformedImage 
+    //  * @param transformedImage
     //  */
     // private getOriginalImageWithRectangle(transformedImage: string): any {
     //     const imagePath &#x3D; new java.io.File(android.os.Environment.getExternalStorageDirectory() + &#x27;/DCIM&#x27;, &#x27;.&#x27;);
 
     //     let imgFileNameOrg &#x3D; transformedImage.substring(0, transformedImage.indexOf(&#x27;_transformed&#x27;)) + &#x27;_contour.jpg&#x27;;
     //     const newFile &#x3D; new java.io.File(imagePath, imgFileNameOrg);
-    //     // const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
-    //     // application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     // const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(
+    //    // application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
+    //     // application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;,
+    //     // uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     //     // return uri;
     //     return this.transformedImageProvider.getURIForFile(newFile);
     // }
 
     // /**
     //  * Get URI for file.
-    //  * @param newFile 
+    //  * @param newFile
     //  * @returns URI
     //  */
     // private getURIForFile(newFile: any): any {
     //     const uri &#x3D; android.support.v4.content.FileProvider.getUriForFile(application.android.context, &#x27;oxs.eye.fileprovider&#x27;, newFile);
-    //     application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;, uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+    //     application.android.context.grantUriPermission(&#x27;oxs.eye.fileprovider&#x27;,
+    //     uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
     //     return uri;
     // }
 
     /**
      * Load thumbnail images by content resolver.
-     * @param orderByAscDescParam 
+     * @param orderByAscDescParam OrderBy value &#x27;Asc&#x27;/&#x27;Desc&#x27;
      */
     private loadThumbnailImagesByContentResolver(orderByAscDescParam: string) {
         this.transformedImageProvider.loadThumbnailImagesByContentResolver(orderByAscDescParam, this.activityLoader);
@@ -1904,7 +1918,7 @@ export class ImageGalleryComponent implements OnInit {
             &lt;ng-template ngFor let-i&#x3D;&quot;index&quot; let-image [ngForOf]&#x3D;&quot;imageList&quot;&gt;
                 &lt;GridLayout class&#x3D;&quot;bg-primary p-5 m-5 bordered img-rounded&quot; width&#x3D;&quot;30%&quot; height&#x3D;&quot;30%&quot; horizontalAlignment&#x3D;&quot;center&quot; verticalAlignment&#x3D;&quot;center&quot;
                     backgroundColor&#x3D;&quot;Black&quot;&gt;
-                    &lt;Image src&#x3D;&quot;{{ image.thumbnailPath }}&quot; loadMode&#x3D;&quot;async&quot; stretch&#x3D;&quot;aspectFill&quot; (doubleTap)&#x3D;&quot;goImageSlide(image.filePath,i, $event)&quot;
+                    &lt;Image src&#x3D;&quot;{{ image.thumbnailPath }}&quot; loadMode&#x3D;&quot;async&quot; stretch&#x3D;&quot;aspectFill&quot; (doubleTap)&#x3D;&quot;goImageSlide(image.filePath,i)&quot;
                         class&#x3D;&quot;img-height img-gallery-image&quot; (longPress)&#x3D;&quot;setCheckboxVisible()&quot;&gt;&lt;/Image&gt;
 
                     &lt;StackLayout [visibility]&#x3D;&quot;isCheckBoxVisible ? &#x27;visible&#x27; : &#x27;collapsed&#x27;&quot;&gt;
@@ -1961,7 +1975,7 @@ export class ImageGalleryComponent implements OnInit {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><ActionBar title="Image Gallery" class="action-bar">    <ActionBar.titleView>        <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-back">            <FormattedString>                <Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span>             </FormattedString>        </Button>    </ActionBar.titleView>    <ActionItem (tap)="onShare()" visibility="{{ isSharing ? \'visible\' : \'collapse\' }}">        <Button horizontalAlignment="left" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-share">					<FormattedString>						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 					</FormattedString>				</Button>    </ActionItem>    <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? \'visible\' : \'collapse\' }}">        <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn p-l-15">					<FormattedString>						<Span class="fa action-item-icon-fontsize"  text="&#xf1f8;"></Span> 					</FormattedString>				</Button>    </ActionItem>    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? \'visible\' : \'collapse\' }}" text="Select/UnSelect All"        android.position="popup">    </ActionItem>    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? \'visible\' : \'collapse\' }}" text="Sort By Date"        android.position="popup">    </ActionItem></ActionBar><Page (loaded)="onPageLoaded($event)" xmlns="http://schemas.nativescript.org/tns.xsd">    <ScrollView>        <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">            <ng-template ngFor let-i="index" let-image [ngForOf]="imageList">                <GridLayout class="bg-primary p-5 m-5 bordered img-rounded" width="30%" height="30%" horizontalAlignment="center" verticalAlignment="center"                    backgroundColor="Black">                    <Image src="{{ image.thumbnailPath }}" loadMode="async" stretch="aspectFill" (doubleTap)="goImageSlide(image.filePath,i, $event)"                        class="img-height img-gallery-image" (longPress)="setCheckboxVisible()"></Image>                    <StackLayout [visibility]="isCheckBoxVisible ? \'visible\' : \'collapsed\'">                        <CheckBox id="checkbox-{{i}}" checked={{image.isSelected}} (checkedChange)="isChecked($event, image.filePath, i)" fillColor="red" text="" class="img-gallery-checkbox"></CheckBox>                    </StackLayout>                </GridLayout>            </ng-template>            <!--<ActivityIndicator id="myIndicator" busy="{{isBusy}}" backgroundColor="lightgray" borderRadius="50" color="blue" width="50"                height="50">            </ActivityIndicator>-->        </WrapLayout>    </ScrollView>    </Page></div>'
+        var COMPONENT_TEMPLATE = '<div><ActionBar title="Image Gallery" class="action-bar">    <ActionBar.titleView>        <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-back">            <FormattedString>                <Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span>             </FormattedString>        </Button>    </ActionBar.titleView>    <ActionItem (tap)="onShare()" visibility="{{ isSharing ? \'visible\' : \'collapse\' }}">        <Button horizontalAlignment="left" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-share">					<FormattedString>						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 					</FormattedString>				</Button>    </ActionItem>    <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? \'visible\' : \'collapse\' }}">        <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn p-l-15">					<FormattedString>						<Span class="fa action-item-icon-fontsize"  text="&#xf1f8;"></Span> 					</FormattedString>				</Button>    </ActionItem>    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? \'visible\' : \'collapse\' }}" text="Select/UnSelect All"        android.position="popup">    </ActionItem>    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? \'visible\' : \'collapse\' }}" text="Sort By Date"        android.position="popup">    </ActionItem></ActionBar><Page (loaded)="onPageLoaded($event)" xmlns="http://schemas.nativescript.org/tns.xsd">    <ScrollView>        <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">            <ng-template ngFor let-i="index" let-image [ngForOf]="imageList">                <GridLayout class="bg-primary p-5 m-5 bordered img-rounded" width="30%" height="30%" horizontalAlignment="center" verticalAlignment="center"                    backgroundColor="Black">                    <Image src="{{ image.thumbnailPath }}" loadMode="async" stretch="aspectFill" (doubleTap)="goImageSlide(image.filePath,i)"                        class="img-height img-gallery-image" (longPress)="setCheckboxVisible()"></Image>                    <StackLayout [visibility]="isCheckBoxVisible ? \'visible\' : \'collapsed\'">                        <CheckBox id="checkbox-{{i}}" checked={{image.isSelected}} (checkedChange)="isChecked($event, image.filePath, i)" fillColor="red" text="" class="img-gallery-checkbox"></CheckBox>                    </StackLayout>                </GridLayout>            </ng-template>            <!--<ActivityIndicator id="myIndicator" busy="{{isBusy}}" backgroundColor="lightgray" borderRadius="50" color="blue" width="50"                height="50">            </ActivityIndicator>-->        </WrapLayout>    </ScrollView>    </Page></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'ns-app'},{'name': 'CaptureComponent', 'selector': 'ns-capture'},{'name': 'DialogContent', 'selector': 'modal-content'},{'name': 'ImageGalleryComponent', 'selector': 'ns-imagegallery'},{'name': 'ImageSlideComponent', 'selector': 'ns-imageslide'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'ImageGalleryComponent'};

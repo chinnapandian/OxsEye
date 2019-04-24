@@ -93,15 +93,15 @@
                         <td class="col-md-4">
                             <i>Default value : </i><code>{
     handlerError(err) {
-        //option 1 (development) - throw the error
+        // option 1 (development) - throw the error
         // throw err;
         alert(&#x27;error :&#x27; + err);
-        //option 2 (development) - logging the error via write method provided from trace module
-        traceModule.write(err,&#x27;unhandled-error&#x27;, traceModule.messageType.error);
+        // option 2 (development) - logging the error via write method provided from trace module
+        traceModule.write(err, &#x27;unhandled-error&#x27;, traceModule.messageType.error);
 
-        //(production) - custom functionality for error handling
-        //reportToAnalytics(err)
-    }
+        // (production) - custom functionality for error handling
+        // reportToAnalytics(err)
+    },
 }</code>
                         </td>
                     </tr>
