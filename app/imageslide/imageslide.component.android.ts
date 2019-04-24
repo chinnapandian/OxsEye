@@ -6,8 +6,8 @@ import { ImageSource } from 'tns-core-modules/image-source';
 import { SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
 import { Page } from 'tns-core-modules/ui/page';
 
-import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'ui/gestures';
-import { Image } from 'ui/image';
+import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'tns-core-modules/ui/gestures';
+import { Image } from 'tns-core-modules/ui/image';
 
 import { RouterExtensions } from 'nativescript-angular/router';
 

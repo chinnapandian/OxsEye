@@ -1,21 +1,15 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
-import * as application from 'tns-core-modules/application';
-import { File, path } from 'tns-core-modules/file-system';
 import { setTimeout } from 'tns-core-modules/timer';
-import { View } from 'tns-core-modules/ui/core/view';
 import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'tns-core-modules/ui/gestures';
-import { Page } from 'tns-core-modules/ui/page';
 
-import { ActivityLoader } from '../activityloader/activityloader.common';
-import { TransformedImage } from '../providers/transformedimage.common';
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
 import * as orientation from 'nativescript-orientation';
 import * as Toast from 'nativescript-toast';
-import * as platform from 'platform';
-import * as formattedStringModule from 'text/formatted-string';
-import * as buttons from 'ui/button';
+import * as platform from 'tns-core-modules/platform';
+import * as formattedStringModule from 'tns-core-modules/text/formatted-string';
+import * as buttons from 'tns-core-modules/ui/button';
 
 import * as opencv from 'nativescript-opencv-plugin';
 /**
@@ -87,7 +81,7 @@ export class DialogContent {
      * @param transformedImageProvider transformed image provider instance
      */
     constructor(private params: ModalDialogParams,
-                private transformedImageProvider: TransformedImageProvider) {
+        private transformedImageProvider: TransformedImageProvider) {
         this.manualBtnText = 'Manual';
         this.points = [];
         this.pointsCounter = 0;
@@ -102,7 +96,9 @@ export class DialogContent {
         orientation.enableRotation();
         this.params.closeCallback(result);
     }
-
+    /**
+     * Performing manual transformation
+     */
     performManualCorrection() {
         let pointsCount = 0;
         this.points.forEach((point: any) => {
@@ -121,8 +117,10 @@ export class DialogContent {
         if (pointsCount !== 4) {
             alert('Please select only four points.');
         } else {
-            const rectanglePoints = this.points[0].x + '-' + (+this.points[0].y - this.circleRadius) + '#'
-                + this.points[1].x + '-' + (+this.points[1].y - this.circleRadius) + '#'
+            const point0Y = (+this.points[0].y - this.circleRadius);
+            const point1Y = (+this.points[1].y - this.circleRadius);
+            const rectanglePoints = this.points[0].x + '-' + ((point0Y < 0)? 0 : point0Y) + '#'
+                + this.points[1].x + '-' + ((point1Y < 0)? 0 : point1Y) + '#'
                 + this.points[2].x + '-' + (+this.points[2].y + this.circleRadius) + '#'
                 + this.points[3].x + '-' + (+this.points[3].y + this.circleRadius);
             console.log(rectanglePoints);
@@ -264,7 +262,9 @@ export class DialogContent {
             }
         }
     }
-
+    /**
+     * Event fires on double tap
+     */
     onDoubleTap() {
         if (this.manualBtnText !== 'Perform') {
             this.imgView.animate({

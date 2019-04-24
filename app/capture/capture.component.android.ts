@@ -1,20 +1,17 @@
-import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CameraPlus } from '@nstudio/nativescript-camera-plus';
-import * as fs from 'file-system';
 import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { ImageAsset } from 'tns-core-modules/image-asset';
 import { ImageSource } from 'tns-core-modules/image-source';
-import { View } from 'tns-core-modules/ui/core/view';
-import { Image } from 'tns-core-modules/ui/image';
-import { Page } from 'tns-core-modules/ui/page';
 import { ActivityLoader } from '../activityloader/activityloader.common';
 import { DialogContent } from '../dialog/dialog.component';
-import { ImageGalleryComponent } from '../imagegallery/imagegallery.component';
 import { SendBroadcastImage } from '../providers/transformedimage.provider';
 
 import * as opencv from 'nativescript-opencv-plugin';
 import * as Toast from 'nativescript-toast';
+import * as fs from 'tns-core-modules/file-system';
+
 import * as application from 'tns-core-modules/application';
 
 /**

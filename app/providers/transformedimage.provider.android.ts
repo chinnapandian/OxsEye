@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { File, path } from 'tns-core-modules/file-system';
+import { File } from 'tns-core-modules/file-system';
 
 import { TransformedImage } from './transformedimage.common';
 
