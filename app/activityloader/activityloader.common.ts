@@ -10,10 +10,8 @@ const LoadingIndicator = require('nativescript-loading-indicator').LoadingIndica
 export class ActivityLoader {
     /** LoadingIndicator Instance variable. */
     private _loader = new LoadingIndicator();
-
-    /** constructor for ActivityLoader */
-    constructor(private logger: OxsEyeLogger) {
-    }
+    /** Logger variable to log message in different level */
+    private logger = new OxsEyeLogger();
 
     /**
      * Gets LoadingIndicator options for both android and ios.
