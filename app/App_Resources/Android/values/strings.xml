@@ -3,4 +3,10 @@
     <string name="app_name">Oxs.Eye</string>
     <string name="title_activity_kimera">Oxs.Eye</string>
     <item name="gallery_btn" type="id"></item>
+    <string name="save">Save</string>
+    <string name="retake">Retake</string>
+    <string name="manual">Manual</string>
+    <string name="perform">Perform</string>
+    <string name="select_unselect_all">Select/Unselect All</string>
+    <string name="sort_by_date">Sort By Date</string>
 </resources>

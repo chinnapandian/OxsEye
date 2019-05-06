@@ -63,7 +63,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>TransformedImageProvider class.</p>
+                <p>This is a provider class contains common functionalyties related to captured image.</p>
 
             </p>
 
@@ -117,9 +117,6 @@
                                 <a href="#getURIForFile">getURIForFile</a>
                             </li>
                             <li>
-                                <a href="#LoadPossibleContourImages">LoadPossibleContourImages</a>
-                            </li>
-                            <li>
                                 <a href="#loadThumbnailImagesByContentResolver">loadThumbnailImagesByContentResolver</a>
                             </li>
                             <li>
@@ -143,12 +140,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor()</code>
+<code>constructor(logger: <a href="../injectables/OxsEyeLogger.html">OxsEyeLogger</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">app/providers/transformedimage.provider.android.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">app/providers/transformedimage.provider.android.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -156,6 +153,32 @@
                     <td class="col-md-4">
                             <div class="io-description"><p>Constructor for TransformedImageProvider</p>
 </div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OxsEyeLogger.html" target="_self" >OxsEyeLogger</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
                     </td>
                 </tr>
             </tbody>
@@ -189,15 +212,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="179"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:179</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="186"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:186</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Delete a selected image file from the disk.</p>
+                    <div class="io-description"><p>Deletes the selected image file from the disk.</p>
 </div>
 
                     <div class="io-description">
@@ -266,15 +289,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="134"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:134</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="140"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:140</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Delete all temporary files used to perform transformation.</p>
+                    <div class="io-description"><p>TODO: this is not been used now. but if needed later uncomment and use it.
+Loads possible contour images</p>
 </div>
 
                     <div class="io-description">
@@ -307,15 +331,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="226"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:226</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="236"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:236</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Get original image</p>
+                    <div class="io-description"><p>Gets the original captured image. This will also be not used in production.</p>
 </div>
 
                     <div class="io-description">
@@ -384,15 +408,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="210"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:210</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="220"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:220</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Get original image</p>
+                    <div class="io-description"><p>Gets the original image with rectangle. But this will not be used when it goes to production.</p>
 </div>
 
                     <div class="io-description">
@@ -461,15 +485,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="245"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:245</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="256"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:256</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Get URI for file.</p>
+                    <div class="io-description"><p>Gets the URI for the captured/transformed image file.</p>
 </div>
 
                     <div class="io-description">
@@ -521,47 +545,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="LoadPossibleContourImages"></a>
-                    <span class="name">
-                        <b>
-                            LoadPossibleContourImages
-                        </b>
-                        <a href="#LoadPossibleContourImages"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>LoadPossibleContourImages()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="84"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:84</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Load possible contour images</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="loadThumbnailImagesByContentResolver"></a>
                     <span class="name">
                         <b>
@@ -580,15 +563,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="36"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:36</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="39"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:39</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Load thumbnail images by content resolver.</p>
+                    <div class="io-description"><p>Loads all the thumbnail images of transformed image by content resolver in order what
+it&#39;s parameter has and populates the image list.</p>
 </div>
 
                     <div class="io-description">
@@ -673,15 +657,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="194"
-                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:194</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="204"
+                            class="link-to-prism">app/providers/transformedimage.provider.android.ts:204</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Rename a fila name to given name.</p>
+                    <div class="io-description"><p>Renames the transformed image file name to given name. This is been used while performing
+manual transformation using OpenCV API. As it creates temporary files behind the scene,
+it needs to be renamed to refresh the final image in the view.</p>
 </div>
 
                     <div class="io-description">
@@ -771,7 +757,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">app/providers/transformedimage.provider.android.ts:22</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">app/providers/transformedimage.provider.android.ts:23</a></div>
                             </td>
                         </tr>
 
@@ -806,7 +792,7 @@ Currently this is not been used.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">app/providers/transformedimage.provider.android.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">app/providers/transformedimage.provider.android.ts:19</a></div>
                             </td>
                         </tr>
 
@@ -826,8 +812,9 @@ Currently this is not been used.</p>
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Injectable } from &#x27;@angular/core&#x27;;
-import { File, path } from &#x27;tns-core-modules/file-system&#x27;;
+import { File } from &#x27;tns-core-modules/file-system&#x27;;
 
+import { OxsEyeLogger } from &#x27;../logger/oxseyelogger&#x27;;
 import { TransformedImage } from &#x27;./transformedimage.common&#x27;;
 
 import * as application from &#x27;tns-core-modules/application&#x27;;
@@ -837,7 +824,7 @@ import * as Toast from &#x27;nativescript-toast&#x27;;
 import * as Permissions from &#x27;nativescript-permissions&#x27;;
 
 /**
- * TransformedImageProvider class.
+ * This is a provider class contains common functionalyties related to captured image.
  */
 @Injectable()
 export class TransformedImageProvider {
@@ -851,12 +838,14 @@ export class TransformedImageProvider {
     /**
      * Constructor for TransformedImageProvider
      */
-    constructor() {
+    constructor(private logger: OxsEyeLogger) {
         this.imageList &#x3D; [];
         this.contourImageList &#x3D; [];
     }
     /**
-     * Load thumbnail images by content resolver.
+     * Loads all the thumbnail images of transformed image by content resolver in order what
+     * it&#x27;s parameter has and populates the image list.
+     * 
      * @param orderByAscDesc Orderby value &#x27;Asc&#x27;/&#x27;Desc&#x27;
      * @param activityLoader ActivityLoader instance
      */
@@ -897,66 +886,69 @@ export class TransformedImageProvider {
                 } catch (error) {
                     activityLoader.hide();
                     Toast.makeText(&#x27;Error while loading gallery images.&#x27;, &#x27;long&#x27;).show();
-                    console.log(&#x27;getGalleryPhotos&#x3D;&gt;&#x27;, JSON.stringify(error));
+                    this.logger.error(&#x27;Error while loading gallery images. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
-            }).catch(() &#x3D;&gt; {
+            }).catch((error) &#x3D;&gt; {
                 activityLoader.hide();
                 Toast.makeText(&#x27;Error in giving permission.&#x27;, &#x27;long&#x27;).show();
-                console.log(&#x27;Permission is not granted (sadface)&#x27;);
+                this.logger.error(&#x27;Error in giving permission. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Load possible contour images
+     * TODO: this is not been used now. but if needed later uncomment and use it.
+     * Loads possible contour images
      */
-    LoadPossibleContourImages() {
+    // LoadPossibleContourImages() {
 
-        this.contourImageList &#x3D; [];
-        Permissions.requestPermission(
-            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
-            &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
-                const MediaStore &#x3D; android.provider.MediaStore;
-                let cursor &#x3D; null;
-                try {
-                    const context &#x3D; application.android.context;
-                    const columns &#x3D; [MediaStore.MediaColumns.DATA];
-                    //      let orderBy &#x3D; MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
-                    const uri &#x3D; MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    const where &#x3D; MediaStore.MediaColumns.DATA + &#x27; like &quot;%contourImage%&quot;&#x27;;
-                    cursor &#x3D; context.getContentResolver().query(uri, columns, where, null, null);
-                    if (cursor &amp;&amp; cursor.getCount() &gt; 0) {
-                        while (cursor.moveToNext()) {
-                            const columnIndex &#x3D; cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
-                            const imageUri &#x3D; cursor.getString(columnIndex) + &#x27;&#x27;;
-                            const name &#x3D; imageUri.substring(imageUri.lastIndexOf(&#x27;contourImage&#x27;));
-                            // let image &#x3D; { fileUri: imageUri, text: name };
-                            //  if (imageUri.indexOf(&#x27;PT_IMG&#x27;) &gt; 0 &amp;&amp; imageUri.endsWith(&#x27;.png&#x27;)) {
-                            //   let thumnailOrgPath &#x3D; imageUri.replace(&#x27;thumb_PT_IMG&#x27;, &#x27;PT_IMG&#x27;);
-                            this.contourImageList.push(new TransformedImage(
-                                name,
-                                imageUri,
-                                imageUri,
-                                false,
-                            ));
+    //     this.contourImageList &#x3D; [];
+    //     Permissions.requestPermission(
+    //         [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+    //         android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+    //         &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
+    //             const MediaStore &#x3D; android.provider.MediaStore;
+    //             let cursor &#x3D; null;
+    //             try {
+    //                 const context &#x3D; application.android.context;
+    //                 const columns &#x3D; [MediaStore.MediaColumns.DATA];
+    //                 //      let orderBy &#x3D; MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
+    //                 const uri &#x3D; MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    //                 const where &#x3D; MediaStore.MediaColumns.DATA + &#x27; like &quot;%contourImage%&quot;&#x27;;
+    //                 cursor &#x3D; context.getContentResolver().query(uri, columns, where, null, null);
+    //                 if (cursor &amp;&amp; cursor.getCount() &gt; 0) {
+    //                     while (cursor.moveToNext()) {
+    //                         const columnIndex &#x3D; cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
+    //                         const imageUri &#x3D; cursor.getString(columnIndex) + &#x27;&#x27;;
+    //                         const name &#x3D; imageUri.substring(imageUri.lastIndexOf(&#x27;contourImage&#x27;));
+    //                         // let image &#x3D; { fileUri: imageUri, text: name };
+    //                         //  if (imageUri.indexOf(&#x27;PT_IMG&#x27;) &gt; 0 &amp;&amp; imageUri.endsWith(&#x27;.png&#x27;)) {
+    //                         //   let thumnailOrgPath &#x3D; imageUri.replace(&#x27;thumb_PT_IMG&#x27;, &#x27;PT_IMG&#x27;);
+    //                         this.contourImageList.push(new TransformedImage(
+    //                             name,
+    //                             imageUri,
+    //                             imageUri,
+    //                             false,
+    //                         ));
 
-                            //   }
-                        }
-                    }
-                    //         activityLoader.hide();
-                } catch (error) {
-                    //           activityLoader.hide();
-                    Toast.makeText(&#x27;Error while loading contour images.&#x27;, &#x27;long&#x27;).show();
-                    console.log(&#x27;getcontourImages&#x3D;&gt;&#x27;, JSON.stringify(error));
-                }
+    //                         //   }
+    //                     }
+    //                 }
+    //                 //         activityLoader.hide();
+    //             } catch (error) {
+    //                 //           activityLoader.hide();
+    //                 Toast.makeText(&#x27;Error while loading contour images.&#x27;, &#x27;long&#x27;).show();
+    //                 this.logger.error(&#x27;Error while loading contour images. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
+    //             }
 
-            }).catch(() &#x3D;&gt; {
-                //   activityLoader.hide();
-                Toast.makeText(&#x27;Error in giving permission.&#x27;, &#x27;long&#x27;).show();
-                console.log(&#x27;Permission is not granted (sadface)&#x27;);
-            });
-    }
+    //         }).catch((error) &#x3D;&gt; {
+    //             //   activityLoader.hide();
+    //             Toast.makeText(&#x27;Error in giving permission.&#x27;, &#x27;long&#x27;).show();
+    //             this.logger.error(&#x27;Error in giving permission. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
+    //         });
+    // }
+
     /**
-     * Delete all temporary files used to perform transformation.
+     * Deletes all the temporary files used to perform transformation. Actually it creates
+     * some temporary files behind the scene when it performs perspective transformation using OpenCV API.
      */
     DeleteFiles() {
         this.contourImageList &#x3D; [];
@@ -981,26 +973,27 @@ export class TransformedImageProvider {
                             tempFile.remove()
                                 .then(() &#x3D;&gt; {
                                     SendBroadcastImage(imageUri);
-                                }).catch((err) &#x3D;&gt; {
+                                }).catch((error) &#x3D;&gt; {
                                     Toast.makeText(&#x27;Error while deleting temporary images&#x27;).show();
-                                    console.log(err.stack);
+                                    this.logger.error(&#x27;Error while deleting temporary files. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }
                     }
                 } catch (error) {
                     //           activityLoader.hide();
                     Toast.makeText(&#x27;Error while loading temporary images.&#x27;, &#x27;long&#x27;).show();
-                    console.log(&#x27;Temporary files &#x3D;&gt;&#x27;, JSON.stringify(error));
+                    this.logger.error(&#x27;Error while loading temporary images. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
 
-            }).catch(() &#x3D;&gt; {
+            }).catch((error) &#x3D;&gt; {
                 //   activityLoader.hide();
                 Toast.makeText(&#x27;Error in giving permission.&#x27;, &#x27;long&#x27;).show();
-                console.log(&#x27;Permission is not granted (sadface)&#x27;);
+                this.logger.error(&#x27;Error in giving permission. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Delete a selected image file from the disk.
+     * Deletes the selected image file from the disk.
+     * 
      * @param fileURI Image file path
      */
     deleteFile(fileURI: string) {
@@ -1008,13 +1001,16 @@ export class TransformedImageProvider {
         tempFile.remove()
             .then(() &#x3D;&gt; {
                 SendBroadcastImage(fileURI);
-            }).catch((err) &#x3D;&gt; {
-                Toast.makeText(&#x27;deleteFile: Error while deleting temporary files&#x27;).show();
-                console.log(err.stack);
+            }).catch((error) &#x3D;&gt; {
+                Toast.makeText(&#x27;Error while deleting temporary files&#x27;).show();
+                this.logger.error(&#x27;Error while deleting temporary files. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Rename a fila name to given name.
+     * Renames the transformed image file name to given name. This is been used while performing
+     * manual transformation using OpenCV API. As it creates temporary files behind the scene,
+     * it needs to be renamed to refresh the final image in the view.
+     * 
      * @param fileURI Image file path
      * @param renameFileto Filename to be renamed to.
      */
@@ -1024,14 +1020,14 @@ export class TransformedImageProvider {
             .then(() &#x3D;&gt; {
                 SendBroadcastImage(fileURI);
                 SendBroadcastImage(renameFileto);
-            }).catch((err) &#x3D;&gt; {
-                Toast.makeText(&#x27;renameFile: Error while renaming temporary file&#x27;).show();
-                console.log(err.stack);
+            }).catch((error) &#x3D;&gt; {
+                Toast.makeText(&#x27;Error while renaming temporary file&#x27;).show();
+                this.logger.error(&#x27;Error while renaming temporary files. &#x27; + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
 
     /**
-     * Get original image
+     * Gets the original image with rectangle. But this will not be used when it goes to production.
      * @param transformedImage Transformed image file path
      */
     getOriginalImageWithRectangle(transformedImage: string): any {
@@ -1047,7 +1043,7 @@ export class TransformedImageProvider {
     }
 
     /**
-     * Get original image
+     * Gets the original captured image. This will also be not used in production.
      * @param transformedImage Transformed image file path
      */
     getOriginalImage(transformedImage: string): any {
@@ -1065,7 +1061,8 @@ export class TransformedImageProvider {
     }
 
     /**
-     * Get URI for file.
+     * Gets the URI for the captured/transformed image file.
+     * 
      * @param newFile File name
      * @returns URI Returns the URI of given file name
      */
@@ -1077,6 +1074,7 @@ export class TransformedImageProvider {
 }
 /**
  * Broadcast image to access publicly, so that it will be available to any app.
+ * 
  * @param imgURI Image file URI
  */
 export function SendBroadcastImage(imgURI) {

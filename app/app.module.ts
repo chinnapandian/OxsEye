@@ -4,6 +4,8 @@ import { PagerModule } from 'nativescript-pager/angular';
 import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular';
 
+import { NativeScriptI18nModule } from 'nativescript-i18n/angular';
+
 import { AppRoutingModule } from './app.routing';
 
 import { AppComponent } from './app.component';
@@ -16,6 +18,9 @@ import { ImageSlideComponent } from './imageslide/imageslide.component';
 import { ActivityLoader } from './activityloader/activityloader.common';
 import { TransformedImageProvider } from './providers/transformedimage.provider';
 
+import { OxsEyeLogger } from './logger/oxseyelogger';
+
+/** This is the main application module contains all the modules used in the application. */
 @NgModule({
     bootstrap: [
         AppComponent,
@@ -26,6 +31,7 @@ import { TransformedImageProvider } from './providers/transformedimage.provider'
         PagerModule,
         NativeScriptUIListViewModule,
         NativeScriptUISideDrawerModule,
+        NativeScriptI18nModule,
 
     ],
     declarations: [
@@ -36,7 +42,7 @@ import { TransformedImageProvider } from './providers/transformedimage.provider'
         ImageSlideComponent,
     ],
     entryComponents: [DialogContent],
-    providers: [TransformedImageProvider, ActivityLoader],
+    providers: [TransformedImageProvider, ActivityLoader, OxsEyeLogger],
     schemas: [
         NO_ERRORS_SCHEMA,
     ],

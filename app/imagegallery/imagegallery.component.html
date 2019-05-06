@@ -21,10 +21,10 @@
 					</FormattedString>
 				</Button>
     </ActionItem>
-    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? 'visible' : 'collapse' }}" text="Select/UnSelect All"
+    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? 'visible' : 'collapse' }}" text="{{selectUnselectAllLable}}"
         android.position="popup">
     </ActionItem>
-    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? 'visible' : 'collapse' }}" text="Sort By Date"
+    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? 'visible' : 'collapse' }}" text="{{sortByDateLable}}"
         android.position="popup">
     </ActionItem>
 </ActionBar>

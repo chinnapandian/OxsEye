@@ -68,7 +68,7 @@
         <h3>Description</h3>
     </p>
     <p class="comment">
-        <p>Capture component class</p>
+        <p>Capture component class, which is being used to capture image from camera.</p>
 
     </p>
 
@@ -78,7 +78,6 @@
     </p>
     <p class="comment">
                     <code><a href="https://angular.io/api/core/OnInit" target="_blank" >OnInit</a></code>
-                    <code><a href="https://angular.io/api/core/OnDestroy" target="_blank" >OnDestroy</a></code>
     </p>
 
 
@@ -182,8 +181,28 @@
                                 <a href="#isCameraVisible">isCameraVisible</a>
                             </li>
                             <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#locale">locale</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#manualBtnLable">manualBtnLable</a>
+                            </li>
+                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#opencvInstance">opencvInstance</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#performBtnLable">performBtnLable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#retakeBtnLable">retakeBtnLable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
+                                <a href="#saveBtnLable">saveBtnLable</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -252,9 +271,6 @@
                                 <a href="#goImageGallery">goImageGallery</a>
                             </li>
                             <li>
-                                <a href="#imagesSelectedEvent">imagesSelectedEvent</a>
-                            </li>
-                            <li>
                                 <a href="#initAutoFocusImageButton">initAutoFocusImageButton</a>
                             </li>
                             <li>
@@ -268,13 +284,7 @@
                                 <a href="#loadImage">loadImage</a>
                             </li>
                             <li>
-                                <a href="#ngOnDestroy">ngOnDestroy</a>
-                            </li>
-                            <li>
                                 <a href="#ngOnInit">ngOnInit</a>
-                            </li>
-                            <li>
-                                <a href="#openCamPlusLibrary">openCamPlusLibrary</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -299,9 +309,6 @@
                             </li>
                             <li>
                                 <a href="#takePicFromCam">takePicFromCam</a>
-                            </li>
-                            <li>
-                                <a href="#toggleCameraEvent">toggleCameraEvent</a>
                             </li>
                             <li>
                                 <a href="#toggleFlashOnCam">toggleFlashOnCam</a>
@@ -330,12 +337,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, modalService: ModalDialogService, viewContainerRef: <a href="https://angular.io/api/core/ViewContainerRef" target="_blank">ViewContainerRef</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, activityLoader: <a href="../classes/ActivityLoader.html">ActivityLoader</a>)</code>
+<code>constructor(zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, modalService: ModalDialogService, viewContainerRef: <a href="https://angular.io/api/core/ViewContainerRef" target="_blank">ViewContainerRef</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, activityLoader: <a href="../classes/ActivityLoader.html">ActivityLoader</a>, logger: <a href="../injectables/OxsEyeLogger.html">OxsEyeLogger</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/capture/capture.component.android.ts:56</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">app/capture/capture.component.android.ts:67</a></div>
                             </td>
                         </tr>
 
@@ -435,6 +442,20 @@
 </code>
                                                         </td>
                                                 </tr>
+                                                <tr>
+                                                        <td>logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OxsEyeLogger.html" target="_self" >OxsEyeLogger</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -475,16 +496,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="100"
-                            class="link-to-prism">app/capture/capture.component.android.ts:100</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="111"
+                            class="link-to-prism">app/capture/capture.component.android.ts:111</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Method to check camera loaded or not along with some
-camera settings initialization.</p>
+                    <div class="io-description"><p>This method is called when camera is loaded, where all the neccessary things like
+displaying buttons(takePicture, gallery, flash, camera &amp; autoFocus) on camera view
+are taken care and also initializes camera instance.</p>
 </div>
 
                     <div class="io-description">
@@ -553,15 +575,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="218"
-                            class="link-to-prism">app/capture/capture.component.android.ts:218</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="233"
+                            class="link-to-prism">app/capture/capture.component.android.ts:233</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create auto focus image.</p>
+                    <div class="io-description"><p>Creates auto focus image button. Actually it creates image button and setting
+it&#39;s properties like image icon, shape and color along with click event listener in it.</p>
 </div>
 
                     <div class="io-description">
@@ -594,15 +617,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="233"
-                            class="link-to-prism">app/capture/capture.component.android.ts:233</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="250"
+                            class="link-to-prism">app/capture/capture.component.android.ts:250</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create auto focus image button.</p>
+                    <div class="io-description"><p>Creates auto focus image button with help ImageView widget and settings
+it&#39;s attributes like padding, height, width, color &amp; scaleType.</p>
 </div>
 
                     <div>
@@ -643,15 +667,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="465"
-                            class="link-to-prism">app/capture/capture.component.android.ts:465</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="501"
+                            class="link-to-prism">app/capture/capture.component.android.ts:501</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create auto focus image params.</p>
+                    <div class="io-description"><p>Creates layout params using LayoutParams widget for autoFocus button
+and sets it&#39;s params like height, width, margin &amp; rules.</p>
 </div>
 
                     <div class="io-description">
@@ -684,15 +709,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="293"
-                            class="link-to-prism">app/capture/capture.component.android.ts:293</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="315"
+                            class="link-to-prism">app/capture/capture.component.android.ts:315</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create auto focus shape.</p>
+                    <div class="io-description"><p>Creates auto focus shape using ShapeDrawable object and
+sets alpha.</p>
 </div>
 
                     <div>
@@ -731,15 +757,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="303"
-                            class="link-to-prism">app/capture/capture.component.android.ts:303</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="327"
+                            class="link-to-prism">app/capture/capture.component.android.ts:327</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create image button.</p>
+                    <div class="io-description"><p>Creates image button with help of ImageButton widget
+and sets it&#39;s attributes like padding, maxHeight &amp; maxwidth.</p>
 </div>
 
                     <div>
@@ -780,15 +807,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="485"
-                            class="link-to-prism">app/capture/capture.component.android.ts:485</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="523"
+                            class="link-to-prism">app/capture/capture.component.android.ts:523</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create image gallery params.</p>
+                    <div class="io-description"><p>Creates layout params using LayoutParams widget for gallery button
+and sets it&#39;s params like height, width, margin &amp; rules.</p>
 </div>
 
                     <div class="io-description">
@@ -821,15 +849,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="246"
-                            class="link-to-prism">app/capture/capture.component.android.ts:246</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="264"
+                            class="link-to-prism">app/capture/capture.component.android.ts:264</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create image gallery button.</p>
+                    <div class="io-description"><p>Creates image gallery button. Actually it creates image button and setting
+it&#39;s properties like image icon, shape and color along with click event listener in it.</p>
 </div>
 
                     <div class="io-description">
@@ -862,15 +891,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="196"
-                            class="link-to-prism">app/capture/capture.component.android.ts:196</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="214"
+                            class="link-to-prism">app/capture/capture.component.android.ts:214</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create take picture button.</p>
+                    <div class="io-description"><p>Creates take picture button. Actually it creates image button and setting
+it&#39;s properties like image icon, shape and color along with click event listener in it.</p>
 </div>
 
                     <div class="io-description">
@@ -905,15 +935,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="452"
-                            class="link-to-prism">app/capture/capture.component.android.ts:452</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="487"
+                            class="link-to-prism">app/capture/capture.component.android.ts:487</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create take picture params.</p>
+                    <div class="io-description"><p>Creates layout params using LayoutParams widget for takePicture button
+and sets it&#39;s params like height, width, margin &amp; rules.</p>
 </div>
 
                     <div class="io-description">
@@ -948,15 +979,15 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="518"
-                            class="link-to-prism">app/capture/capture.component.android.ts:518</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="560"
+                            class="link-to-prism">app/capture/capture.component.android.ts:560</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create thumbnail image.</p>
+                    <div class="io-description"><p>Creates thumbnail image for the captured transformed image and sets it in gallery button.</p>
 </div>
 
                     <div class="io-description">
@@ -1025,15 +1056,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="282"
-                            class="link-to-prism">app/capture/capture.component.android.ts:282</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="303"
+                            class="link-to-prism">app/capture/capture.component.android.ts:303</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create transparent circle shape.</p>
+                    <div class="io-description"><p>Creates transparent circle shape with help of GradientDrawable object
+and sets it&#39;s attributes like color, radius and alpha.</p>
 </div>
 
                     <div>
@@ -1072,15 +1104,15 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="272"
-                            class="link-to-prism">app/capture/capture.component.android.ts:272</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="291"
+                            class="link-to-prism">app/capture/capture.component.android.ts:291</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Gets image drawable image id</p>
+                    <div class="io-description"><p>Gets actual icon image using icon name from context.</p>
 </div>
 
                     <div class="io-description">
@@ -1149,97 +1181,20 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="371"
-                            class="link-to-prism">app/capture/capture.component.android.ts:371</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="393"
+                            class="link-to-prism">app/capture/capture.component.android.ts:393</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Go to image gallery.</p>
+                    <div class="io-description"><p>It takes to image gallery view when user clicks on gallery button on camera view.</p>
 </div>
 
                     <div class="io-description">
                         <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="imagesSelectedEvent"></a>
-                    <span class="name">
-                        <b>
-                            imagesSelectedEvent
-                        </b>
-                        <a href="#imagesSelectedEvent"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>imagesSelectedEvent(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="314"
-                            class="link-to-prism">app/capture/capture.component.android.ts:314</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Image selected event.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>args</td>
-                                    <td>
-                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>Image selected event data</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
                     </div>
                 </td>
             </tr>
@@ -1267,15 +1222,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="189"
-                            class="link-to-prism">app/capture/capture.component.android.ts:189</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="206"
+                            class="link-to-prism">app/capture/capture.component.android.ts:206</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>initialize auto focus image button.</p>
+                    <div class="io-description"><p>This method initializes autoFocus button in camera view, actually
+it removes an existing one if exists and adds it.</p>
 </div>
 
                     <div class="io-description">
@@ -1308,15 +1264,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="174"
-                            class="link-to-prism">app/capture/capture.component.android.ts:174</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="188"
+                            class="link-to-prism">app/capture/capture.component.android.ts:188</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Initialize Camera Button.</p>
+                    <div class="io-description"><p>This method initializes camera button in camera view, actually
+it removes an existing one if exists and adds it.</p>
 </div>
 
                     <div class="io-description">
@@ -1349,15 +1306,17 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="181"
-                            class="link-to-prism">app/capture/capture.component.android.ts:181</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="197"
+                            class="link-to-prism">app/capture/capture.component.android.ts:197</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>initialize image gallery button.</p>
+                    <div class="io-description"><p>This method initializes gallery button in camera view, actually
+it removes an existing one if exists and adds it. And also sets
+the image icon for it.</p>
 </div>
 
                     <div class="io-description">
@@ -1392,15 +1351,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="567"
-                            class="link-to-prism">app/capture/capture.component.android.ts:567</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="614"
+                            class="link-to-prism">app/capture/capture.component.android.ts:614</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>load images.</p>
+                    <div class="io-description"><p>Method to perform prespective transformation for the captured image 
+and sets the transformed image URI in this.imgURI variable.</p>
 </div>
 
                     <div class="io-description">
@@ -1451,47 +1411,6 @@ camera settings initialization.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="ngOnDestroy"></a>
-                    <span class="name">
-                        <b>
-                            ngOnDestroy
-                        </b>
-                        <a href="#ngOnDestroy"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>ngOnDestroy()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="92"
-                            class="link-to-prism">app/capture/capture.component.android.ts:92</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Destroy method called while angular destroys.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="ngOnInit"></a>
                     <span class="name">
                         <b>
@@ -1510,56 +1429,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="79"
-                            class="link-to-prism">app/capture/capture.component.android.ts:79</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="94"
+                            class="link-to-prism">app/capture/capture.component.android.ts:94</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Initialization method called while angular initialize.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
-                    <a name="openCamPlusLibrary"></a>
-                    <span class="name">
-                        <b>
-                            openCamPlusLibrary
-                        </b>
-                        <a href="#openCamPlusLibrary"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>openCamPlusLibrary()</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="355"
-                            class="link-to-prism">app/capture/capture.component.android.ts:355</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Open camera library.</p>
+                    <div class="io-description"><p>Initialization method initializes OpenCV module and buttons like
+takePicture, gallery and autoFocus buttons in camera view.</p>
 </div>
 
                     <div class="io-description">
@@ -1594,15 +1473,17 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="551"
-                            class="link-to-prism">app/capture/capture.component.android.ts:551</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="597"
+                            class="link-to-prism">app/capture/capture.component.android.ts:597</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Perform perspective transformation.</p>
+                    <div class="io-description"><p>This method performs perspective transformation for the captured image using OpenCV API and
+returns the transformed image URI along with rectangle points as string which will be used to
+draw circle points. After that it shows up the dialog modal window with the transformed image.</p>
 </div>
 
                     <div class="io-description">
@@ -1671,15 +1552,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="322"
-                            class="link-to-prism">app/capture/capture.component.android.ts:322</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="340"
+                            class="link-to-prism">app/capture/capture.component.android.ts:340</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Photo captured event.</p>
+                    <div class="io-description"><p>Photo captured event fires when a picture is taken from camera, which actually
+loads the captured image from ImageAsset.</p>
 </div>
 
                     <div class="io-description">
@@ -1750,15 +1632,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="501"
-                            class="link-to-prism">app/capture/capture.component.android.ts:501</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="541"
+                            class="link-to-prism">app/capture/capture.component.android.ts:541</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Refresh captured images in media store.</p>
+                    <div class="io-description"><p>Refreshes the captured images in media store meaning that the new captured image will be
+available to public access. That can be done by SendBroadcastImage method.</p>
 </div>
 
                     <div class="io-description">
@@ -1861,15 +1744,15 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="478"
-                            class="link-to-prism">app/capture/capture.component.android.ts:478</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="515"
+                            class="link-to-prism">app/capture/capture.component.android.ts:515</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Sets image resource.</p>
+                    <div class="io-description"><p>Sets image resource to given image button.</p>
 </div>
 
                     <div class="io-description">
@@ -1954,15 +1837,15 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="436"
-                            class="link-to-prism">app/capture/capture.component.android.ts:436</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="469"
+                            class="link-to-prism">app/capture/capture.component.android.ts:469</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Set transformed image.</p>
+                    <div class="io-description"><p>Sets the transformed image in gallery image button.</p>
 </div>
 
                     <div class="io-description">
@@ -2031,15 +1914,19 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="381"
-                            class="link-to-prism">app/capture/capture.component.android.ts:381</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="408"
+                            class="link-to-prism">app/capture/capture.component.android.ts:408</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Show captured picture dialog</p>
+                    <div class="io-description"><p>Shows the captured picture dialog window after taking picture. This is modal window along with
+reuired options like capture image URI, transformed image URI, rectangle points and etc.
+This also takes care of deleting the captured image when user wants to retake (using Retake button)
+picture and, creates thumbnail image when user wants to save the captured image and
+sets the transformed image in gallery icon button in camera view.</p>
 </div>
 
                     <div class="io-description">
@@ -2155,15 +2042,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="362"
-                            class="link-to-prism">app/capture/capture.component.android.ts:362</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="384"
+                            class="link-to-prism">app/capture/capture.component.android.ts:384</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Take picture from camera.</p>
+                    <div class="io-description"><p>Takes picture from camera when user press the takePicture button on camera view.
+Then it sets the captured image URI into imageSource to be displayed in front-end.</p>
 </div>
 
                     <div class="io-description">
@@ -2214,83 +2102,6 @@ camera settings initialization.</p>
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="toggleCameraEvent"></a>
-                    <span class="name">
-                        <b>
-                            toggleCameraEvent
-                        </b>
-                        <a href="#toggleCameraEvent"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>toggleCameraEvent(args: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="330"
-                            class="link-to-prism">app/capture/capture.component.android.ts:330</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Toggle camera event.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>args</td>
-                                    <td>
-                                                <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>Camera toggle event data</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="toggleFlashOnCam"></a>
                     <span class="name">
                         <b>
@@ -2309,15 +2120,16 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="336"
-                            class="link-to-prism">app/capture/capture.component.android.ts:336</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="356"
+                            class="link-to-prism">app/capture/capture.component.android.ts:356</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Toggle flash on camera.</p>
+                    <div class="io-description"><p>This method is called when toggle the flash icon on camera. This actually
+flash off when it already is on or vice-versa.</p>
 </div>
 
                     <div class="io-description">
@@ -2350,15 +2162,15 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="342"
-                            class="link-to-prism">app/capture/capture.component.android.ts:342</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="362"
+                            class="link-to-prism">app/capture/capture.component.android.ts:362</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Toggle showing flash icon.</p>
+                    <div class="io-description"><p>Method to display flash icon based on it&#39;s property value true/false.</p>
 </div>
 
                     <div class="io-description">
@@ -2391,15 +2203,15 @@ camera settings initialization.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="349"
-                            class="link-to-prism">app/capture/capture.component.android.ts:349</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="369"
+                            class="link-to-prism">app/capture/capture.component.android.ts:369</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Toggle camera.</p>
+                    <div class="io-description"><p>Method to switch front/back camera.</p>
 </div>
 
                     <div class="io-description">
@@ -2651,7 +2463,7 @@ camera settings initialization.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">app/capture/capture.component.android.ts:50</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">app/capture/capture.component.android.ts:61</a></div>
                             </td>
                         </tr>
 
@@ -2685,7 +2497,7 @@ camera settings initialization.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">app/capture/capture.component.android.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">app/capture/capture.component.android.ts:63</a></div>
                             </td>
                         </tr>
 
@@ -2719,7 +2531,7 @@ camera settings initialization.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">app/capture/capture.component.android.ts:54</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">app/capture/capture.component.android.ts:65</a></div>
                             </td>
                         </tr>
 
@@ -2753,13 +2565,81 @@ camera settings initialization.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">app/capture/capture.component.android.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">app/capture/capture.component.android.ts:59</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>Boolean value to check the camera is visible or not. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="locale"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            locale</b>
+                            <a href="#locale"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">app/capture/capture.component.android.ts:48</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Localization </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="manualBtnLable"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            manualBtnLable</b>
+                            <a href="#manualBtnLable"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">app/capture/capture.component.android.ts:52</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Lable for manual button </p>
 </div>
                     </td>
                 </tr>
@@ -2787,13 +2667,115 @@ camera settings initialization.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/capture/capture.component.android.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">app/capture/capture.component.android.ts:67</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>OpenCV instance variable. </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="performBtnLable"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            performBtnLable</b>
+                            <a href="#performBtnLable"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">app/capture/capture.component.android.ts:54</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Lable for perform button </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="retakeBtnLable"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            retakeBtnLable</b>
+                            <a href="#retakeBtnLable"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/capture/capture.component.android.ts:56</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Lable for retake button </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="saveBtnLable"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            saveBtnLable</b>
+                            <a href="#saveBtnLable"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">app/capture/capture.component.android.ts:50</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Lable for save button </p>
 </div>
                     </td>
                 </tr>
@@ -2874,19 +2856,19 @@ camera settings initialization.</p>
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ElementRef, NgZone, OnDestroy, OnInit, ViewChild, ViewContainerRef } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, NgZone, OnInit, ViewContainerRef } from &#x27;@angular/core&#x27;;
 import { Router } from &#x27;@angular/router&#x27;;
 import { CameraPlus } from &#x27;@nstudio/nativescript-camera-plus&#x27;;
 import { ModalDialogOptions, ModalDialogService } from &#x27;nativescript-angular/modal-dialog&#x27;;
 import { ImageAsset } from &#x27;tns-core-modules/image-asset&#x27;;
 import { ImageSource } from &#x27;tns-core-modules/image-source&#x27;;
-import { View } from &#x27;tns-core-modules/ui/core/view&#x27;;
-import { Image } from &#x27;tns-core-modules/ui/image&#x27;;
-import { Page } from &#x27;tns-core-modules/ui/page&#x27;;
+
 import { ActivityLoader } from &#x27;../activityloader/activityloader.common&#x27;;
 import { DialogContent } from &#x27;../dialog/dialog.component&#x27;;
-import { ImageGalleryComponent } from &#x27;../imagegallery/imagegallery.component&#x27;;
 import { SendBroadcastImage } from &#x27;../providers/transformedimage.provider&#x27;;
+
+import { L } from &#x27;nativescript-i18n/angular&#x27;;
+import { OxsEyeLogger } from &#x27;../logger/oxseyelogger&#x27;;
 
 import * as opencv from &#x27;nativescript-opencv-plugin&#x27;;
 import * as Toast from &#x27;nativescript-toast&#x27;;
@@ -2895,7 +2877,7 @@ import * as fs from &#x27;tns-core-modules/file-system&#x27;;
 import * as application from &#x27;tns-core-modules/application&#x27;;
 
 /**
- * Capture component class
+ * Capture component class, which is being used to capture image from camera.
  */
 @Component({
     selector: &#x27;ns-capture&#x27;,
@@ -2903,7 +2885,7 @@ import * as application from &#x27;tns-core-modules/application&#x27;;
     styleUrls: [&#x27;./capture.component.css&#x27;],
     templateUrl: &#x27;./capture.component.html&#x27;,
 })
-export class CaptureComponent implements OnInit, OnDestroy {
+export class CaptureComponent implements OnInit {
     /** Camera instance variable. */
     private cam: any;
     /** Gallery button. */
@@ -2920,6 +2902,17 @@ export class CaptureComponent implements OnInit, OnDestroy {
     private autofocusParams: any;
     /** Empty string variable */
     private empty: any &#x3D; null;
+    /** Localization */
+    private locale: any;
+    /** Lable for save button */
+    private saveBtnLable: any;
+    /** Lable for manual button */
+    private manualBtnLable: any;
+    /** Lable for perform button */
+    private performBtnLable: any;
+    /** Lable for retake button */
+    private retakeBtnLable: any;
+
     /** Boolean value to check the camera is visible or not. */
     public isCameraVisible: any;
     /** Transformed Image source */
@@ -2933,6 +2926,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
 
     /**
      * Constructor for CaptureComponent.
+     * 
      * @param zone Angular zone to run a task asynchronously.
      * @param modalService Service modal
      * @param viewContainerRef View container referrence
@@ -2946,11 +2940,14 @@ export class CaptureComponent implements OnInit, OnDestroy {
         private router: Router,
         private activityLoader: ActivityLoader,
         // private _changeDetectionRef: ChangeDetectorRef
+        private logger: OxsEyeLogger,
     ) {
+        this.locale &#x3D; new L();
     }
 
     /**
-     * Initialization method called while angular initialize.
+     * Initialization method initializes OpenCV module and buttons like
+     * takePicture, gallery and autoFocus buttons in camera view.
      */
     ngOnInit(): void {
         console.log(&#x27;Initializing OpenCV...&#x27;);
@@ -2963,18 +2960,18 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Destroy method called while angular destroys.
-     */
-    ngOnDestroy() {
-        console.log(&#x27;Destroy called...&#x27;);
-    }
-    /**
-     * Method to check camera loaded or not along with some
-     * camera settings initialization.
+     * This method is called when camera is loaded, where all the neccessary things like
+     * displaying buttons(takePicture, gallery, flash, camera &amp; autoFocus) on camera view
+     * are taken care and also initializes camera instance.
+     * 
      * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
-        console.log(&#x27;***** cam loaded *****&#x27;);
+        this.saveBtnLable &#x3D; this.locale.transform(&#x27;save&#x27;);
+        this.manualBtnLable &#x3D; this.locale.transform(&#x27;manual&#x27;);
+        this.retakeBtnLable &#x3D; this.locale.transform(&#x27;retake&#x27;);
+        this.performBtnLable &#x3D; this.locale.transform(&#x27;perform&#x27;);
+
         this.cam &#x3D; args.object as CameraPlus;
         const flashMode &#x3D; this.cam.getFlashMode();
 
@@ -3010,9 +3007,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
             this.cam.camera.setAutoFocusMoveCallback(cb);
         }
         if (args.data) {
-
             this.cam.showFlashIcon &#x3D; true;
-
             this.cam.showToggleIcon &#x3D; true;
             try {
                 this.initImageGalleryButton();
@@ -3045,14 +3040,17 @@ export class CaptureComponent implements OnInit, OnDestroy {
         // this.cameraPlus.showToggleIcon &#x3D; false;
     }
     /**
-     * Initialize Camera Button.
+     * This method initializes camera button in camera view, actually
+     * it removes an existing one if exists and adds it.
      */
     initCameraButton() {
         this.cam.nativeView.removeView(this.takePicBtn);
         this.cam.nativeView.addView(this.takePicBtn, this.takePicParams);
     }
     /**
-     * initialize image gallery button.
+     * This method initializes gallery button in camera view, actually
+     * it removes an existing one if exists and adds it. And also sets
+     * the image icon for it.
      */
     initImageGalleryButton() {
         this.cam.nativeView.removeView(this.galleryBtn);
@@ -3060,27 +3058,25 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.setImageResource(this.galleryBtn, &#x27;ic_photo_library_white&#x27;);
     }
     /**
-     * initialize auto focus image button.
+     * This method initializes autoFocus button in camera view, actually
+     * it removes an existing one if exists and adds it.
      */
     initAutoFocusImageButton() {
         this.cam.nativeView.removeView(this.autofocusBtn);
         this.cam.nativeView.addView(this.autofocusBtn, this.autofocusParams);
     }
     /**
-     * Create take picture button.
+     * Creates take picture button. Actually it creates image button and setting
+     * it&#x27;s properties like image icon, shape and color along with click event listener in it.
      */
     createTakePictureButton() {
         const _this &#x3D; this;
         this.takePicBtn &#x3D; this.createImageButton();
         this.setImageResource(this.takePicBtn, &#x27;ic_camera&#x27;);
-        // let takePicDrawable &#x3D; this.getImageDrawable(&#x27;ic_camera&#x27;);
-        // this.takePicBtn.setImageResource(takePicDrawable);
         const shape &#x3D; this.createTransparentCircleDrawable();
         this.takePicBtn.setBackgroundDrawable(shape);
         const color &#x3D; android.graphics.Color.parseColor(&#x27;#ffffff&#x27;); // white color
         this.takePicBtn.setColorFilter(color);
-        // this.takePicBtn.setScaleX(0.50);
-        // this.takePicBtn.setScaleY(0.50);
         this.takePicBtn.setOnClickListener(new android.view.View.OnClickListener({
             onClick(args: any) {
                 _this.takePicFromCam(_this);
@@ -3089,7 +3085,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.createTakePictureParams();
     }
     /**
-     * Create auto focus image.
+     * Creates auto focus image button. Actually it creates image button and setting
+     * it&#x27;s properties like image icon, shape and color along with click event listener in it.
      */
     createAutoFocusImage() {
         const _this &#x3D; this;
@@ -3103,7 +3100,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.createAutoFocusImageParams();
     }
     /**
-     * Create auto focus image button.
+     * Creates auto focus image button with help ImageView widget and settings
+     * it&#x27;s attributes like padding, height, width, color &amp; scaleType.
+     * 
      * @returns Returns button object
      */
     createAutoFocusImageButton(): any {
@@ -3117,7 +3116,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return btn;
     }
     /**
-     * Create image gallery button.
+     * Creates image gallery button. Actually it creates image button and setting
+     * it&#x27;s properties like image icon, shape and color along with click event listener in it.
      */
     createImageGalleryButton() {
         const _this &#x3D; this;
@@ -3142,7 +3142,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.createImageGallerryParams();
     }
     /**
-     * Gets image drawable image id
+     * Gets actual icon image using icon name from context.
+     * 
      * @param iconName Icon Name
      */
     getImageDrawable(iconName: any): any {
@@ -3152,7 +3153,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return drawableId;
     }
     /**
-     * Create transparent circle shape.
+     * Creates transparent circle shape with help of GradientDrawable object
+     * and sets it&#x27;s attributes like color, radius and alpha.
+     * 
      * @returns Returns shape object
      */
     createTransparentCircleDrawable(): any {
@@ -3163,7 +3166,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return shape;
     }
     /**
-     * Create auto focus shape.
+     * Creates auto focus shape using ShapeDrawable object and
+     * sets alpha.
      * @returns Returns shape object
      */
     createAutofocusShape(): any {
@@ -3173,7 +3177,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return shape;
     }
     /**
-     * Create image button.
+     * Creates image button with help of ImageButton widget
+     * and sets it&#x27;s attributes like padding, maxHeight &amp; maxwidth.
+     * 
      * @returns Returns button object
      */
     createImageButton(): any {
@@ -3184,55 +3190,53 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return btn;
     }
     /**
-     * Image selected event.
-     * @param args Image selected event data
-     */
-    imagesSelectedEvent(args: any): void {
-        console.log(&#x27;IMAGES SELECTED EVENT!!!&#x27;);
-        this.loadImage((args.data as ImageAsset[])[0]);
-    }
-    /**
-     * Photo captured event.
+     * Photo captured event fires when a picture is taken from camera, which actually
+     * loads the captured image from ImageAsset.
+     * 
      * @param args Image captured event data
      */
     photoCapturedEvent(args: any): void {
         console.log(&#x27;PHOTO CAPTURED EVENT!!!&#x27;);
         this.loadImage(args.data as ImageAsset);
     }
+    // /**
+    //  * This is been called when toggle the camera button.
+    //  * @param args Camera toggle event data
+    //  */
+    // toggleCameraEvent(args: any): void {
+    //     console.log(&#x27;camera toggled&#x27;);
+    // }
+
     /**
-     * Toggle camera event.
-     * @param args Camera toggle event data
-     */
-    toggleCameraEvent(args: any): void {
-        console.log(&#x27;camera toggled&#x27;);
-    }
-    /**
-     * Toggle flash on camera.
+     * This method is called when toggle the flash icon on camera. This actually
+     * flash off when it already is on or vice-versa.
      */
     toggleFlashOnCam(): void {
         this.cam.toggleFlash();
     }
     /**
-     * Toggle showing flash icon.
+     * Method to display flash icon based on it&#x27;s property value true/false.
      */
     toggleShowingFlashIcon(): void {
         console.log(&#x60;showFlashIcon &#x3D; ${this.cam.showFlashIcon}&#x60;);
         this.cam.showFlashIcon &#x3D; !this.cam.showFlashIcon;
     }
     /**
-     * Toggle camera.
+     * Method to switch front/back camera.
      */
     toggleTheCamera(): void {
         this.cam.toggleCamera();
     }
+    // /**
+    //  * Open camera library.
+    //  */
+    // openCamPlusLibrary(): void {
+    //     this.cam.chooseFromLibrary();
+    // }
     /**
-     * Open camera library.
-     */
-    openCamPlusLibrary(): void {
-        this.cam.chooseFromLibrary();
-    }
-    /**
-     * Take picture from camera.
+     * Takes picture from camera when user press the takePicture button on camera view.
+     * Then it sets the captured image URI into imageSource to be displayed in front-end.
+     * 
      * @param thisParam Contains cameraplus instance
      */
     takePicFromCam(thisParam: any): void {
@@ -3242,13 +3246,18 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.imageSource &#x3D; this.imgURI;
     }
     /**
-     * Go to image gallery.
+     * It takes to image gallery view when user clicks on gallery button on camera view.
      */
     goImageGallery() {
         this.router.navigate([&#x27;imagegallery&#x27;]);
     }
     /**
-     * Show captured picture dialog
+     * Shows the captured picture dialog window after taking picture. This is modal window along with
+     * reuired options like capture image URI, transformed image URI, rectangle points and etc.
+     * This also takes care of deleting the captured image when user wants to retake (using Retake button)
+     * picture and, creates thumbnail image when user wants to save the captured image and
+     * sets the transformed image in gallery icon button in camera view.
+     * 
      * @param fullScreen Option to show fullscreen dialog or not
      * @param filePathOrg Captured image file path
      * @param imgURI Transformed image file path
@@ -3261,6 +3270,10 @@ export class CaptureComponent implements OnInit, OnDestroy {
                 imageSourceOrg: filePathOrg,
                 isAutoCorrection: true,
                 rectanglePoints: recPointsStr,
+                saveBtnLable: this.saveBtnLable,
+                manualBtnLable: this.manualBtnLable,
+                retakeBtnLable: this.retakeBtnLable,
+                performBtnLable: this.performBtnLable,
             },
             fullscreen: fullScreen,
             viewContainerRef: this.viewContainerRef,
@@ -3283,30 +3296,32 @@ export class CaptureComponent implements OnInit, OnDestroy {
                         const imgFileOrg: fs.File &#x3D; fs.File.fromPath(filePathOrg);
 
                         if (imgFileOrg) {
-                            imgFileOrg.remove();
+                            imgFileOrg.removeSync();
                         }
                         const imgURIFile: fs.File &#x3D; fs.File.fromPath(imgURI);
                         if (imgURIFile) {
-                            imgURIFile.remove();
+                            imgURIFile.removeSync();
                         }
                         // Todo : to be removed later
                         const imgUriContourPath &#x3D; imgURI.substring(0, imgURI.indexOf(&#x27;_transformed&#x27;)) + &#x27;_contour.jpg&#x27;;
                         const imgURIContourFile: fs.File &#x3D; fs.File.fromPath(imgUriContourPath);
                         if (imgURIContourFile) {
-                            imgURIContourFile.remove();
+                            imgURIContourFile.removeSync();
                             SendBroadcastImage(imgUriContourPath);
                         }
                         // Todo - End
 
                         this.refreshCapturedImagesinMediaStore(filePathOrg, imgURI, &#x27;Remove&#x27;);
-                    } catch (e) {
-                        alert(&#x27;Couldnot delete the file&#x27;);
+                    } catch (error) {
+                        Toast.makeText(&#x27;Could not delete the capture image.&#x27; + error, &#x27;long&#x27;).show();
+                        this.logger.error(module.filename + &#x27;: &#x27; + error);
                     }
                 }
             });
     }
     /**
-     * Set transformed image.
+     * Sets the transformed image in gallery image button.
+     * 
      * @param imgURIParam Transformed image file URI
      */
     setTransformedImage(imgURIParam: any) {
@@ -3316,14 +3331,16 @@ export class CaptureComponent implements OnInit, OnDestroy {
                 this.imgURI &#x3D; imgURIParam;
                 this.imageSource &#x3D; imgURIParam;
                 SendBroadcastImage(this.imgURI);
-            } catch (e) {
-                Toast.makeText(&#x27;Error while setting image in preview area&#x27; + e, &#x27;long&#x27;).show();
+            } catch (error) {
+                Toast.makeText(&#x27;Error while setting image in preview area&#x27; + error, &#x27;long&#x27;).show();
+                this.logger.error(module.filename + &#x27;: &#x27; + error);
             }
         }
     }
 
     /**
-     * Create take picture params.
+     * Creates layout params using LayoutParams widget for takePicture button
+     * and sets it&#x27;s params like height, width, margin &amp; rules.
      */
     private createTakePictureParams() {
         this.takePicParams &#x3D; new android.widget.RelativeLayout.LayoutParams(-2, -2);
@@ -3336,7 +3353,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.takePicParams.addRule(11);
     }
     /**
-     * Create auto focus image params.
+     * Creates layout params using LayoutParams widget for autoFocus button
+     * and sets it&#x27;s params like height, width, margin &amp; rules.
      */
     private createAutoFocusImageParams() {
         this.autofocusParams &#x3D; new android.widget.RelativeLayout.LayoutParams(-2, -2);
@@ -3347,7 +3365,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.autofocusParams.addRule(13);
     }
     /**
-     * Sets image resource.
+     * Sets image resource to given image button.
+     * 
      * @param btn Button image instance referrence
      * @param iconName Icon name
      */
@@ -3356,7 +3375,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         btn.setImageResource(openGalleryDrawable);
     }
     /**
-     * Create image gallery params.
+     * Creates layout params using LayoutParams widget for gallery button
+     * and sets it&#x27;s params like height, width, margin &amp; rules.
      */
     private createImageGallerryParams() {
         this.galleryParams &#x3D; new android.widget.RelativeLayout.LayoutParams(-2, -2);
@@ -3369,7 +3389,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.galleryParams.addRule(9);
     }
     /**
-     * Refresh captured images in media store.
+     * Refreshes the captured images in media store meaning that the new captured image will be
+     * available to public access. That can be done by SendBroadcastImage method.
+     * 
      * @param filePathOrg Captured Image file path
      * @param imgURI Transformed Image file URI
      * @param action Actions &#x27;Add&#x27;/&#x27;Remove&#x27;
@@ -3383,12 +3405,14 @@ export class CaptureComponent implements OnInit, OnDestroy {
                 const thumnailOrgPath &#x3D; imgURI.replace(&#x27;PT_IMG&#x27;, &#x27;thumb_PT_IMG&#x27;);
                 SendBroadcastImage(thumnailOrgPath);
             }
-        } catch (e) {
-            alert(&#x27;Could not sync the file &#x27;);
+        } catch (error) {
+            Toast.makeText(&#x27;Could not sync the captured image file. &#x27; + error, &#x27;long&#x27;).show();
+            this.logger.error(module.filename + &#x27;: &#x27; + error);
         }
     }
     /**
-     * Create thumbnail image.
+     * Creates thumbnail image for the captured transformed image and sets it in gallery button.
+     * 
      * @param imgURI Transformed image file path
      */
     private createThumbNailImage(imgURI: string): any {
@@ -3399,8 +3423,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
 
             const uri &#x3D; android.net.Uri.parse(&#x27;file://&#x27; + thumbnailImagePath);
             this.galleryBtn.setImageURI(uri);
-        } catch (e) {
-            console.log(&#x27;Error while creating thumbnail image. &#x27; + e);
+        } catch (error) {
+            Toast.makeText(&#x27;Error while creating thumbnail image. &#x27; + error, &#x27;long&#x27;).show();
+            this.logger.error(module.filename + &#x27;: &#x27; + error);
         }
     }
 
@@ -3421,7 +3446,10 @@ export class CaptureComponent implements OnInit, OnDestroy {
     // }
 
     /**
-     * Perform perspective transformation.
+     * This method performs perspective transformation for the captured image using OpenCV API and
+     * returns the transformed image URI along with rectangle points as string which will be used to
+     * draw circle points. After that it shows up the dialog modal window with the transformed image.
+     * 
      * @param filePath Captured image file path
      */
     private performPerspectiveTransformation(filePath: any): void {
@@ -3430,14 +3458,15 @@ export class CaptureComponent implements OnInit, OnDestroy {
             this.imgURI &#x3D; imgURITemp.substring(0, imgURITemp.indexOf(&#x27;RPTSTR&#x27;));
             const rectanglePointsStr &#x3D; imgURITemp.substring(imgURITemp.indexOf(&#x27;RPTSTR&#x27;));
             this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
             this.activityLoader.hide();
-            alert(&#x27;Error while performing perspective transformation process. Please retake picture&#x27;);
+            Toast.makeText(&#x27;Error while performing perspective transformation process. Please retake picture&#x27;, &#x27;long&#x27;).show();
         }
     }
     /**
-     * load images.
+     * Method to perform prespective transformation for the captured image 
+     * and sets the transformed image URI in this.imgURI variable.
+     * 
      * @param imageAsset ImageAsset object instance referrence
      */
     private loadImage(imageAsset: ImageAsset): void {
@@ -3462,18 +3491,19 @@ export class CaptureComponent implements OnInit, OnDestroy {
                         });
                     } else {
                         this.imageSource &#x3D; this.empty;
-                        alert(&#x27;Image source is bad.&#x27;);
+                        Toast.makeText(&#x27;Image source is bad.&#x27;, &#x27;long&#x27;).show();
                     }
                 },
-                (err) &#x3D;&gt; {
+                (error) &#x3D;&gt; {
                     this.imageSource &#x3D; this.empty;
-                    console.error(err);
-                    alert(&#x27;Error getting image source from asset&#x27;);
+                    this.logger.error(&#x27;Error getting image source from asset. &#x27; + module.filename
+                        + this.logger.ERROR_MSG_SEPARATOR + error);
+                    Toast.makeText(&#x27;Error getting image source from asset.&#x27;, &#x27;long&#x27;).show();
                 },
             );
         } else {
-            console.log(&#x27;Image Asset was null&#x27;);
-            alert(&#x27;Image Asset was null&#x27;);
+            this.logger.error(&#x27;Image Asset was null. &#x27; + module.filename);
+            Toast.makeText(&#x27;Image Asset was null&#x27;, &#x27;long&#x27;).show();
             this.imageSource &#x3D; this.empty;
         }
     }

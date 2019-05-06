@@ -1,4 +1,4 @@
-import {Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
 import { File, Folder } from 'tns-core-modules/file-system';
@@ -11,6 +11,9 @@ import { CheckBox } from 'nativescript-checkbox';
 import { ActivityLoader } from '../activityloader/activityloader.common';
 import { TransformedImage } from '../providers/transformedimage.common';
 
+import { L } from 'nativescript-i18n/angular';
+import { OxsEyeLogger } from '../logger/oxseyelogger';
+
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
 import * as application from 'tns-core-modules/application';
@@ -20,7 +23,8 @@ import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
 
 /**
- * ImageGalleryComponent class.
+ * ImageGalleryComponent class is being used to display all the thumbnail 
+ * images of transformed images in gallery view.
  */
 @Component({
     selector: 'ns-imagegallery',
@@ -47,9 +51,16 @@ export class ImageGalleryComponent implements OnInit {
     private orderByAscDesc: string;
     /** Stores page referrence. */
     private page;
+    /** Lable for select/unselect All menu */
+    private selectUnselectAllLable: any;
+    /** Lable for sort by date menu */
+    private sortByDateLable: any;
+    /** Localization */
+    private locale: L;
 
     /**
-     * Constructor for ImageGalleryComponent
+     * Constructor for ImageGalleryComponent.
+     * 
      * @param routerExtensions Router extension instance
      * @param router Router instance
      * @param transformedImageProvider Transformed image provider instance
@@ -59,11 +70,16 @@ export class ImageGalleryComponent implements OnInit {
         private routerExtensions: RouterExtensions,
         private router: Router,
         private transformedImageProvider: TransformedImageProvider,
-        private activityLoader: ActivityLoader) {
+        private activityLoader: ActivityLoader,
+        private logger: OxsEyeLogger) {
+        this.locale = new L();
+        this.selectUnselectAllLable = this.locale.transform('select_unselect_all');
+        this.sortByDateLable = this.locale.transform('sort_by_date');
     }
 
     /**
-     * Angular initialize method.
+     * Initializes menu properties and checkbox to be selected image(s) and
+     * load thumbnail images for gallery view to be displayed.
      */
     ngOnInit(): void {
         this.activityLoader.show();
@@ -79,21 +95,23 @@ export class ImageGalleryComponent implements OnInit {
         this.loadThumbnailImagesByContentResolver(this.orderByAscDesc);
     }
     /**
-     * Get image list.
+     * Gets the stored transformed thumbnail image list.
      * @returns image list.
      */
     get imageList(): TransformedImage[] {
         return this.transformedImageProvider.imageList;
     }
     /**
-     * Set checkbox visible.
+     * Sets the checkbox and popup menu properties true for them to be visible.
      */
     setCheckboxVisible() {
         this.isCheckBoxVisible = true;
         this.isPopUpMenu = true;
     }
     /**
-     * On page loaded
+     * This method fires when the gallery page is loaded and sets page and menu
+     * properties value to true/false based on thumbnail image list count.
+     * 
      * @param args Page loaded event data
      */
     onPageLoaded(args) {
@@ -114,7 +132,7 @@ export class ImageGalleryComponent implements OnInit {
         }
     }
     /**
-     * Go back
+     * Goes back to previous page (camera view) when the Back button is pressed.
      */
     goBack() {
         for (const image in this.imageList) {
@@ -125,7 +143,9 @@ export class ImageGalleryComponent implements OnInit {
         this.routerExtensions.back();
     }
     /**
-     * Go to Image slide page
+     * Goes to Image slide page when user does double tap on image and also navigates with
+     * transformed image URI and index of it.
+     * 
      * @param imgURIParam Transformed image file URI
      * @param imgIndexParam  image index
      */
@@ -139,7 +159,10 @@ export class ImageGalleryComponent implements OnInit {
         this.router.navigate(['imageslide'], navigationExtras);
     }
     /**
-     * Is checkBox checked or not.
+     * Checks whether the checkBox is been selected or not. If it is selected,
+     * the delete/share menus are visible, otherwise they are not visible.
+     * And also sets the same value in the image list.
+     * 
      * @param event Checkbox event data
      * @param imagePath transformed image file path
      * @param index image index in the list
@@ -160,7 +183,11 @@ export class ImageGalleryComponent implements OnInit {
         this.imageList[index].isSelected = event.value;
     }
     /**
-     * Select/Unselect all checkbox
+     * Method to show dialog window with options 'Select All' & 'Unselect All' when
+     * there is partial selection by user, where user have to select one of the options
+     * if needed, otherwise can be cancelled.
+     * If there is no partial selection, then this will select all/unselect all based on
+     * the current value of the checkbox.
      */
     onSelectUnSelectAllCheckBox() {
         if (this.selectedCount !== this.imageList.length && this.selectedCount > 0) {
@@ -183,7 +210,8 @@ export class ImageGalleryComponent implements OnInit {
         }
     }
     /**
-     * Sort images by date.
+     * This method fires when user choose the menu 'SortByDate',where sorts the image list
+     * by date it created and also sets the menus 'delete'/'share' invisible.
      */
     onSortByDate() {
         this.selectedCount = 0;
@@ -202,7 +230,9 @@ export class ImageGalleryComponent implements OnInit {
         }
     }
     /**
-     * Share selected image(s)
+     * Shares selected image(s) when user clicks the share button. The sharing can be done
+     * via any one of the medias supported by android device by default. The list of supported
+     * medias will be visible when the share button clicked.
      */
     onShare() {
         Permissions.requestPermission(
@@ -243,17 +273,20 @@ export class ImageGalleryComponent implements OnInit {
                         application.android.foregroundActivity.startActivity(
                             android.content.Intent.createChooser(intent, 'Share images...'));
                     }
-                } catch (e) {
-                    Toast.makeText('Error while sharing images.' + e).show();
-                    console.log('is exception raises during sending mail ' + e);
+                } catch (error) {
+                    Toast.makeText('Error while sharing images.' + error).show();
+                    this.logger.error('Error while sharing images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
-            }).catch(() => {
-                Toast.makeText('Error in giving permission.').show();
-                console.log('Permission is not granted (sadface)');
+            }).catch((error) => {
+                Toast.makeText('Error in giving permission.' + error).show();
+                this.logger.error('Error in giving permission. '  + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Delete selected image(s)
+     * Deletes the selected image(s) when user clicks the 'delete' button in menu.
+     * This will show up a dialog window for confirmation for the selected image(s)
+     * to be deleted. If user says 'Ok', then those image(s) will be removed from the
+     * device, otherwise can be cancelled.
      */
     onDelete() {
         if (this.selectedCount > 0) {
@@ -281,14 +314,16 @@ export class ImageGalleryComponent implements OnInit {
                                                 this.imageList.splice(imgIdx, 1);
                                             }
                                             this.onPageLoaded(this.page);
-                                        }).catch((err) => {
-                                            Toast.makeText('Error while deleting thumbnail images').show();
-                                            console.log(err.stack);
+                                        }).catch((error) => {
+                                            Toast.makeText('Error while deleting thumbnail images.' + error).show();
+                                            this.logger.error('Error while deleting thumbnail images. ' + module.filename
+                                            + this.logger.ERROR_MSG_SEPARATOR + error);
                                         });
 
-                                }).catch((err) => {
+                                }).catch((error) => {
                                     Toast.makeText('Error while deleting images').show();
-                                    console.log('Error while deleting original image.' + err.stack);
+                                    this.logger.error('Error while deleting images. ' + module.filename
+                                    + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }
 
@@ -299,7 +334,10 @@ export class ImageGalleryComponent implements OnInit {
         }
     }
     /**
-     * Perform select/unselect all checkbox.
+     * Sets all the checkBox checked value based on what it receives value as parameter.
+     * And also sets the checkBox's page property value based on the current vlaue like
+     * if already has true, then sets false, otherwise it sets true.
+     * 
      * @param value Checkbox value
      */
     private performSelectUnselectAll(value: any) {
@@ -356,14 +394,16 @@ export class ImageGalleryComponent implements OnInit {
     // }
 
     /**
-     * Load thumbnail images by content resolver.
+     * Loads thumbnail images using content resolver by order what it receives as parameter.
+     * 
      * @param orderByAscDescParam OrderBy value 'Asc'/'Desc'
      */
     private loadThumbnailImagesByContentResolver(orderByAscDescParam: string) {
         this.transformedImageProvider.loadThumbnailImagesByContentResolver(orderByAscDescParam, this.activityLoader);
     }
     /**
-     * Load thumbnail images by file system
+     * Loads all the transformed thumbnail images from the file system and stores in the image list for
+     * public access. The file system needs READ_EXTERNAL_STORAGE permission.
      */
     private loadThumbnailImagesByFileSystem() {
         Permissions.requestPermission(
@@ -375,9 +415,9 @@ export class ImageGalleryComponent implements OnInit {
                 this.transformedImageProvider.imageList = [];
                 try {
                     capturedPicturePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + '/DCIM';
-                } catch (e) {
-                    console.log(e.toString());
-                    Toast.makeText(e.toString()).show();
+                } catch (error) {
+                    Toast.makeText('Error while getting path.' + error.toString()).show();
+                    this.logger.error('Error while getting path. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
                 const folders: Folder = Folder.fromPath(capturedPicturePath);
                 folders.getEntities()
@@ -394,15 +434,15 @@ export class ImageGalleryComponent implements OnInit {
                                 ));
                             }
                         });
-                    }).catch((err) => {
+                    }).catch((error) => {
                         // Failed to obtain folder's contents.
-                        Toast.makeText('Error while loading images', 'long').show();
-                        console.log(err.stack);
+                        Toast.makeText('Error while loading images.' + error, 'long').show();
+                        this.logger.error('Error while loading images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                     });
                 this.activityLoader.hide();
-            }).catch(() => {
-                Toast.makeText('Error in giving permission.', 'long').show();
-                console.log('Permission is not granted (sadface)');
+            }).catch((error) => {
+                Toast.makeText('Error in giving permission.' + error, 'long').show();
+                this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
 }

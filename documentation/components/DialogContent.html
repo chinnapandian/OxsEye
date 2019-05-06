@@ -196,6 +196,10 @@
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
+                                <a href="#manualPerformBtnLable">manualPerformBtnLable</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Private</span>
                                 <a href="#newScale">newScale</a>
                             </li>
                             <li>
@@ -258,9 +262,6 @@
                                 <a href="#createCircle">createCircle</a>
                             </li>
                             <li>
-                                <a href="#getPoints">getPoints</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Private</span>
                                 <a href="#initPoints">initPoints</a>
                             </li>
@@ -304,12 +305,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(params: ModalDialogParams, transformedImageProvider: <a href="../injectables/TransformedImageProvider.html">TransformedImageProvider</a>)</code>
+<code>constructor(params: ModalDialogParams, transformedImageProvider: <a href="../injectables/TransformedImageProvider.html">TransformedImageProvider</a>, logger: <a href="../injectables/OxsEyeLogger.html">OxsEyeLogger</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">app/dialog/dialog.component.android.ts:78</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">app/dialog/dialog.component.android.ts:82</a></div>
                             </td>
                         </tr>
 
@@ -361,6 +362,20 @@
 </code>
                                                         </td>
                                                 </tr>
+                                                <tr>
+                                                        <td>logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OxsEyeLogger.html" target="_self" >OxsEyeLogger</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -403,15 +418,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="316"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:316</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="342"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:342</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Add circles.</p>
+                    <div class="io-description"><p>Add circles method adds circle points btn in original image.</p>
 </div>
 
                     <div class="io-description">
@@ -446,15 +461,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="503"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:503</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="532"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:532</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Check screen boundary.</p>
+                    <div class="io-description"><p>Checks the image that it is within the image view boundary or not.</p>
 </div>
 
                     <div class="io-description">
@@ -539,15 +554,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="101"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:101</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="110"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:110</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Close</p>
+                    <div class="io-description"><p>Close method, which close the dialog window opened after captured image from camera.
+And returns back to the place where the dialog window got triggered, along with 
+the parameter &#39;result&#39;</p>
 </div>
 
                     <div class="io-description">
@@ -618,15 +635,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="412"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:412</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="440"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:440</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Create circles.</p>
+                    <div class="io-description"><p>This method creates circle points button on original image view
+based on the points receieved via actualPoint and also takes
+care of boundary checking while diplaying it.</p>
 </div>
 
                     <div class="io-description">
@@ -677,83 +696,6 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="getPoints"></a>
-                    <span class="name">
-                        <b>
-                            getPoints
-                        </b>
-                        <a href="#getPoints"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-<code>getPoints(event: GestureEventData)</code>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="152"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:152</a></div>
-                </td>
-            </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-                    <div class="io-description"><p>Gets rectangle points.</p>
-</div>
-
-                    <div class="io-description">
-                        <b>Parameters :</b>
-                        <table class="params">
-                            <thead>
-                                <tr>
-                                    <td>Name</td>
-                                    <td>Type</td>
-                                    <td>Optional</td>
-                                    <td>Description</td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>event</td>
-                                    <td>
-                                            <code>GestureEventData</code>
-                                    </td>
-
-                                    <td>
-                                        No
-                                    </td>
-
-
-                                    <td>
-                                        <p>Gesture event data</p>
-
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div>
-                    </div>
-                    <div class="io-description">
-                        <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
-
-                    </div>
-                    <div class="io-description">
-                        
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="initPoints"></a>
                     <span class="name">
                         <b>
@@ -774,15 +716,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="332"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:332</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="359"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:359</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Initialize points</p>
+                    <div class="io-description"><p>Initialize circle points based on the receieved rectangle points and
+image&#39;s width &amp; height.</p>
 </div>
 
                     <div class="io-description">
@@ -815,15 +758,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="272"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:272</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="294"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:294</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Event fires on double tap</p>
+                    <div class="io-description"><p>Double tap method fires on when user taps two times on transformed image. 
+Actually it brings the image to it&#39;s original positions and also adds 
+circle points if it is original image.</p>
 </div>
 
                     <div class="io-description">
@@ -856,15 +801,18 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="216"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:216</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="236"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:236</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>On event pan/move</p>
+                    <div class="io-description"><p>On pan/move method, which moves image when user press &amp; drag with a finger around
+the image area. Here the image&#39;s tralateX/translateY values are been calculated
+based on the image&#39;s scale, width &amp; height. And also it takes care of image boundary
+checking.</p>
 </div>
 
                     <div class="io-description">
@@ -933,15 +881,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="193"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:193</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="209"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:209</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>On event pinch</p>
+                    <div class="io-description"><p>On pinch method, is being called while pinch event fired on image,
+where the new scale, width &amp; height of the transformed image have been calculated
+to zoom-in/out.</p>
 </div>
 
                     <div class="io-description">
@@ -1010,15 +960,18 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="293"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:293</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="319"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:319</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>On event page loaded.</p>
+                    <div class="io-description"><p>Page loaded method which is been called when dialog window is loaded,
+where all the necessary values for the image to be displayed in the window
+have been initialized, like transformedImageSource, originalImageSource &amp;
+rectangle points.</p>
 </div>
 
                     <div class="io-description">
@@ -1087,15 +1040,19 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="108"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:108</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="121"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:121</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Performing manual transformation</p>
+                    <div class="io-description"><p>Performing manual transformation
+this is been used to perform transformation manually, where the rectangle
+points will be choosen by user in the captured image displaying in the dialog window.
+In the dialog window, there are four circles are being used to select points.
+Based on the selected points, the transformation will be performed here.</p>
 </div>
 
                     <div class="io-description">
@@ -1130,15 +1087,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="324"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:324</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="350"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:350</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Remove circles.</p>
+                    <div class="io-description"><p>Remove circles removes circle points btn from original image.</p>
 </div>
 
                     <div class="io-description">
@@ -1171,15 +1128,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="177"
-                            class="link-to-prism">app/dialog/dialog.component.android.ts:177</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="191"
+                            class="link-to-prism">app/dialog/dialog.component.android.ts:191</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Show original image.</p>
+                    <div class="io-description"><p>Gets rectangle points.</p>
 </div>
 
                     <div class="io-description">
@@ -1217,7 +1174,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">app/dialog/dialog.component.android.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">app/dialog/dialog.component.android.ts:64</a></div>
                             </td>
                         </tr>
 
@@ -1251,7 +1208,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">app/dialog/dialog.component.android.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">app/dialog/dialog.component.android.ts:66</a></div>
                             </td>
                         </tr>
 
@@ -1285,7 +1242,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">app/dialog/dialog.component.android.ts:50</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">app/dialog/dialog.component.android.ts:52</a></div>
                             </td>
                         </tr>
 
@@ -1324,7 +1281,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">app/dialog/dialog.component.android.ts:78</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="80" class="link-to-prism">app/dialog/dialog.component.android.ts:80</a></div>
                             </td>
                         </tr>
 
@@ -1358,7 +1315,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">app/dialog/dialog.component.android.ts:74</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">app/dialog/dialog.component.android.ts:76</a></div>
                             </td>
                         </tr>
 
@@ -1392,7 +1349,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">app/dialog/dialog.component.android.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">app/dialog/dialog.component.android.ts:50</a></div>
                             </td>
                         </tr>
 
@@ -1426,7 +1383,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">app/dialog/dialog.component.android.ts:32</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">app/dialog/dialog.component.android.ts:34</a></div>
                             </td>
                         </tr>
 
@@ -1460,7 +1417,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">app/dialog/dialog.component.android.ts:46</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">app/dialog/dialog.component.android.ts:48</a></div>
                             </td>
                         </tr>
 
@@ -1494,7 +1451,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">app/dialog/dialog.component.android.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">app/dialog/dialog.component.android.ts:36</a></div>
                             </td>
                         </tr>
 
@@ -1528,7 +1485,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">app/dialog/dialog.component.android.ts:44</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">app/dialog/dialog.component.android.ts:46</a></div>
                             </td>
                         </tr>
 
@@ -1562,7 +1519,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">app/dialog/dialog.component.android.ts:54</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/dialog/dialog.component.android.ts:56</a></div>
                             </td>
                         </tr>
 
@@ -1596,7 +1553,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">app/dialog/dialog.component.android.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">app/dialog/dialog.component.android.ts:54</a></div>
                             </td>
                         </tr>
 
@@ -1629,7 +1586,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">app/dialog/dialog.component.android.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">app/dialog/dialog.component.android.ts:38</a></div>
                             </td>
                         </tr>
 
@@ -1662,7 +1619,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">app/dialog/dialog.component.android.ts:72</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="74" class="link-to-prism">app/dialog/dialog.component.android.ts:74</a></div>
                             </td>
                         </tr>
 
@@ -1696,13 +1653,47 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">app/dialog/dialog.component.android.ts:38</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">app/dialog/dialog.component.android.ts:40</a></div>
                             </td>
                         </tr>
 
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>Contains button label name either &#39;Manual&#39;/ &#39;Perform&#39; </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="manualPerformBtnLable"></a>
+                        <span class="name">
+                            <b>
+                                <span class="modifier">Private</span>
+                            manualPerformBtnLable</b>
+                            <a href="#manualPerformBtnLable"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                        </td>
+                    </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                    <div class="io-line">Defined in <a href="" data-line="82" class="link-to-prism">app/dialog/dialog.component.android.ts:82</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Lable for Manua/Perform button </p>
 </div>
                     </td>
                 </tr>
@@ -1735,7 +1726,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">app/dialog/dialog.component.android.ts:66</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">app/dialog/dialog.component.android.ts:68</a></div>
                             </td>
                         </tr>
 
@@ -1774,7 +1765,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">app/dialog/dialog.component.android.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">app/dialog/dialog.component.android.ts:70</a></div>
                             </td>
                         </tr>
 
@@ -1813,7 +1804,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">app/dialog/dialog.component.android.ts:70</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="72" class="link-to-prism">app/dialog/dialog.component.android.ts:72</a></div>
                             </td>
                         </tr>
 
@@ -1847,7 +1838,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">app/dialog/dialog.component.android.ts:40</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">app/dialog/dialog.component.android.ts:42</a></div>
                             </td>
                         </tr>
 
@@ -1881,7 +1872,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">app/dialog/dialog.component.android.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">app/dialog/dialog.component.android.ts:44</a></div>
                             </td>
                         </tr>
 
@@ -1915,7 +1906,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/dialog/dialog.component.android.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">app/dialog/dialog.component.android.ts:58</a></div>
                             </td>
                         </tr>
 
@@ -1949,7 +1940,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">app/dialog/dialog.component.android.ts:58</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">app/dialog/dialog.component.android.ts:60</a></div>
                             </td>
                         </tr>
 
@@ -1983,7 +1974,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">app/dialog/dialog.component.android.ts:76</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="78" class="link-to-prism">app/dialog/dialog.component.android.ts:78</a></div>
                             </td>
                         </tr>
 
@@ -2022,7 +2013,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">app/dialog/dialog.component.android.ts:60</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">app/dialog/dialog.component.android.ts:62</a></div>
                             </td>
                         </tr>
 
@@ -2041,18 +2032,14 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, ElementRef, ViewChild } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component } from &#x27;@angular/core&#x27;;
 import { ModalDialogParams } from &#x27;nativescript-angular/modal-dialog&#x27;;
-import * as application from &#x27;tns-core-modules/application&#x27;;
-import { File, path } from &#x27;tns-core-modules/file-system&#x27;;
 import { setTimeout } from &#x27;tns-core-modules/timer&#x27;;
-import { View } from &#x27;tns-core-modules/ui/core/view&#x27;;
 import { GestureEventData, PanGestureEventData, PinchGestureEventData } from &#x27;tns-core-modules/ui/gestures&#x27;;
-import { Page } from &#x27;tns-core-modules/ui/page&#x27;;
 
-import { ActivityLoader } from &#x27;../activityloader/activityloader.common&#x27;;
-import { TransformedImage } from &#x27;../providers/transformedimage.common&#x27;;
 import { SendBroadcastImage, TransformedImageProvider } from &#x27;../providers/transformedimage.provider&#x27;;
+
+import { OxsEyeLogger } from &#x27;../logger/oxseyelogger&#x27;;
 
 import * as orientation from &#x27;nativescript-orientation&#x27;;
 import * as Toast from &#x27;nativescript-toast&#x27;;
@@ -2061,6 +2048,12 @@ import * as formattedStringModule from &#x27;tns-core-modules/text/formatted-str
 import * as buttons from &#x27;tns-core-modules/ui/button&#x27;;
 
 import * as opencv from &#x27;nativescript-opencv-plugin&#x27;;
+
+/** Lable for &#x27;Manual&#x27; text */
+const LABLE_MANUAL &#x3D; &#x27;Manual&#x27;;
+/** Lable for &#x27;Perform&#x27; text */
+const LABLE_PERFORM &#x3D; &#x27;Perform&#x27;;
+
 /**
  * Dialog content class.
  */
@@ -2119,6 +2112,8 @@ export class DialogContent {
     private rectanglePoints: any;
     /** To get accurate position, need to adjust the radius value */
     private circleRadius &#x3D; 17;
+    /** Lable for Manua/Perform button */
+    private manualPerformBtnLable: any;
     // private _dragImageItem: Image;
     // @ViewChild(&#x27;imgViewId&#x27;) _dragImage: ElementRef;
 
@@ -2126,19 +2121,24 @@ export class DialogContent {
 
     /**
      * Constructor for DialogContent class.
+     * 
      * @param params contains captured image file information
      * @param transformedImageProvider transformed image provider instance
      */
     constructor(private params: ModalDialogParams,
-        private transformedImageProvider: TransformedImageProvider) {
-        this.manualBtnText &#x3D; &#x27;Manual&#x27;;
+                private transformedImageProvider: TransformedImageProvider,
+                private logger: OxsEyeLogger) {
+        this.manualBtnText &#x3D; LABLE_MANUAL;
+        this.manualPerformBtnLable &#x3D; this.params.context.manualBtnLable;
         this.points &#x3D; [];
         this.pointsCounter &#x3D; 0;
         this.circleBtnList &#x3D; [];
         // this._dragImageItem &#x3D; &lt;Image&gt;this._dragImage.nativeElement;
     }
     /**
-     * Close
+     * Close method, which close the dialog window opened after captured image from camera.
+     * And returns back to the place where the dialog window got triggered, along with 
+     * the parameter &#x27;result&#x27;
      * @param result Which is nothing but empty string or transformed image URI string
      */
     close(result: string) {
@@ -2147,6 +2147,10 @@ export class DialogContent {
     }
     /**
      * Performing manual transformation
+     * this is been used to perform transformation manually, where the rectangle
+     * points will be choosen by user in the captured image displaying in the dialog window.
+     * In the dialog window, there are four circles are being used to select points.
+     * Based on the selected points, the transformation will be performed here.
      */
     performManualCorrection() {
         let pointsCount &#x3D; 0;
@@ -2163,74 +2167,77 @@ export class DialogContent {
         // this.points[2].y &#x3D; +this.points[2].y + circleRadius;
         // this.points[3].y &#x3D; +this.points[3].y + circleRadius;
 
-        if (pointsCount !&#x3D;&#x3D; 4) {
-            alert(&#x27;Please select only four points.&#x27;);
-        } else {
-            const rectanglePoints &#x3D; this.points[0].x + &#x27;-&#x27; + (+this.points[0].y - this.circleRadius) + &#x27;#&#x27;
-                + this.points[1].x + &#x27;-&#x27; + (+this.points[1].y - this.circleRadius) + &#x27;#&#x27;
-                + this.points[2].x + &#x27;-&#x27; + (+this.points[2].y + this.circleRadius) + &#x27;#&#x27;
-                + this.points[3].x + &#x27;-&#x27; + (+this.points[3].y + this.circleRadius);
-            console.log(rectanglePoints);
-            console.log(this.imageSourceOrg);
-            console.log(this.imageActualSize.width + &#x27;-&#x27; + this.imageActualSize.height);
-            this.imageSourceOld &#x3D; this.imageSource;
-            this.imageSource &#x3D; opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
-                this.imageActualSize.width + &#x27;-&#x27; + this.imageActualSize.height);
-            SendBroadcastImage(this.imageSource);
-            setTimeout(() &#x3D;&gt; {
-                this.transformedImageProvider.deleteFile(this.imageSourceOld);
-            }, 1000);
-            this.imageSourceOrg &#x3D; this.imageSourceOrgOld;
-            this.isAutoCorrection &#x3D; true;
-            this.manualBtnText &#x3D; &#x27;Manual&#x27;;
-            this.removeCircles();
-            // this.pointsCounter &#x3D; 0;
-            this.transformedImageProvider.DeleteFiles();
-        }
+        const point0Y &#x3D; (+this.points[0].y - this.circleRadius);
+        const point1Y &#x3D; (+this.points[1].y - this.circleRadius);
+        const rectanglePoints &#x3D; this.points[0].x + &#x27;-&#x27; + ((point0Y &lt; 0) ? 0 : point0Y) + &#x27;#&#x27;
+            + this.points[1].x + &#x27;-&#x27; + ((point1Y &lt; 0) ? 0 : point1Y) + &#x27;#&#x27;
+            + this.points[2].x + &#x27;-&#x27; + (+this.points[2].y + this.circleRadius) + &#x27;#&#x27;
+            + this.points[3].x + &#x27;-&#x27; + (+this.points[3].y + this.circleRadius);
+        this.imageSourceOld &#x3D; this.imageSource;
+        this.imageSource &#x3D; opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
+            this.imageActualSize.width + &#x27;-&#x27; + this.imageActualSize.height);
+        SendBroadcastImage(this.imageSource);
+        setTimeout(() &#x3D;&gt; {
+            this.transformedImageProvider.deleteFile(this.imageSourceOld);
+        }, 1000);
+        this.imageSourceOrg &#x3D; this.imageSourceOrgOld;
+        this.isAutoCorrection &#x3D; true;
+        this.manualBtnText &#x3D; LABLE_MANUAL;
+        this.manualPerformBtnLable &#x3D; this.params.context.manualBtnLable;
+        this.removeCircles();
+        // this.pointsCounter &#x3D; 0;
+        this.transformedImageProvider.DeleteFiles();
     }
     /**
      * Gets rectangle points.
+     * 
      * @param event Gesture event data
      */
-    getPoints(event: GestureEventData) {
-        try {
-            if (this.manualBtnText &#x3D;&#x3D;&#x3D; &#x27;Perform&#x27;) {
-                // This is the density of your screen, so we can divide the measured width/height by it.
-                const scale: number &#x3D; platform.screen.mainScreen.scale;
+    // getPoints(event: GestureEventData) {
+    //     try {
+    //         if (this.manualBtnText &#x3D;&#x3D;&#x3D; LABLE_PERFORM) {
+    //             // This is the density of your screen, so we can divide the measured width/height by it.
+    //             const scale: number &#x3D; platform.screen.mainScreen.scale;
 
-                this.imageActualSize &#x3D; this.imgView.getActualSize();
-                const pointX &#x3D; event.android.getX() / scale;
-                const pointY &#x3D; event.android.getY() / scale;
+    //             this.imageActualSize &#x3D; this.imgView.getActualSize();
+    //             const pointX &#x3D; event.android.getX() / scale;
+    //             const pointY &#x3D; event.android.getY() / scale;
 
-                const actualPoint &#x3D; { x: pointX, y: pointY, id: this.pointsCounter };
+    //             const actualPoint &#x3D; { x: pointX, y: pointY, id: this.pointsCounter };
 
-                if (this.points.length &gt;&#x3D; 4) {
-                    Toast.makeText(&#x27;Please select only four points.&#x27;, &#x27;long&#x27;).show();
-                } else {
-                    this.imgGridId.addChild(this.createCircle(actualPoint));
-                }
-            }
-        } catch (e) {
-            alert(e);
-        }
-    }
+    //             if (this.points.length &gt;&#x3D; 4) {
+    //                 Toast.makeText(&#x27;Please select only four points.&#x27;, &#x27;long&#x27;).show();
+    //             } else {
+    //                 this.imgGridId.addChild(this.createCircle(actualPoint));
+    //             }
+    //         }
+    //     } catch (error) {
+    //         Toast.makeText(&#x27;Error calling getPoints(). &#x27; + error);
+    //         this.logger.error(module.filename + &#x27;: &#x27; + error);
+    //     }
+    // }
     /**
-     * Show original image.
+     * Show original image, is being used to show original captured image
+     * when the &#x27;Manual&#x27; button is been pressed, this is where user can select desired points
+     * and perform manual transformation. It is also intializing circle points to be displayed
+     * in the original image.
      */
     showOriginalImage() {
-
         this.onDoubleTap();
         if (this.circleBtnList.length &#x3D;&#x3D;&#x3D; 0) {
             this.initPoints();
             Toast.makeText(&#x27;Please move around the four red circle(s) on image if needed and click &quot;Perform&quot; button.&#x27;, &#x27;long&#x27;).show();
         }
         this.isAutoCorrection &#x3D; false;
-        this.manualBtnText &#x3D; &#x27;Perform&#x27;;
+        this.manualBtnText &#x3D; LABLE_PERFORM;
+        this.manualPerformBtnLable &#x3D; this.params.context.performBtnLable;
         this.pointsCounter &#x3D; 0;
         this.addCircles();
     }
     /**
-     * On event pinch
+     * On pinch method, is being called while pinch event fired on image,
+     * where the new scale, width &amp; height of the transformed image have been calculated
+     * to zoom-in/out.
      * @param args PinchGesture event data
      */
     onPinch(args: PinchGestureEventData) {
@@ -2253,12 +2260,16 @@ export class DialogContent {
         }
     }
     /**
-     * On event pan/move
+     * On pan/move method, which moves image when user press &amp; drag with a finger around
+     * the image area. Here the image&#x27;s tralateX/translateY values are been calculated
+     * based on the image&#x27;s scale, width &amp; height. And also it takes care of image boundary
+     * checking.
+     * 
      * @param args PanGesture event data
      */
     onPan(args: PanGestureEventData) {
         const screenLocation &#x3D; this.imgView.getLocationOnScreen();
-        if (this.manualBtnText !&#x3D;&#x3D; &#x27;Perform&#x27;) {
+        if (this.manualBtnText !&#x3D;&#x3D; LABLE_PERFORM) {
             let centerPointX &#x3D; (this.imgView.getMeasuredWidth() / 4) * (this.newScale);
             let centerPointY &#x3D; (this.imgView.getMeasuredHeight() / 4) * (this.newScale);
             const imageViewWidth &#x3D; this.imgView.getMeasuredWidth() * this.imgView.originX;
@@ -2310,10 +2321,12 @@ export class DialogContent {
         }
     }
     /**
-     * Event fires on double tap
+     * Double tap method fires on when user taps two times on transformed image. 
+     * Actually it brings the image to it&#x27;s original positions and also adds 
+     * circle points if it is original image.
      */
     onDoubleTap() {
-        if (this.manualBtnText !&#x3D;&#x3D; &#x27;Perform&#x27;) {
+        if (this.manualBtnText !&#x3D;&#x3D; LABLE_PERFORM) {
             this.imgView.animate({
                 translate: { x: 0, y: 0 },
                 scale: { x: 1, y: 1 },
@@ -2330,7 +2343,11 @@ export class DialogContent {
         }
     }
     /**
-     * On event page loaded.
+     * Page loaded method which is been called when dialog window is loaded,
+     * where all the necessary values for the image to be displayed in the window
+     * have been initialized, like transformedImageSource, originalImageSource &amp;
+     * rectangle points.
+     * 
      * @param args Page loaded event data
      */
     pageLoaded(args: { object: any; }) {
@@ -2354,7 +2371,7 @@ export class DialogContent {
         orientation.setOrientation(&#x27;portrait&#x27;);
     }
     /**
-     * Add circles.
+     * Add circles method adds circle points btn in original image.
      */
     private addCircles() {
         this.circleBtnList.forEach((btn: any) &#x3D;&gt; {
@@ -2362,7 +2379,7 @@ export class DialogContent {
         });
     }
     /**
-     * Remove circles.
+     * Remove circles removes circle points btn from original image.
      */
     private removeCircles() {
         const imgElement &#x3D; this.imgGridId.getChildAt(0);
@@ -2370,7 +2387,8 @@ export class DialogContent {
         this.imgGridId.addChild(imgElement);
     }
     /**
-     * Initialize points
+     * Initialize circle points based on the receieved rectangle points and
+     * image&#x27;s width &amp; height.
      */
     private initPoints() {
         this.points &#x3D; [];
@@ -2386,7 +2404,6 @@ export class DialogContent {
         let actualPoint &#x3D; {};
         if (this.rectanglePoints.length &gt; 0) {
             let pointIndex &#x3D; 1;
-            console.log(&#x27;this.rectanglePoints: &#x27; + JSON.stringify(this.rectanglePoints));
             this.rectanglePoints.forEach((point) &#x3D;&gt; {
                 const points &#x3D; point.split(&#x27;%&#x27;);
                 let bottomCircleRadius &#x3D; this.circleRadius;
@@ -2424,7 +2441,6 @@ export class DialogContent {
                     x: (+points[0]) * (this.imgGridId.getMeasuredWidth() / scale),
                     y: ((+points[1]) * (this.imgGridId.getMeasuredHeight() / scale)) + bottomCircleRadius, id: this.pointsCounter,
                 };
-                console.log(&#x27;actualPoint : &#x27; + JSON.stringify(actualPoint));
                 this.createCircle(actualPoint);
             });
         } else {
@@ -2449,7 +2465,10 @@ export class DialogContent {
         }
     }
     /**
-     * Create circles.
+     * This method creates circle points button on original image view
+     * based on the points receieved via actualPoint and also takes
+     * care of boundary checking while diplaying it.
+     * 
      * @param actualPoint Contains circle points(x,y)
      */
     private createCircle(actualPoint: any): any {
@@ -2539,7 +2558,8 @@ export class DialogContent {
         return circleBtn;
     }
     /**
-     * Check screen boundary.
+     * Checks the image that it is within the image view boundary or not.
+     * 
      * @param translateX Image translateX
      * @param translateY Image translateY
      */
@@ -2567,9 +2587,9 @@ export class DialogContent {
             &lt;Image src&#x3D;&quot;{{ isAutoCorrection ? imageSource : imageSourceOrg }}&quot;    id&#x3D;&quot;imgViewId&quot;  (pan)&#x3D;&quot;onPan($event)&quot; (pinch)&#x3D;&quot;onPinch($event)&quot; backgroundColor&#x3D;&quot;gray&quot;&gt;&lt;/Image&gt;
         &lt;/GridLayout&gt;
         &lt;StackLayout height&#x3D;&quot;10%&quot; orientation&#x3D;&quot;horizontal&quot; horizontalAlignment&#x3D;&quot;center&quot; verticalAlignment&#x3D;&quot;center&quot; marginTop&#x3D;&quot;10&quot;&gt;
-            &lt;Button class&#x3D;&quot;btn-outline btn-active btn-rounded-lg&quot; text&#x3D;&quot;Retake&quot; (tap)&#x3D;&quot;close(&#x27;&#x27;)&quot;&gt;&lt;/Button&gt;
-            &lt;Button class&#x3D;&quot;btn btn-outline btn-active btn-rounded-lg&quot; text&#x3D;&quot;Save&quot; (tap)&#x3D;&quot;close(imageSource)&quot;&gt;&lt;/Button&gt;
-            &lt;Button class&#x3D;&quot;btn-outline btn-active btn-rounded-lg&quot; text&#x3D;&quot;{{manualBtnText}}&quot; (tap)&#x3D;&quot;(manualBtnText &#x3D;&#x3D; &#x27;Perform&#x27;) ? performManualCorrection() : showOriginalImage()&quot;&gt;&lt;/Button&gt;
+            &lt;Button class&#x3D;&quot;btn-outline btn-active btn-rounded-lg&quot; text&#x3D;&quot;{{this.params.context.retakeBtnLable}}&quot; (tap)&#x3D;&quot;close(&#x27;&#x27;)&quot;&gt;&lt;/Button&gt;
+            &lt;Button class&#x3D;&quot;save-btn btn-outline btn-active btn-rounded-lg&quot; text&#x3D;&quot;{{this.params.context.saveBtnLable}}&quot; (tap)&#x3D;&quot;close(imageSource)&quot;&gt;&lt;/Button&gt;
+            &lt;Button class&#x3D;&quot;btn-outline btn-active btn-rounded-lg&quot; text&#x3D;&quot;{{manualPerformBtnLable}}&quot; (tap)&#x3D;&quot;(manualBtnText &#x3D;&#x3D; &#x27;Perform&#x27;) ? performManualCorrection() : showOriginalImage()&quot;&gt;&lt;/Button&gt;
         &lt;/StackLayout&gt;
     &lt;/StackLayout&gt;
 &lt;/Page&gt;</code></pre>
@@ -2607,7 +2627,7 @@ export class DialogContent {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">    <StackLayout orientation="vertical" margin="20" horizontalAlignment="center" verticalAlignment="center">        <GridLayout id="imgGridId" height="90%"  (doubleTap)="onDoubleTap()"            borderLeftWidth="1" borderBottomWidth="1" borderRightWidth="1" borderTopWidth="1" backgroundColor="gray">            <Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"    id="imgViewId"  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>        </GridLayout>        <StackLayout height="10%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="10">            <Button class="btn-outline btn-active btn-rounded-lg" text="Retake" (tap)="close(\'\')"></Button>            <Button class="btn btn-outline btn-active btn-rounded-lg" text="Save" (tap)="close(imageSource)"></Button>            <Button class="btn-outline btn-active btn-rounded-lg" text="{{manualBtnText}}" (tap)="(manualBtnText == \'Perform\') ? performManualCorrection() : showOriginalImage()"></Button>        </StackLayout>    </StackLayout></Page></div>'
+        var COMPONENT_TEMPLATE = '<div><Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">    <StackLayout orientation="vertical" margin="20" horizontalAlignment="center" verticalAlignment="center">        <GridLayout id="imgGridId" height="90%"  (doubleTap)="onDoubleTap()"            borderLeftWidth="1" borderBottomWidth="1" borderRightWidth="1" borderTopWidth="1" backgroundColor="gray">            <Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"    id="imgViewId"  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>        </GridLayout>        <StackLayout height="10%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="10">            <Button class="btn-outline btn-active btn-rounded-lg" text="{{this.params.context.retakeBtnLable}}" (tap)="close(\'\')"></Button>            <Button class="save-btn btn-outline btn-active btn-rounded-lg" text="{{this.params.context.saveBtnLable}}" (tap)="close(imageSource)"></Button>            <Button class="btn-outline btn-active btn-rounded-lg" text="{{manualPerformBtnLable}}" (tap)="(manualBtnText == \'Perform\') ? performManualCorrection() : showOriginalImage()"></Button>        </StackLayout>    </StackLayout></Page></div>'
     var COMPONENTS = [{'name': 'AppComponent', 'selector': 'ns-app'},{'name': 'CaptureComponent', 'selector': 'ns-capture'},{'name': 'DialogContent', 'selector': 'modal-content'},{'name': 'ImageGalleryComponent', 'selector': 'ns-imagegallery'},{'name': 'ImageSlideComponent', 'selector': 'ns-imageslide'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'DialogContent'};

@@ -58,5 +58,16 @@ refer to http://docs.nativescript.org/ui/theme.
     font-size: 10;
     color: red; 
 }
+button {
+    /** ALL CAPS **/
+    text-transform: capitalize;
+    /*font-family: "FontAwesome, fontawesome-webfont";*/
+    font-size: 17;
+    font-weight: bold;
+}
+.save-btn {
+    margin-left: 20 !important;
+    margin-right: 20 !important;
+}
 /*.Grid-Layout { font-size: 12; color: red; }
 .landscape .Grid-Layout { font-size: 20; color: green; }*/

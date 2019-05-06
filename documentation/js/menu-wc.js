@@ -75,13 +75,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' : 'data-target="#xs-components-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' }>
+                                            'data-target="#components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' : 'data-target="#xs-components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' :
-                                            'id="xs-components-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' :
+                                            'id="xs-components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
                                             <li class="link">
                                                 <a href="components/AppComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -102,13 +102,17 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' : 'data-target="#xs-injectables-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' }>
+                                        'data-target="#injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' : 'data-target="#xs-injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' :
-                                        'id="xs-injectables-links-module-AppModule-83ef2157ea2a585e22642392ca37b474"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' :
+                                        'id="xs-injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
+                                        <li class="link">
+                                            <a href="injectables/OxsEyeLogger.html"
+                                                data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>OxsEyeLogger</a>
+                                        </li>
                                         <li class="link">
                                             <a href="injectables/TransformedImageProvider.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>TransformedImageProvider</a>

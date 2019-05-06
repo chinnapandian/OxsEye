@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oxs.Eye</string>
+    <string name="title_activity_kimera">Oxs.Eye</string>
+    <item name="gallery_btn" type="id"></item>
+    <string name="save">Sparen</string>
+    <string name="retake">Wiederholung</string>
+    <string name="manual">Handbuch</string>
+    <string name="perform">Ausführen</string>
+    <string name="select_unselect_all">Alle auswählen / abwählen</string>
+    <string name="sort_by_date">Nach Datum sortieren</string>
+</resources>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { File } from 'tns-core-modules/file-system';
 
+import { OxsEyeLogger } from '../logger/oxseyelogger';
 import { TransformedImage } from './transformedimage.common';
 
 import * as application from 'tns-core-modules/application';
@@ -10,7 +11,7 @@ import * as Toast from 'nativescript-toast';
 import * as Permissions from 'nativescript-permissions';
 
 /**
- * TransformedImageProvider class.
+ * This is a provider class contains common functionalyties related to captured image.
  */
 @Injectable()
 export class TransformedImageProvider {
@@ -24,12 +25,14 @@ export class TransformedImageProvider {
     /**
      * Constructor for TransformedImageProvider
      */
-    constructor() {
+    constructor(private logger: OxsEyeLogger) {
         this.imageList = [];
         this.contourImageList = [];
     }
     /**
-     * Load thumbnail images by content resolver.
+     * Loads all the thumbnail images of transformed image by content resolver in order what
+     * it's parameter has and populates the image list.
+     * 
      * @param orderByAscDesc Orderby value 'Asc'/'Desc'
      * @param activityLoader ActivityLoader instance
      */
@@ -70,66 +73,69 @@ export class TransformedImageProvider {
                 } catch (error) {
                     activityLoader.hide();
                     Toast.makeText('Error while loading gallery images.', 'long').show();
-                    console.log('getGalleryPhotos=>', JSON.stringify(error));
+                    this.logger.error('Error while loading gallery images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
-            }).catch(() => {
+            }).catch((error) => {
                 activityLoader.hide();
                 Toast.makeText('Error in giving permission.', 'long').show();
-                console.log('Permission is not granted (sadface)');
+                this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Load possible contour images
+     * TODO: this is not been used now. but if needed later uncomment and use it.
+     * Loads possible contour images
      */
-    LoadPossibleContourImages() {
+    // LoadPossibleContourImages() {
 
-        this.contourImageList = [];
-        Permissions.requestPermission(
-            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
-            'Needed for sharing files').then(() => {
-                const MediaStore = android.provider.MediaStore;
-                let cursor = null;
-                try {
-                    const context = application.android.context;
-                    const columns = [MediaStore.MediaColumns.DATA];
-                    //      let orderBy = MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
-                    const uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    const where = MediaStore.MediaColumns.DATA + ' like "%contourImage%"';
-                    cursor = context.getContentResolver().query(uri, columns, where, null, null);
-                    if (cursor && cursor.getCount() > 0) {
-                        while (cursor.moveToNext()) {
-                            const columnIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
-                            const imageUri = cursor.getString(columnIndex) + '';
-                            const name = imageUri.substring(imageUri.lastIndexOf('contourImage'));
-                            // let image = { fileUri: imageUri, text: name };
-                            //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
-                            //   let thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
-                            this.contourImageList.push(new TransformedImage(
-                                name,
-                                imageUri,
-                                imageUri,
-                                false,
-                            ));
+    //     this.contourImageList = [];
+    //     Permissions.requestPermission(
+    //         [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+    //         android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+    //         'Needed for sharing files').then(() => {
+    //             const MediaStore = android.provider.MediaStore;
+    //             let cursor = null;
+    //             try {
+    //                 const context = application.android.context;
+    //                 const columns = [MediaStore.MediaColumns.DATA];
+    //                 //      let orderBy = MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
+    //                 const uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+    //                 const where = MediaStore.MediaColumns.DATA + ' like "%contourImage%"';
+    //                 cursor = context.getContentResolver().query(uri, columns, where, null, null);
+    //                 if (cursor && cursor.getCount() > 0) {
+    //                     while (cursor.moveToNext()) {
+    //                         const columnIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
+    //                         const imageUri = cursor.getString(columnIndex) + '';
+    //                         const name = imageUri.substring(imageUri.lastIndexOf('contourImage'));
+    //                         // let image = { fileUri: imageUri, text: name };
+    //                         //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
+    //                         //   let thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
+    //                         this.contourImageList.push(new TransformedImage(
+    //                             name,
+    //                             imageUri,
+    //                             imageUri,
+    //                             false,
+    //                         ));
 
-                            //   }
-                        }
-                    }
-                    //         activityLoader.hide();
-                } catch (error) {
-                    //           activityLoader.hide();
-                    Toast.makeText('Error while loading contour images.', 'long').show();
-                    console.log('getcontourImages=>', JSON.stringify(error));
-                }
+    //                         //   }
+    //                     }
+    //                 }
+    //                 //         activityLoader.hide();
+    //             } catch (error) {
+    //                 //           activityLoader.hide();
+    //                 Toast.makeText('Error while loading contour images.', 'long').show();
+    //                 this.logger.error('Error while loading contour images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
+    //             }
 
-            }).catch(() => {
-                //   activityLoader.hide();
-                Toast.makeText('Error in giving permission.', 'long').show();
-                console.log('Permission is not granted (sadface)');
-            });
-    }
+    //         }).catch((error) => {
+    //             //   activityLoader.hide();
+    //             Toast.makeText('Error in giving permission.', 'long').show();
+    //             this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
+    //         });
+    // }
+
     /**
-     * Delete all temporary files used to perform transformation.
+     * Deletes all the temporary files used to perform transformation. Actually it creates
+     * some temporary files behind the scene when it performs perspective transformation using OpenCV API.
      */
     DeleteFiles() {
         this.contourImageList = [];
@@ -154,26 +160,27 @@ export class TransformedImageProvider {
                             tempFile.remove()
                                 .then(() => {
                                     SendBroadcastImage(imageUri);
-                                }).catch((err) => {
+                                }).catch((error) => {
                                     Toast.makeText('Error while deleting temporary images').show();
-                                    console.log(err.stack);
+                                    this.logger.error('Error while deleting temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }
                     }
                 } catch (error) {
                     //           activityLoader.hide();
                     Toast.makeText('Error while loading temporary images.', 'long').show();
-                    console.log('Temporary files =>', JSON.stringify(error));
+                    this.logger.error('Error while loading temporary images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
 
-            }).catch(() => {
+            }).catch((error) => {
                 //   activityLoader.hide();
                 Toast.makeText('Error in giving permission.', 'long').show();
-                console.log('Permission is not granted (sadface)');
+                this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Delete a selected image file from the disk.
+     * Deletes the selected image file from the disk.
+     * 
      * @param fileURI Image file path
      */
     deleteFile(fileURI: string) {
@@ -181,13 +188,16 @@ export class TransformedImageProvider {
         tempFile.remove()
             .then(() => {
                 SendBroadcastImage(fileURI);
-            }).catch((err) => {
-                Toast.makeText('deleteFile: Error while deleting temporary files').show();
-                console.log(err.stack);
+            }).catch((error) => {
+                Toast.makeText('Error while deleting temporary files').show();
+                this.logger.error('Error while deleting temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Rename a fila name to given name.
+     * Renames the transformed image file name to given name. This is been used while performing
+     * manual transformation using OpenCV API. As it creates temporary files behind the scene,
+     * it needs to be renamed to refresh the final image in the view.
+     * 
      * @param fileURI Image file path
      * @param renameFileto Filename to be renamed to.
      */
@@ -197,14 +207,14 @@ export class TransformedImageProvider {
             .then(() => {
                 SendBroadcastImage(fileURI);
                 SendBroadcastImage(renameFileto);
-            }).catch((err) => {
-                Toast.makeText('renameFile: Error while renaming temporary file').show();
-                console.log(err.stack);
+            }).catch((error) => {
+                Toast.makeText('Error while renaming temporary file').show();
+                this.logger.error('Error while renaming temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
 
     /**
-     * Get original image
+     * Gets the original image with rectangle. But this will not be used when it goes to production.
      * @param transformedImage Transformed image file path
      */
     getOriginalImageWithRectangle(transformedImage: string): any {
@@ -220,7 +230,7 @@ export class TransformedImageProvider {
     }
 
     /**
-     * Get original image
+     * Gets the original captured image. This will also be not used in production.
      * @param transformedImage Transformed image file path
      */
     getOriginalImage(transformedImage: string): any {
@@ -238,7 +248,8 @@ export class TransformedImageProvider {
     }
 
     /**
-     * Get URI for file.
+     * Gets the URI for the captured/transformed image file.
+     * 
      * @param newFile File name
      * @returns URI Returns the URI of given file name
      */
@@ -250,6 +261,7 @@ export class TransformedImageProvider {
 }
 /**
  * Broadcast image to access publicly, so that it will be available to any app.
+ * 
  * @param imgURI Image file URI
  */
 export function SendBroadcastImage(imgURI) {

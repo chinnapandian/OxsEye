@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 
 /**
- * TransformedImage injectable class
+ * This is an injectable class contains image information like transformed image URI,
+ * original captured image path, thumbnail image path and isSelected indication to
+ * say this image is been selected or not.
  */
 @Injectable()
 export class TransformedImage {

@@ -67,7 +67,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Activity loader class.</p>
+                <p>Activity loader class to show up application event progress dialog box.</p>
 
             </p>
 
@@ -124,6 +124,56 @@
     </table>
 </section>
 
+            <section>
+    <h3 id="constructor">Constructor</h3>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+<code>constructor(logger: <a href="../injectables/OxsEyeLogger.html">OxsEyeLogger</a>)</code>
+                    </td>
+                </tr>
+                        <tr>
+                            <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">app/activityloader/activityloader.common.ts:12</a></div>
+                            </td>
+                        </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>constructor for ActivityLoader </p>
+</div>
+                            <div>
+                                    <b>Parameters :</b>
+                                    <table class="params">
+                                        <thead>
+                                            <tr>
+                                                <td>Name</td>
+                                                    <td>Type</td>
+                                                <td>Optional</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                                <tr>
+                                                        <td>logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OxsEyeLogger.html" target="_self" >OxsEyeLogger</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                </tr>
+                                        </tbody>
+                                    </table>
+                            </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+</section>
 
             <section>
     
@@ -150,7 +200,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">app/activityloader/activityloader.common.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">app/activityloader/activityloader.common.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -194,8 +244,8 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="15"
-                            class="link-to-prism">app/activityloader/activityloader.common.ts:15</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="22"
+                            class="link-to-prism">app/activityloader/activityloader.common.ts:22</a></div>
                 </td>
             </tr>
 
@@ -241,15 +291,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="57"
-                            class="link-to-prism">app/activityloader/activityloader.common.ts:57</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="64"
+                            class="link-to-prism">app/activityloader/activityloader.common.ts:64</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Hide activity loader.</p>
+                    <div class="io-description"><p>Hides activity loader.</p>
 </div>
 
                     <div class="io-description">
@@ -282,15 +332,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="47"
-                            class="link-to-prism">app/activityloader/activityloader.common.ts:47</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="54"
+                            class="link-to-prism">app/activityloader/activityloader.common.ts:54</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Show activity loader.</p>
+                    <div class="io-description"><p>Shows activity loader.</p>
 </div>
 
                     <div class="io-description">
@@ -311,13 +361,23 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="c-source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">const LoadingIndicator &#x3D; require(&#x27;nativescript-loading-indicator&#x27;).LoadingIndicator;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { OxsEyeLogger } from &#x27;../logger/oxseyelogger&#x27;;
 /**
- * Activity loader class.
+ * LoadingIndicator Instance variable.
+ */
+const LoadingIndicator &#x3D; require(&#x27;nativescript-loading-indicator&#x27;).LoadingIndicator;
+
+/**
+ * Activity loader class to show up application event progress dialog box.
  */
 export class ActivityLoader {
     /** LoadingIndicator Instance variable. */
     private _loader &#x3D; new LoadingIndicator();
+
+    /** constructor for ActivityLoader */
+    constructor(private logger: OxsEyeLogger) {
+    }
+
     /**
      * Gets LoadingIndicator options for both android and ios.
      * @returns options
@@ -352,17 +412,17 @@ export class ActivityLoader {
         return options;
     }
     /**
-     * Show activity loader.
+     * Shows activity loader.
      */
     show() {
         try {
             this._loader.show(this.getOptions());
-        } catch (e) {
-            console.log(&#x27;Error while showing lodingindicator. &#x27; + e);
+        } catch (error) {
+            this.logger.error(&#x27;Error while showing lodingindicator. &#x27; + error);
         }
     }
     /**
-     * Hide activity loader.
+     * Hides activity loader.
      */
     hide() {
         this._loader.hide();

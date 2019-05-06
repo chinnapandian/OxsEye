@@ -1,12 +1,16 @@
-import { Component, NgZone, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, NgZone, OnInit, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { CameraPlus } from '@nstudio/nativescript-camera-plus';
 import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { ImageAsset } from 'tns-core-modules/image-asset';
 import { ImageSource } from 'tns-core-modules/image-source';
+
 import { ActivityLoader } from '../activityloader/activityloader.common';
 import { DialogContent } from '../dialog/dialog.component';
 import { SendBroadcastImage } from '../providers/transformedimage.provider';
+
+import { L } from 'nativescript-i18n/angular';
+import { OxsEyeLogger } from '../logger/oxseyelogger';
 
 import * as opencv from 'nativescript-opencv-plugin';
 import * as Toast from 'nativescript-toast';
@@ -15,7 +19,7 @@ import * as fs from 'tns-core-modules/file-system';
 import * as application from 'tns-core-modules/application';
 
 /**
- * Capture component class
+ * Capture component class, which is being used to capture image from camera.
  */
 @Component({
     selector: 'ns-capture',
@@ -23,7 +27,7 @@ import * as application from 'tns-core-modules/application';
     styleUrls: ['./capture.component.css'],
     templateUrl: './capture.component.html',
 })
-export class CaptureComponent implements OnInit, OnDestroy {
+export class CaptureComponent implements OnInit {
     /** Camera instance variable. */
     private cam: any;
     /** Gallery button. */
@@ -40,6 +44,17 @@ export class CaptureComponent implements OnInit, OnDestroy {
     private autofocusParams: any;
     /** Empty string variable */
     private empty: any = null;
+    /** Localization */
+    private locale: any;
+    /** Lable for save button */
+    private saveBtnLable: any;
+    /** Lable for manual button */
+    private manualBtnLable: any;
+    /** Lable for perform button */
+    private performBtnLable: any;
+    /** Lable for retake button */
+    private retakeBtnLable: any;
+
     /** Boolean value to check the camera is visible or not. */
     public isCameraVisible: any;
     /** Transformed Image source */
@@ -53,6 +68,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
 
     /**
      * Constructor for CaptureComponent.
+     * 
      * @param zone Angular zone to run a task asynchronously.
      * @param modalService Service modal
      * @param viewContainerRef View container referrence
@@ -66,11 +82,14 @@ export class CaptureComponent implements OnInit, OnDestroy {
         private router: Router,
         private activityLoader: ActivityLoader,
         // private _changeDetectionRef: ChangeDetectorRef
+        private logger: OxsEyeLogger,
     ) {
+        this.locale = new L();
     }
 
     /**
-     * Initialization method called while angular initialize.
+     * Initialization method initializes OpenCV module and buttons like
+     * takePicture, gallery and autoFocus buttons in camera view.
      */
     ngOnInit(): void {
         console.log('Initializing OpenCV...');
@@ -83,18 +102,18 @@ export class CaptureComponent implements OnInit, OnDestroy {
     }
 
     /**
-     * Destroy method called while angular destroys.
-     */
-    ngOnDestroy() {
-        console.log('Destroy called...');
-    }
-    /**
-     * Method to check camera loaded or not along with some
-     * camera settings initialization.
+     * This method is called when camera is loaded, where all the neccessary things like
+     * displaying buttons(takePicture, gallery, flash, camera & autoFocus) on camera view
+     * are taken care and also initializes camera instance.
+     * 
      * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
-        console.log('***** cam loaded *****');
+        this.saveBtnLable = this.locale.transform('save');
+        this.manualBtnLable = this.locale.transform('manual');
+        this.retakeBtnLable = this.locale.transform('retake');
+        this.performBtnLable = this.locale.transform('perform');
+
         this.cam = args.object as CameraPlus;
         const flashMode = this.cam.getFlashMode();
 
@@ -130,9 +149,7 @@ export class CaptureComponent implements OnInit, OnDestroy {
             this.cam.camera.setAutoFocusMoveCallback(cb);
         }
         if (args.data) {
-
             this.cam.showFlashIcon = true;
-
             this.cam.showToggleIcon = true;
             try {
                 this.initImageGalleryButton();
@@ -165,14 +182,17 @@ export class CaptureComponent implements OnInit, OnDestroy {
         // this.cameraPlus.showToggleIcon = false;
     }
     /**
-     * Initialize Camera Button.
+     * This method initializes camera button in camera view, actually
+     * it removes an existing one if exists and adds it.
      */
     initCameraButton() {
         this.cam.nativeView.removeView(this.takePicBtn);
         this.cam.nativeView.addView(this.takePicBtn, this.takePicParams);
     }
     /**
-     * initialize image gallery button.
+     * This method initializes gallery button in camera view, actually
+     * it removes an existing one if exists and adds it. And also sets
+     * the image icon for it.
      */
     initImageGalleryButton() {
         this.cam.nativeView.removeView(this.galleryBtn);
@@ -180,27 +200,25 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.setImageResource(this.galleryBtn, 'ic_photo_library_white');
     }
     /**
-     * initialize auto focus image button.
+     * This method initializes autoFocus button in camera view, actually
+     * it removes an existing one if exists and adds it.
      */
     initAutoFocusImageButton() {
         this.cam.nativeView.removeView(this.autofocusBtn);
         this.cam.nativeView.addView(this.autofocusBtn, this.autofocusParams);
     }
     /**
-     * Create take picture button.
+     * Creates take picture button. Actually it creates image button and setting
+     * it's properties like image icon, shape and color along with click event listener in it.
      */
     createTakePictureButton() {
         const _this = this;
         this.takePicBtn = this.createImageButton();
         this.setImageResource(this.takePicBtn, 'ic_camera');
-        // let takePicDrawable = this.getImageDrawable('ic_camera');
-        // this.takePicBtn.setImageResource(takePicDrawable);
         const shape = this.createTransparentCircleDrawable();
         this.takePicBtn.setBackgroundDrawable(shape);
         const color = android.graphics.Color.parseColor('#ffffff'); // white color
         this.takePicBtn.setColorFilter(color);
-        // this.takePicBtn.setScaleX(0.50);
-        // this.takePicBtn.setScaleY(0.50);
         this.takePicBtn.setOnClickListener(new android.view.View.OnClickListener({
             onClick(args: any) {
                 _this.takePicFromCam(_this);
@@ -209,7 +227,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.createTakePictureParams();
     }
     /**
-     * Create auto focus image.
+     * Creates auto focus image button. Actually it creates image button and setting
+     * it's properties like image icon, shape and color along with click event listener in it.
      */
     createAutoFocusImage() {
         const _this = this;
@@ -223,7 +242,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.createAutoFocusImageParams();
     }
     /**
-     * Create auto focus image button.
+     * Creates auto focus image button with help ImageView widget and settings
+     * it's attributes like padding, height, width, color & scaleType.
+     * 
      * @returns Returns button object
      */
     createAutoFocusImageButton(): any {
@@ -237,7 +258,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return btn;
     }
     /**
-     * Create image gallery button.
+     * Creates image gallery button. Actually it creates image button and setting
+     * it's properties like image icon, shape and color along with click event listener in it.
      */
     createImageGalleryButton() {
         const _this = this;
@@ -262,7 +284,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.createImageGallerryParams();
     }
     /**
-     * Gets image drawable image id
+     * Gets actual icon image using icon name from context.
+     * 
      * @param iconName Icon Name
      */
     getImageDrawable(iconName: any): any {
@@ -272,7 +295,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return drawableId;
     }
     /**
-     * Create transparent circle shape.
+     * Creates transparent circle shape with help of GradientDrawable object
+     * and sets it's attributes like color, radius and alpha.
+     * 
      * @returns Returns shape object
      */
     createTransparentCircleDrawable(): any {
@@ -283,7 +308,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return shape;
     }
     /**
-     * Create auto focus shape.
+     * Creates auto focus shape using ShapeDrawable object and
+     * sets alpha.
      * @returns Returns shape object
      */
     createAutofocusShape(): any {
@@ -293,7 +319,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return shape;
     }
     /**
-     * Create image button.
+     * Creates image button with help of ImageButton widget
+     * and sets it's attributes like padding, maxHeight & maxwidth.
+     * 
      * @returns Returns button object
      */
     createImageButton(): any {
@@ -304,55 +332,53 @@ export class CaptureComponent implements OnInit, OnDestroy {
         return btn;
     }
     /**
-     * Image selected event.
-     * @param args Image selected event data
-     */
-    imagesSelectedEvent(args: any): void {
-        console.log('IMAGES SELECTED EVENT!!!');
-        this.loadImage((args.data as ImageAsset[])[0]);
-    }
-    /**
-     * Photo captured event.
+     * Photo captured event fires when a picture is taken from camera, which actually
+     * loads the captured image from ImageAsset.
+     * 
      * @param args Image captured event data
      */
     photoCapturedEvent(args: any): void {
         console.log('PHOTO CAPTURED EVENT!!!');
         this.loadImage(args.data as ImageAsset);
     }
+    // /**
+    //  * This is been called when toggle the camera button.
+    //  * @param args Camera toggle event data
+    //  */
+    // toggleCameraEvent(args: any): void {
+    //     console.log('camera toggled');
+    // }
+
     /**
-     * Toggle camera event.
-     * @param args Camera toggle event data
-     */
-    toggleCameraEvent(args: any): void {
-        console.log('camera toggled');
-    }
-    /**
-     * Toggle flash on camera.
+     * This method is called when toggle the flash icon on camera. This actually
+     * flash off when it already is on or vice-versa.
      */
     toggleFlashOnCam(): void {
         this.cam.toggleFlash();
     }
     /**
-     * Toggle showing flash icon.
+     * Method to display flash icon based on it's property value true/false.
      */
     toggleShowingFlashIcon(): void {
         console.log(`showFlashIcon = ${this.cam.showFlashIcon}`);
         this.cam.showFlashIcon = !this.cam.showFlashIcon;
     }
     /**
-     * Toggle camera.
+     * Method to switch front/back camera.
      */
     toggleTheCamera(): void {
         this.cam.toggleCamera();
     }
+    // /**
+    //  * Open camera library.
+    //  */
+    // openCamPlusLibrary(): void {
+    //     this.cam.chooseFromLibrary();
+    // }
     /**
-     * Open camera library.
-     */
-    openCamPlusLibrary(): void {
-        this.cam.chooseFromLibrary();
-    }
-    /**
-     * Take picture from camera.
+     * Takes picture from camera when user press the takePicture button on camera view.
+     * Then it sets the captured image URI into imageSource to be displayed in front-end.
+     * 
      * @param thisParam Contains cameraplus instance
      */
     takePicFromCam(thisParam: any): void {
@@ -362,13 +388,18 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.imageSource = this.imgURI;
     }
     /**
-     * Go to image gallery.
+     * It takes to image gallery view when user clicks on gallery button on camera view.
      */
     goImageGallery() {
         this.router.navigate(['imagegallery']);
     }
     /**
-     * Show captured picture dialog
+     * Shows the captured picture dialog window after taking picture. This is modal window along with
+     * reuired options like capture image URI, transformed image URI, rectangle points and etc.
+     * This also takes care of deleting the captured image when user wants to retake (using Retake button)
+     * picture and, creates thumbnail image when user wants to save the captured image and
+     * sets the transformed image in gallery icon button in camera view.
+     * 
      * @param fullScreen Option to show fullscreen dialog or not
      * @param filePathOrg Captured image file path
      * @param imgURI Transformed image file path
@@ -381,6 +412,10 @@ export class CaptureComponent implements OnInit, OnDestroy {
                 imageSourceOrg: filePathOrg,
                 isAutoCorrection: true,
                 rectanglePoints: recPointsStr,
+                saveBtnLable: this.saveBtnLable,
+                manualBtnLable: this.manualBtnLable,
+                retakeBtnLable: this.retakeBtnLable,
+                performBtnLable: this.performBtnLable,
             },
             fullscreen: fullScreen,
             viewContainerRef: this.viewContainerRef,
@@ -403,30 +438,32 @@ export class CaptureComponent implements OnInit, OnDestroy {
                         const imgFileOrg: fs.File = fs.File.fromPath(filePathOrg);
 
                         if (imgFileOrg) {
-                            imgFileOrg.remove();
+                            imgFileOrg.removeSync();
                         }
                         const imgURIFile: fs.File = fs.File.fromPath(imgURI);
                         if (imgURIFile) {
-                            imgURIFile.remove();
+                            imgURIFile.removeSync();
                         }
                         // Todo : to be removed later
                         const imgUriContourPath = imgURI.substring(0, imgURI.indexOf('_transformed')) + '_contour.jpg';
                         const imgURIContourFile: fs.File = fs.File.fromPath(imgUriContourPath);
                         if (imgURIContourFile) {
-                            imgURIContourFile.remove();
+                            imgURIContourFile.removeSync();
                             SendBroadcastImage(imgUriContourPath);
                         }
                         // Todo - End
 
                         this.refreshCapturedImagesinMediaStore(filePathOrg, imgURI, 'Remove');
-                    } catch (e) {
-                        alert('Couldnot delete the file');
+                    } catch (error) {
+                        Toast.makeText('Could not delete the capture image.' + error, 'long').show();
+                        this.logger.error(module.filename + ': ' + error);
                     }
                 }
             });
     }
     /**
-     * Set transformed image.
+     * Sets the transformed image in gallery image button.
+     * 
      * @param imgURIParam Transformed image file URI
      */
     setTransformedImage(imgURIParam: any) {
@@ -436,14 +473,16 @@ export class CaptureComponent implements OnInit, OnDestroy {
                 this.imgURI = imgURIParam;
                 this.imageSource = imgURIParam;
                 SendBroadcastImage(this.imgURI);
-            } catch (e) {
-                Toast.makeText('Error while setting image in preview area' + e, 'long').show();
+            } catch (error) {
+                Toast.makeText('Error while setting image in preview area' + error, 'long').show();
+                this.logger.error(module.filename + ': ' + error);
             }
         }
     }
 
     /**
-     * Create take picture params.
+     * Creates layout params using LayoutParams widget for takePicture button
+     * and sets it's params like height, width, margin & rules.
      */
     private createTakePictureParams() {
         this.takePicParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
@@ -456,7 +495,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.takePicParams.addRule(11);
     }
     /**
-     * Create auto focus image params.
+     * Creates layout params using LayoutParams widget for autoFocus button
+     * and sets it's params like height, width, margin & rules.
      */
     private createAutoFocusImageParams() {
         this.autofocusParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
@@ -467,7 +507,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.autofocusParams.addRule(13);
     }
     /**
-     * Sets image resource.
+     * Sets image resource to given image button.
+     * 
      * @param btn Button image instance referrence
      * @param iconName Icon name
      */
@@ -476,7 +517,8 @@ export class CaptureComponent implements OnInit, OnDestroy {
         btn.setImageResource(openGalleryDrawable);
     }
     /**
-     * Create image gallery params.
+     * Creates layout params using LayoutParams widget for gallery button
+     * and sets it's params like height, width, margin & rules.
      */
     private createImageGallerryParams() {
         this.galleryParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
@@ -489,7 +531,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
         this.galleryParams.addRule(9);
     }
     /**
-     * Refresh captured images in media store.
+     * Refreshes the captured images in media store meaning that the new captured image will be
+     * available to public access. That can be done by SendBroadcastImage method.
+     * 
      * @param filePathOrg Captured Image file path
      * @param imgURI Transformed Image file URI
      * @param action Actions 'Add'/'Remove'
@@ -503,12 +547,14 @@ export class CaptureComponent implements OnInit, OnDestroy {
                 const thumnailOrgPath = imgURI.replace('PT_IMG', 'thumb_PT_IMG');
                 SendBroadcastImage(thumnailOrgPath);
             }
-        } catch (e) {
-            alert('Could not sync the file ');
+        } catch (error) {
+            Toast.makeText('Could not sync the captured image file. ' + error, 'long').show();
+            this.logger.error(module.filename + ': ' + error);
         }
     }
     /**
-     * Create thumbnail image.
+     * Creates thumbnail image for the captured transformed image and sets it in gallery button.
+     * 
      * @param imgURI Transformed image file path
      */
     private createThumbNailImage(imgURI: string): any {
@@ -519,8 +565,9 @@ export class CaptureComponent implements OnInit, OnDestroy {
 
             const uri = android.net.Uri.parse('file://' + thumbnailImagePath);
             this.galleryBtn.setImageURI(uri);
-        } catch (e) {
-            console.log('Error while creating thumbnail image. ' + e);
+        } catch (error) {
+            Toast.makeText('Error while creating thumbnail image. ' + error, 'long').show();
+            this.logger.error(module.filename + ': ' + error);
         }
     }
 
@@ -541,7 +588,10 @@ export class CaptureComponent implements OnInit, OnDestroy {
     // }
 
     /**
-     * Perform perspective transformation.
+     * This method performs perspective transformation for the captured image using OpenCV API and
+     * returns the transformed image URI along with rectangle points as string which will be used to
+     * draw circle points. After that it shows up the dialog modal window with the transformed image.
+     * 
      * @param filePath Captured image file path
      */
     private performPerspectiveTransformation(filePath: any): void {
@@ -550,14 +600,15 @@ export class CaptureComponent implements OnInit, OnDestroy {
             this.imgURI = imgURITemp.substring(0, imgURITemp.indexOf('RPTSTR'));
             const rectanglePointsStr = imgURITemp.substring(imgURITemp.indexOf('RPTSTR'));
             this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
-        } catch (err) {
-            console.log(err);
+        } catch (error) {
             this.activityLoader.hide();
-            alert('Error while performing perspective transformation process. Please retake picture');
+            Toast.makeText('Error while performing perspective transformation process. Please retake picture', 'long').show();
         }
     }
     /**
-     * load images.
+     * Method to perform prespective transformation for the captured image 
+     * and sets the transformed image URI in this.imgURI variable.
+     * 
      * @param imageAsset ImageAsset object instance referrence
      */
     private loadImage(imageAsset: ImageAsset): void {
@@ -582,18 +633,19 @@ export class CaptureComponent implements OnInit, OnDestroy {
                         });
                     } else {
                         this.imageSource = this.empty;
-                        alert('Image source is bad.');
+                        Toast.makeText('Image source is bad.', 'long').show();
                     }
                 },
-                (err) => {
+                (error) => {
                     this.imageSource = this.empty;
-                    console.error(err);
-                    alert('Error getting image source from asset');
+                    this.logger.error('Error getting image source from asset. ' + module.filename
+                        + this.logger.ERROR_MSG_SEPARATOR + error);
+                    Toast.makeText('Error getting image source from asset.', 'long').show();
                 },
             );
         } else {
-            console.log('Image Asset was null');
-            alert('Image Asset was null');
+            this.logger.error('Image Asset was null. ' + module.filename);
+            Toast.makeText('Image Asset was null', 'long').show();
             this.imageSource = this.empty;
         }
     }

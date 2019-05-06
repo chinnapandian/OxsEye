@@ -57,7 +57,10 @@
                 <td class="col-md-4">
                     <ul class="index-list">
                         <li>
-                            <a href="#errorHandler" title="app/main.ts"><b>errorHandler</b>&nbsp;&nbsp;&nbsp;(app/.../main.ts)</a>
+                            <a href="#LABLE_MANUAL" title="app/dialog/dialog.component.android.ts"><b>LABLE_MANUAL</b>&nbsp;&nbsp;&nbsp;(app/.../dialog.component.android.ts)</a>
+                        </li>
+                        <li>
+                            <a href="#LABLE_PERFORM" title="app/dialog/dialog.component.android.ts"><b>LABLE_PERFORM</b>&nbsp;&nbsp;&nbsp;(app/.../dialog.component.android.ts)</a>
                         </li>
                         <li>
                             <a href="#LoadingIndicator" title="app/activityloader/activityloader.common.ts"><b>LoadingIndicator</b>&nbsp;&nbsp;&nbsp;(app/.../activityloader.common.ts)</a>
@@ -69,46 +72,68 @@
     </table>
 </section>
 
-    <h3>app/main.ts</h3>
+    <h3>app/dialog/dialog.component.android.ts</h3>
     <section>
     <h3></h3>        <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="errorHandler"></a>
+                        <a name="LABLE_MANUAL"></a>
                         <span class="name">
                             <b>
-                            errorHandler</b>
-                            <a href="#errorHandler"><span class="icon ion-ios-link"></span></a>
+                            LABLE_MANUAL</b>
+                            <a href="#LABLE_MANUAL"><span class="icon ion-ios-link"></span></a>
                         </span>
                     </td>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Type : </i>    <code>traceModule.ErrorHandler</code>
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
 
                         </td>
                     </tr>
                     <tr>
                         <td class="col-md-4">
-                            <i>Default value : </i><code>{
-    handlerError(err) {
-        // option 1 (development) - throw the error
-        // throw err;
-        alert(&#x27;error :&#x27; + err);
-        // option 2 (development) - logging the error via write method provided from trace module
-        traceModule.write(err, &#x27;unhandled-error&#x27;, traceModule.messageType.error);
-
-        // (production) - custom functionality for error handling
-        // reportToAnalytics(err)
-    },
-}</code>
+                            <i>Default value : </i><code>&#x27;Manual&#x27;</code>
                         </td>
                     </tr>
 
                 <tr>
                     <td class="col-md-4">
-                        <div class="io-description"><p>Error handler variable to handle error across system.</p>
+                        <div class="io-description"><p>Lable for &#39;Manual&#39; text </p>
+</div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm table-bordered">
+            <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <a name="LABLE_PERFORM"></a>
+                        <span class="name">
+                            <b>
+                            LABLE_PERFORM</b>
+                            <a href="#LABLE_PERFORM"><span class="icon ion-ios-link"></span></a>
+                        </span>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-md-4">
+                            <i>Default value : </i><code>&#x27;Perform&#x27;</code>
+                        </td>
+                    </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Lable for &#39;Perform&#39; text </p>
 </div>
                     </td>
                 </tr>

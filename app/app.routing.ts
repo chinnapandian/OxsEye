@@ -12,6 +12,7 @@ const routes: Routes = [
     { path: 'imageslide', component: ImageSlideComponent},
 ];
 
+/** This is routing module where all the routes used in application will be defined here */
 @NgModule({
     imports: [NativeScriptRouterModule.forRoot(routes)],
     exports: [NativeScriptRouterModule],

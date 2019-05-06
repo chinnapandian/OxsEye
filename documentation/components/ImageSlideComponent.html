@@ -68,7 +68,7 @@
         <h3>Description</h3>
     </p>
     <p class="comment">
-        <p>ImageSlideComponent Component.</p>
+        <p>ImageSlideComponent is used to show image in detail view, where user can zoom-in/out.</p>
 
     </p>
 
@@ -268,12 +268,12 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(page: Page, routerExtensions: RouterExtensions, route: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, transformedImageProvider: <a href="../injectables/TransformedImageProvider.html">TransformedImageProvider</a>)</code>
+<code>constructor(page: Page, routerExtensions: RouterExtensions, route: <a href="https://angular.io/api/router/ActivatedRoute" target="_blank">ActivatedRoute</a>, transformedImageProvider: <a href="../injectables/TransformedImageProvider.html">TransformedImageProvider</a>, logger: <a href="../injectables/OxsEyeLogger.html">OxsEyeLogger</a>)</code>
                     </td>
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">app/imageslide/imageslide.component.android.ts:68</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">app/imageslide/imageslide.component.android.ts:69</a></div>
                             </td>
                         </tr>
 
@@ -357,6 +357,20 @@
 </code>
                                                         </td>
                                                 </tr>
+                                                <tr>
+                                                        <td>logger</td>
+                                                  
+                                                        <td>
+                                                                        <code><a href="../injectables/OxsEyeLogger.html" target="_self" >OxsEyeLogger</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
                                         </tbody>
                                     </table>
                             </div>
@@ -397,15 +411,15 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="105"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:105</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="108"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:108</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Go back to previous page</p>
+                    <div class="io-description"><p>Goes back to previous page when the back button is pressed.</p>
 </div>
 
                     <div class="io-description">
@@ -438,15 +452,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="90"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:90</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="93"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:93</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Angular initialization.</p>
+                    <div class="io-description"><p>Initializes page properties like menus (&#39;delete&#39;/&#39;share&#39;) and the image
+properties like translateX/translateY/scaleX/scaleY.</p>
 </div>
 
                     <div class="io-description">
@@ -479,15 +494,18 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="329"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:329</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="354"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:354</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Delete selected image.</p>
+                    <div class="io-description"><p>Deletes the selected image(s) when user clicks the &#39;delete&#39; button in menu.
+This will show up a dialog window for confirmation for the selected image(s)
+to be deleted. If user says &#39;Ok&#39;, then those image(s) will be removed from the
+device, otherwise can be cancelled.</p>
 </div>
 
                     <div class="io-description">
@@ -556,15 +574,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="208"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:208</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="221"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:221</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Resets image position while double tap with single fingure.</p>
+                    <div class="io-description"><p>Double tap method fires on when user taps two times on transformed image. 
+Actually it brings the image to it&#39;s original positions and also adds 
+circle points if it is original image.</p>
 </div>
 
                     <div class="io-description">
@@ -633,15 +653,18 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="133"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:133</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="143"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:143</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Moves images while move with a finger.</p>
+                    <div class="io-description"><p>On pan/move method, which moves image when user press &amp; drag with a finger around
+the image area. Here the image&#39;s tralateX/translateY values are been calculated
+based on the image&#39;s scale, width &amp; height. And also it takes care of image boundary
+checking.</p>
 </div>
 
                     <div class="io-description">
@@ -710,15 +733,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="112"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:112</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="118"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:118</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Triggers while pinch with two fingers.</p>
+                    <div class="io-description"><p>On pinch method, is being called while pinch event fired on image,
+where the new scale, width &amp; height of the transformed image have been calculated
+to zoom-in/out.</p>
 </div>
 
                     <div class="io-description">
@@ -787,15 +812,17 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="280"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:280</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="301"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:301</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Shares image(s) while on share.</p>
+                    <div class="io-description"><p>Shares selected image(s) when user clicks the share button. The sharing can be done
+via any one of the medias supported by android device by default. The list of supported
+medias will be visible when the share button clicked.</p>
 </div>
 
                     <div class="io-description">
@@ -828,15 +855,18 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="234"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:234</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="253"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:253</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Move image left/right while on swipe with fingure.</p>
+                    <div class="io-description"><p>Moves the image left/right while swipe with a fingure. Actually when a finger is swiped
+it checks that the swipe is right direct or left direction, based on that it pulls the image from
+the image list and display it in view. After that, it sets the image in default position by calling
+onDoubleTap method.</p>
 </div>
 
                     <div class="io-description">
@@ -905,15 +935,16 @@
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="223"
-                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:223</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="238"
+                            class="link-to-prism">app/imageslide/imageslide.component.android.ts:238</a></div>
                 </td>
             </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Sets the selected image in the image source while page loaded.</p>
+                    <div class="io-description"><p>Page loaded method which is been called when imageslide page is loaded,
+where it sets the selected image in the source for display.</p>
 </div>
 
                     <div class="io-description">
@@ -995,7 +1026,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="40" class="link-to-prism">app/imageslide/imageslide.component.android.ts:40</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">app/imageslide/imageslide.component.android.ts:41</a></div>
                             </td>
                         </tr>
 
@@ -1029,7 +1060,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">app/imageslide/imageslide.component.android.ts:68</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="69" class="link-to-prism">app/imageslide/imageslide.component.android.ts:69</a></div>
                             </td>
                         </tr>
 
@@ -1063,7 +1094,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="46" class="link-to-prism">app/imageslide/imageslide.component.android.ts:46</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">app/imageslide/imageslide.component.android.ts:47</a></div>
                             </td>
                         </tr>
 
@@ -1097,7 +1128,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">app/imageslide/imageslide.component.android.ts:52</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">app/imageslide/imageslide.component.android.ts:53</a></div>
                             </td>
                         </tr>
 
@@ -1131,7 +1162,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="34" class="link-to-prism">app/imageslide/imageslide.component.android.ts:34</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">app/imageslide/imageslide.component.android.ts:35</a></div>
                             </td>
                         </tr>
 
@@ -1165,7 +1196,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">app/imageslide/imageslide.component.android.ts:44</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="45" class="link-to-prism">app/imageslide/imageslide.component.android.ts:45</a></div>
                             </td>
                         </tr>
 
@@ -1199,7 +1230,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">app/imageslide/imageslide.component.android.ts:54</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="55" class="link-to-prism">app/imageslide/imageslide.component.android.ts:55</a></div>
                             </td>
                         </tr>
 
@@ -1233,7 +1264,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">app/imageslide/imageslide.component.android.ts:42</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="43" class="link-to-prism">app/imageslide/imageslide.component.android.ts:43</a></div>
                             </td>
                         </tr>
 
@@ -1267,7 +1298,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">app/imageslide/imageslide.component.android.ts:38</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">app/imageslide/imageslide.component.android.ts:39</a></div>
                             </td>
                         </tr>
 
@@ -1300,7 +1331,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="66" class="link-to-prism">app/imageslide/imageslide.component.android.ts:66</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">app/imageslide/imageslide.component.android.ts:67</a></div>
                             </td>
                         </tr>
 
@@ -1333,7 +1364,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="60" class="link-to-prism">app/imageslide/imageslide.component.android.ts:60</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">app/imageslide/imageslide.component.android.ts:61</a></div>
                             </td>
                         </tr>
 
@@ -1367,7 +1398,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">app/imageslide/imageslide.component.android.ts:36</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="37" class="link-to-prism">app/imageslide/imageslide.component.android.ts:37</a></div>
                             </td>
                         </tr>
 
@@ -1406,7 +1437,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="58" class="link-to-prism">app/imageslide/imageslide.component.android.ts:58</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">app/imageslide/imageslide.component.android.ts:59</a></div>
                             </td>
                         </tr>
 
@@ -1445,7 +1476,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">app/imageslide/imageslide.component.android.ts:62</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="63" class="link-to-prism">app/imageslide/imageslide.component.android.ts:63</a></div>
                             </td>
                         </tr>
 
@@ -1484,7 +1515,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">app/imageslide/imageslide.component.android.ts:64</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">app/imageslide/imageslide.component.android.ts:65</a></div>
                             </td>
                         </tr>
 
@@ -1518,7 +1549,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">app/imageslide/imageslide.component.android.ts:48</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="49" class="link-to-prism">app/imageslide/imageslide.component.android.ts:49</a></div>
                             </td>
                         </tr>
 
@@ -1552,7 +1583,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">app/imageslide/imageslide.component.android.ts:50</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="51" class="link-to-prism">app/imageslide/imageslide.component.android.ts:51</a></div>
                             </td>
                         </tr>
 
@@ -1591,7 +1622,7 @@
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/imageslide/imageslide.component.android.ts:56</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="57" class="link-to-prism">app/imageslide/imageslide.component.android.ts:57</a></div>
                             </td>
                         </tr>
 
@@ -1623,6 +1654,7 @@ import { Image } from &#x27;tns-core-modules/ui/image&#x27;;
 
 import { RouterExtensions } from &#x27;nativescript-angular/router&#x27;;
 
+import { OxsEyeLogger } from &#x27;../logger/oxseyelogger&#x27;;
 import { SendBroadcastImage, TransformedImageProvider } from &#x27;../providers/transformedimage.provider&#x27;;
 
 import * as application from &#x27;tns-core-modules/application&#x27;;
@@ -1633,7 +1665,7 @@ import * as Toast from &#x27;nativescript-toast&#x27;;
 import * as Permissions from &#x27;nativescript-permissions&#x27;;
 
 /**
- * ImageSlideComponent Component.
+ * ImageSlideComponent is used to show image in detail view, where user can zoom-in/out.
  */
 @Component({
     selector: &#x27;ns-imageslide&#x27;,
@@ -1672,11 +1704,11 @@ export class ImageSlideComponent implements OnInit {
     private isPinchSelected &#x3D; false;
     /** To store old TranslateX value of image */
     private oldTranslateX &#x3D; 0;
-     /** To store old TranslateY value of image */
+    /** To store old TranslateY value of image */
     private oldTranslateY &#x3D; 0;
-     /** Indicates whether the image got default screen location or not */
+    /** Indicates whether the image got default screen location or not */
     private isGotDefaultLocation &#x3D; false;
-     /** Contains image default screen location */
+    /** Contains image default screen location */
     private defaultScreenLocation: any;
 
     /**
@@ -1690,14 +1722,16 @@ export class ImageSlideComponent implements OnInit {
         private page: Page,
         private routerExtensions: RouterExtensions,
         private route: ActivatedRoute,
-        private transformedImageProvider: TransformedImageProvider) {
+        private transformedImageProvider: TransformedImageProvider,
+        private logger: OxsEyeLogger) {
         this.route.queryParams.subscribe((params) &#x3D;&gt; {
             this.imgURI &#x3D; params[&#x27;imgURI&#x27;];
             this.imgIndex &#x3D; params[&#x27;imgIndex&#x27;];
         });
     }
     /**
-     * Angular initialization.
+     * Initializes page properties like menus (&#x27;delete&#x27;/&#x27;share&#x27;) and the image
+     * properties like translateX/translateY/scaleX/scaleY.
      */
     ngOnInit(): void {
         this.imgNext &#x3D; this.imgIndex;
@@ -1712,13 +1746,16 @@ export class ImageSlideComponent implements OnInit {
         this.dragImageItem.scaleY &#x3D; 1;
     }
     /**
-     * Go back to previous page
+     * Goes back to previous page when the back button is pressed.
      */
     goBack() {
         this.routerExtensions.back();
     }
     /**
-     * Triggers while pinch with two fingers.
+     * On pinch method, is being called while pinch event fired on image,
+     * where the new scale, width &amp; height of the transformed image have been calculated
+     * to zoom-in/out.
+     * 
      * @param args PinchGestureEventData
      */
     onPinch(args: PinchGestureEventData) {
@@ -1739,7 +1776,11 @@ export class ImageSlideComponent implements OnInit {
         }
     }
     /**
-     * Moves images while move with a finger.
+     * On pan/move method, which moves image when user press &amp; drag with a finger around
+     * the image area. Here the image&#x27;s tralateX/translateY values are been calculated
+     * based on the image&#x27;s scale, width &amp; height. And also it takes care of image boundary
+     * checking.
+     * 
      * @param args PanGestureEventData
      */
     onPan(args: PanGestureEventData) {
@@ -1814,7 +1855,10 @@ export class ImageSlideComponent implements OnInit {
         }
     }
     /**
-     * Resets image position while double tap with single fingure.
+     * Double tap method fires on when user taps two times on transformed image. 
+     * Actually it brings the image to it&#x27;s original positions and also adds 
+     * circle points if it is original image.
+     * 
      * @param args GestureEventData
      */
     onDoubleTap(args: GestureEventData) {
@@ -1829,7 +1873,9 @@ export class ImageSlideComponent implements OnInit {
         this.oldTranslateX &#x3D; 0;
     }
     /**
-     * Sets the selected image in the image source while page loaded.
+     * Page loaded method which is been called when imageslide page is loaded,
+     * where it sets the selected image in the source for display.
+     * 
      * @param args any object
      */
     pageLoaded(args: any) {
@@ -1840,7 +1886,11 @@ export class ImageSlideComponent implements OnInit {
         this.oldTranslateX &#x3D; 0;
     }
     /**
-     * Move image left/right while on swipe with fingure.
+     * Moves the image left/right while swipe with a fingure. Actually when a finger is swiped
+     * it checks that the swipe is right direct or left direction, based on that it pulls the image from
+     * the image list and display it in view. After that, it sets the image in default position by calling
+     * onDoubleTap method.
+     * 
      * @param args SwipeGestureEventData
      */
     onSwipe(args: SwipeGestureEventData) {
@@ -1887,7 +1937,9 @@ export class ImageSlideComponent implements OnInit {
     // }
 
     /**
-     * Shares image(s) while on share.
+     * Shares selected image(s) when user clicks the share button. The sharing can be done
+     * via any one of the medias supported by android device by default. The list of supported
+     * medias will be visible when the share button clicked.
      */
     onShare() {
         Permissions.requestPermission(
@@ -1925,17 +1977,21 @@ export class ImageSlideComponent implements OnInit {
                         intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
                         application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, &#x27;Send mail...&#x27;));
                     }
-                } catch (e) {
-                    Toast.makeText(&#x27;Error while sending mail.&#x27; + e).show();
-                    console.log(&#x27;is exception raises during sending mail &#x27; + e);
+                } catch (error) {
+                    Toast.makeText(&#x27;Error while sending mail.&#x27; + error).show();
+                    this.logger.error(&#x27;Error while sending mail. &#x27; + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
-            }).catch(() &#x3D;&gt; {
-                Toast.makeText(&#x27;Error in giving permission.&#x27;).show();
-                console.log(&#x27;Permission is not granted (sadface)&#x27;);
+            }).catch((error) &#x3D;&gt; {
+                Toast.makeText(&#x27;Error in giving permission.&#x27; + error).show();
+                this.logger.error(&#x27;Error in giving permission. &#x27; + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Delete selected image.
+     * Deletes the selected image(s) when user clicks the &#x27;delete&#x27; button in menu.
+     * This will show up a dialog window for confirmation for the selected image(s)
+     * to be deleted. If user says &#x27;Ok&#x27;, then those image(s) will be removed from the
+     * device, otherwise can be cancelled.
+     * 
      * @param args any boject
      */
     onDelete(args: any) {
@@ -1961,7 +2017,7 @@ export class ImageSlideComponent implements OnInit {
                                     this.imageFileList.splice(this.imgNext, 1);
                                     Toast.makeText(&#x27;Selected image deleted.&#x27;).show();
                                     if (this.imageFileList.length &gt; 0) {
-                                        if (this.imageFileList.length &#x3D;&#x3D;&#x3D; this.imgNext.valueOf()) {
+                                        if (this.imageFileList.length &lt;&#x3D; this.imgNext.valueOf()) {
                                             this.imgNext &#x3D; 0;
                                         }
                                         this.imageSource &#x3D; this.imageFileList[this.imgNext].filePath;
@@ -1972,11 +2028,15 @@ export class ImageSlideComponent implements OnInit {
                                         Toast.makeText(&#x27;No image available.&#x27;).show();
                                     }
                                     // this.onSwipe(args);
-                                }).catch((err) &#x3D;&gt; {
-                                    console.log(&#x27;Error while deleting thumbnail image. &#x27; + err.stack);
+                                }).catch((error) &#x3D;&gt; {
+                                    Toast.makeText(&#x27;Error while deleting thumbnail image. &#x27; + error.stack, &#x27;long&#x27;).show();
+                                    this.logger.error(&#x27;Error while deleting thumbnail image. &#x27; + module.filename
+                                    + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
-                        }).catch((err) &#x3D;&gt; {
-                            console.log(&#x27;Error while deleting original image. &#x27; + err.stack);
+                        }).catch((error) &#x3D;&gt; {
+                            Toast.makeText(&#x27;Error while deleting original image. &#x27; + error.stack, &#x27;long&#x27;).show();
+                            this.logger.error(&#x27;Error while deleting original image. &#x27; + module.filename
+                            + this.logger.ERROR_MSG_SEPARATOR + error);
                         });
                 } else {
                     this.imageSource &#x3D; null;

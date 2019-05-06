@@ -1,13 +1,20 @@
+import { OxsEyeLogger } from '../logger/oxseyelogger';
 /**
  * LoadingIndicator Instance variable.
  */
 const LoadingIndicator = require('nativescript-loading-indicator').LoadingIndicator;
+
 /**
- * Activity loader class.
+ * Activity loader class to show up application event progress dialog box.
  */
 export class ActivityLoader {
     /** LoadingIndicator Instance variable. */
     private _loader = new LoadingIndicator();
+
+    /** constructor for ActivityLoader */
+    constructor(private logger: OxsEyeLogger) {
+    }
+
     /**
      * Gets LoadingIndicator options for both android and ios.
      * @returns options
@@ -42,17 +49,17 @@ export class ActivityLoader {
         return options;
     }
     /**
-     * Show activity loader.
+     * Shows activity loader.
      */
     show() {
         try {
             this._loader.show(this.getOptions());
-        } catch (e) {
-            console.log('Error while showing lodingindicator. ' + e);
+        } catch (error) {
+            this.logger.error('Error while showing lodingindicator. ' + error);
         }
     }
     /**
-     * Hide activity loader.
+     * Hides activity loader.
      */
     hide() {
         this._loader.hide();

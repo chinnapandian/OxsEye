@@ -11,6 +11,7 @@ import { Image } from 'tns-core-modules/ui/image';
 
 import { RouterExtensions } from 'nativescript-angular/router';
 
+import { OxsEyeLogger } from '../logger/oxseyelogger';
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
 import * as application from 'tns-core-modules/application';
@@ -21,7 +22,7 @@ import * as Toast from 'nativescript-toast';
 import * as Permissions from 'nativescript-permissions';
 
 /**
- * ImageSlideComponent Component.
+ * ImageSlideComponent is used to show image in detail view, where user can zoom-in/out.
  */
 @Component({
     selector: 'ns-imageslide',
@@ -60,11 +61,11 @@ export class ImageSlideComponent implements OnInit {
     private isPinchSelected = false;
     /** To store old TranslateX value of image */
     private oldTranslateX = 0;
-     /** To store old TranslateY value of image */
+    /** To store old TranslateY value of image */
     private oldTranslateY = 0;
-     /** Indicates whether the image got default screen location or not */
+    /** Indicates whether the image got default screen location or not */
     private isGotDefaultLocation = false;
-     /** Contains image default screen location */
+    /** Contains image default screen location */
     private defaultScreenLocation: any;
 
     /**
@@ -78,14 +79,16 @@ export class ImageSlideComponent implements OnInit {
         private page: Page,
         private routerExtensions: RouterExtensions,
         private route: ActivatedRoute,
-        private transformedImageProvider: TransformedImageProvider) {
+        private transformedImageProvider: TransformedImageProvider,
+        private logger: OxsEyeLogger) {
         this.route.queryParams.subscribe((params) => {
             this.imgURI = params['imgURI'];
             this.imgIndex = params['imgIndex'];
         });
     }
     /**
-     * Angular initialization.
+     * Initializes page properties like menus ('delete'/'share') and the image
+     * properties like translateX/translateY/scaleX/scaleY.
      */
     ngOnInit(): void {
         this.imgNext = this.imgIndex;
@@ -100,13 +103,16 @@ export class ImageSlideComponent implements OnInit {
         this.dragImageItem.scaleY = 1;
     }
     /**
-     * Go back to previous page
+     * Goes back to previous page when the back button is pressed.
      */
     goBack() {
         this.routerExtensions.back();
     }
     /**
-     * Triggers while pinch with two fingers.
+     * On pinch method, is being called while pinch event fired on image,
+     * where the new scale, width & height of the transformed image have been calculated
+     * to zoom-in/out.
+     * 
      * @param args PinchGestureEventData
      */
     onPinch(args: PinchGestureEventData) {
@@ -127,7 +133,11 @@ export class ImageSlideComponent implements OnInit {
         }
     }
     /**
-     * Moves images while move with a finger.
+     * On pan/move method, which moves image when user press & drag with a finger around
+     * the image area. Here the image's tralateX/translateY values are been calculated
+     * based on the image's scale, width & height. And also it takes care of image boundary
+     * checking.
+     * 
      * @param args PanGestureEventData
      */
     onPan(args: PanGestureEventData) {
@@ -202,7 +212,10 @@ export class ImageSlideComponent implements OnInit {
         }
     }
     /**
-     * Resets image position while double tap with single fingure.
+     * Double tap method fires on when user taps two times on transformed image. 
+     * Actually it brings the image to it's original positions and also adds 
+     * circle points if it is original image.
+     * 
      * @param args GestureEventData
      */
     onDoubleTap(args: GestureEventData) {
@@ -217,7 +230,9 @@ export class ImageSlideComponent implements OnInit {
         this.oldTranslateX = 0;
     }
     /**
-     * Sets the selected image in the image source while page loaded.
+     * Page loaded method which is been called when imageslide page is loaded,
+     * where it sets the selected image in the source for display.
+     * 
      * @param args any object
      */
     pageLoaded(args: any) {
@@ -228,7 +243,11 @@ export class ImageSlideComponent implements OnInit {
         this.oldTranslateX = 0;
     }
     /**
-     * Move image left/right while on swipe with fingure.
+     * Moves the image left/right while swipe with a fingure. Actually when a finger is swiped
+     * it checks that the swipe is right direct or left direction, based on that it pulls the image from
+     * the image list and display it in view. After that, it sets the image in default position by calling
+     * onDoubleTap method.
+     * 
      * @param args SwipeGestureEventData
      */
     onSwipe(args: SwipeGestureEventData) {
@@ -275,7 +294,9 @@ export class ImageSlideComponent implements OnInit {
     // }
 
     /**
-     * Shares image(s) while on share.
+     * Shares selected image(s) when user clicks the share button. The sharing can be done
+     * via any one of the medias supported by android device by default. The list of supported
+     * medias will be visible when the share button clicked.
      */
     onShare() {
         Permissions.requestPermission(
@@ -313,17 +334,21 @@ export class ImageSlideComponent implements OnInit {
                         intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
                         application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, 'Send mail...'));
                     }
-                } catch (e) {
-                    Toast.makeText('Error while sending mail.' + e).show();
-                    console.log('is exception raises during sending mail ' + e);
+                } catch (error) {
+                    Toast.makeText('Error while sending mail.' + error).show();
+                    this.logger.error('Error while sending mail. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
-            }).catch(() => {
-                Toast.makeText('Error in giving permission.').show();
-                console.log('Permission is not granted (sadface)');
+            }).catch((error) => {
+                Toast.makeText('Error in giving permission.' + error).show();
+                this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
     /**
-     * Delete selected image.
+     * Deletes the selected image(s) when user clicks the 'delete' button in menu.
+     * This will show up a dialog window for confirmation for the selected image(s)
+     * to be deleted. If user says 'Ok', then those image(s) will be removed from the
+     * device, otherwise can be cancelled.
+     * 
      * @param args any boject
      */
     onDelete(args: any) {
@@ -349,7 +374,7 @@ export class ImageSlideComponent implements OnInit {
                                     this.imageFileList.splice(this.imgNext, 1);
                                     Toast.makeText('Selected image deleted.').show();
                                     if (this.imageFileList.length > 0) {
-                                        if (this.imageFileList.length === this.imgNext.valueOf()) {
+                                        if (this.imageFileList.length <= this.imgNext.valueOf()) {
                                             this.imgNext = 0;
                                         }
                                         this.imageSource = this.imageFileList[this.imgNext].filePath;
@@ -360,11 +385,15 @@ export class ImageSlideComponent implements OnInit {
                                         Toast.makeText('No image available.').show();
                                     }
                                     // this.onSwipe(args);
-                                }).catch((err) => {
-                                    console.log('Error while deleting thumbnail image. ' + err.stack);
+                                }).catch((error) => {
+                                    Toast.makeText('Error while deleting thumbnail image. ' + error.stack, 'long').show();
+                                    this.logger.error('Error while deleting thumbnail image. ' + module.filename
+                                    + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
-                        }).catch((err) => {
-                            console.log('Error while deleting original image. ' + err.stack);
+                        }).catch((error) => {
+                            Toast.makeText('Error while deleting original image. ' + error.stack, 'long').show();
+                            this.logger.error('Error while deleting original image. ' + module.filename
+                            + this.logger.ERROR_MSG_SEPARATOR + error);
                         });
                 } else {
                     this.imageSource = null;

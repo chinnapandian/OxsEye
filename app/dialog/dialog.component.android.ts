@@ -5,6 +5,8 @@ import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'tn
 
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
+import { OxsEyeLogger } from '../logger/oxseyelogger';
+
 import * as orientation from 'nativescript-orientation';
 import * as Toast from 'nativescript-toast';
 import * as platform from 'tns-core-modules/platform';
@@ -12,6 +14,12 @@ import * as formattedStringModule from 'tns-core-modules/text/formatted-string';
 import * as buttons from 'tns-core-modules/ui/button';
 
 import * as opencv from 'nativescript-opencv-plugin';
+
+/** Lable for 'Manual' text */
+const LABLE_MANUAL = 'Manual';
+/** Lable for 'Perform' text */
+const LABLE_PERFORM = 'Perform';
+
 /**
  * Dialog content class.
  */
@@ -70,6 +78,8 @@ export class DialogContent {
     private rectanglePoints: any;
     /** To get accurate position, need to adjust the radius value */
     private circleRadius = 17;
+    /** Lable for Manua/Perform button */
+    private manualPerformBtnLable: any;
     // private _dragImageItem: Image;
     // @ViewChild('imgViewId') _dragImage: ElementRef;
 
@@ -77,19 +87,24 @@ export class DialogContent {
 
     /**
      * Constructor for DialogContent class.
+     * 
      * @param params contains captured image file information
      * @param transformedImageProvider transformed image provider instance
      */
     constructor(private params: ModalDialogParams,
-        private transformedImageProvider: TransformedImageProvider) {
-        this.manualBtnText = 'Manual';
+                private transformedImageProvider: TransformedImageProvider,
+                private logger: OxsEyeLogger) {
+        this.manualBtnText = LABLE_MANUAL;
+        this.manualPerformBtnLable = this.params.context.manualBtnLable;
         this.points = [];
         this.pointsCounter = 0;
         this.circleBtnList = [];
         // this._dragImageItem = <Image>this._dragImage.nativeElement;
     }
     /**
-     * Close
+     * Close method, which close the dialog window opened after captured image from camera.
+     * And returns back to the place where the dialog window got triggered, along with 
+     * the parameter 'result'
      * @param result Which is nothing but empty string or transformed image URI string
      */
     close(result: string) {
@@ -98,6 +113,10 @@ export class DialogContent {
     }
     /**
      * Performing manual transformation
+     * this is been used to perform transformation manually, where the rectangle
+     * points will be choosen by user in the captured image displaying in the dialog window.
+     * In the dialog window, there are four circles are being used to select points.
+     * Based on the selected points, the transformation will be performed here.
      */
     performManualCorrection() {
         let pointsCount = 0;
@@ -114,76 +133,77 @@ export class DialogContent {
         // this.points[2].y = +this.points[2].y + circleRadius;
         // this.points[3].y = +this.points[3].y + circleRadius;
 
-        if (pointsCount !== 4) {
-            alert('Please select only four points.');
-        } else {
-            const point0Y = (+this.points[0].y - this.circleRadius);
-            const point1Y = (+this.points[1].y - this.circleRadius);
-            const rectanglePoints = this.points[0].x + '-' + ((point0Y < 0)? 0 : point0Y) + '#'
-                + this.points[1].x + '-' + ((point1Y < 0)? 0 : point1Y) + '#'
-                + this.points[2].x + '-' + (+this.points[2].y + this.circleRadius) + '#'
-                + this.points[3].x + '-' + (+this.points[3].y + this.circleRadius);
-            console.log(rectanglePoints);
-            console.log(this.imageSourceOrg);
-            console.log(this.imageActualSize.width + '-' + this.imageActualSize.height);
-            this.imageSourceOld = this.imageSource;
-            this.imageSource = opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
-                this.imageActualSize.width + '-' + this.imageActualSize.height);
-            SendBroadcastImage(this.imageSource);
-            setTimeout(() => {
-                this.transformedImageProvider.deleteFile(this.imageSourceOld);
-            }, 1000);
-            this.imageSourceOrg = this.imageSourceOrgOld;
-            this.isAutoCorrection = true;
-            this.manualBtnText = 'Manual';
-            this.removeCircles();
-            // this.pointsCounter = 0;
-            this.transformedImageProvider.DeleteFiles();
-        }
+        const point0Y = (+this.points[0].y - this.circleRadius);
+        const point1Y = (+this.points[1].y - this.circleRadius);
+        const rectanglePoints = this.points[0].x + '-' + ((point0Y < 0) ? 0 : point0Y) + '#'
+            + this.points[1].x + '-' + ((point1Y < 0) ? 0 : point1Y) + '#'
+            + this.points[2].x + '-' + (+this.points[2].y + this.circleRadius) + '#'
+            + this.points[3].x + '-' + (+this.points[3].y + this.circleRadius);
+        this.imageSourceOld = this.imageSource;
+        this.imageSource = opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
+            this.imageActualSize.width + '-' + this.imageActualSize.height);
+        SendBroadcastImage(this.imageSource);
+        setTimeout(() => {
+            this.transformedImageProvider.deleteFile(this.imageSourceOld);
+        }, 1000);
+        this.imageSourceOrg = this.imageSourceOrgOld;
+        this.isAutoCorrection = true;
+        this.manualBtnText = LABLE_MANUAL;
+        this.manualPerformBtnLable = this.params.context.manualBtnLable;
+        this.removeCircles();
+        // this.pointsCounter = 0;
+        this.transformedImageProvider.DeleteFiles();
     }
     /**
      * Gets rectangle points.
+     * 
      * @param event Gesture event data
      */
-    getPoints(event: GestureEventData) {
-        try {
-            if (this.manualBtnText === 'Perform') {
-                // This is the density of your screen, so we can divide the measured width/height by it.
-                const scale: number = platform.screen.mainScreen.scale;
+    // getPoints(event: GestureEventData) {
+    //     try {
+    //         if (this.manualBtnText === LABLE_PERFORM) {
+    //             // This is the density of your screen, so we can divide the measured width/height by it.
+    //             const scale: number = platform.screen.mainScreen.scale;
 
-                this.imageActualSize = this.imgView.getActualSize();
-                const pointX = event.android.getX() / scale;
-                const pointY = event.android.getY() / scale;
+    //             this.imageActualSize = this.imgView.getActualSize();
+    //             const pointX = event.android.getX() / scale;
+    //             const pointY = event.android.getY() / scale;
 
-                const actualPoint = { x: pointX, y: pointY, id: this.pointsCounter };
+    //             const actualPoint = { x: pointX, y: pointY, id: this.pointsCounter };
 
-                if (this.points.length >= 4) {
-                    Toast.makeText('Please select only four points.', 'long').show();
-                } else {
-                    this.imgGridId.addChild(this.createCircle(actualPoint));
-                }
-            }
-        } catch (e) {
-            alert(e);
-        }
-    }
+    //             if (this.points.length >= 4) {
+    //                 Toast.makeText('Please select only four points.', 'long').show();
+    //             } else {
+    //                 this.imgGridId.addChild(this.createCircle(actualPoint));
+    //             }
+    //         }
+    //     } catch (error) {
+    //         Toast.makeText('Error calling getPoints(). ' + error);
+    //         this.logger.error(module.filename + ': ' + error);
+    //     }
+    // }
     /**
-     * Show original image.
+     * Show original image, is being used to show original captured image
+     * when the 'Manual' button is been pressed, this is where user can select desired points
+     * and perform manual transformation. It is also intializing circle points to be displayed
+     * in the original image.
      */
     showOriginalImage() {
-
         this.onDoubleTap();
         if (this.circleBtnList.length === 0) {
             this.initPoints();
             Toast.makeText('Please move around the four red circle(s) on image if needed and click "Perform" button.', 'long').show();
         }
         this.isAutoCorrection = false;
-        this.manualBtnText = 'Perform';
+        this.manualBtnText = LABLE_PERFORM;
+        this.manualPerformBtnLable = this.params.context.performBtnLable;
         this.pointsCounter = 0;
         this.addCircles();
     }
     /**
-     * On event pinch
+     * On pinch method, is being called while pinch event fired on image,
+     * where the new scale, width & height of the transformed image have been calculated
+     * to zoom-in/out.
      * @param args PinchGesture event data
      */
     onPinch(args: PinchGestureEventData) {
@@ -206,12 +226,16 @@ export class DialogContent {
         }
     }
     /**
-     * On event pan/move
+     * On pan/move method, which moves image when user press & drag with a finger around
+     * the image area. Here the image's tralateX/translateY values are been calculated
+     * based on the image's scale, width & height. And also it takes care of image boundary
+     * checking.
+     * 
      * @param args PanGesture event data
      */
     onPan(args: PanGestureEventData) {
         const screenLocation = this.imgView.getLocationOnScreen();
-        if (this.manualBtnText !== 'Perform') {
+        if (this.manualBtnText !== LABLE_PERFORM) {
             let centerPointX = (this.imgView.getMeasuredWidth() / 4) * (this.newScale);
             let centerPointY = (this.imgView.getMeasuredHeight() / 4) * (this.newScale);
             const imageViewWidth = this.imgView.getMeasuredWidth() * this.imgView.originX;
@@ -263,10 +287,12 @@ export class DialogContent {
         }
     }
     /**
-     * Event fires on double tap
+     * Double tap method fires on when user taps two times on transformed image. 
+     * Actually it brings the image to it's original positions and also adds 
+     * circle points if it is original image.
      */
     onDoubleTap() {
-        if (this.manualBtnText !== 'Perform') {
+        if (this.manualBtnText !== LABLE_PERFORM) {
             this.imgView.animate({
                 translate: { x: 0, y: 0 },
                 scale: { x: 1, y: 1 },
@@ -283,7 +309,11 @@ export class DialogContent {
         }
     }
     /**
-     * On event page loaded.
+     * Page loaded method which is been called when dialog window is loaded,
+     * where all the necessary values for the image to be displayed in the window
+     * have been initialized, like transformedImageSource, originalImageSource &
+     * rectangle points.
+     * 
      * @param args Page loaded event data
      */
     pageLoaded(args: { object: any; }) {
@@ -307,7 +337,7 @@ export class DialogContent {
         orientation.setOrientation('portrait');
     }
     /**
-     * Add circles.
+     * Add circles method adds circle points btn in original image.
      */
     private addCircles() {
         this.circleBtnList.forEach((btn: any) => {
@@ -315,7 +345,7 @@ export class DialogContent {
         });
     }
     /**
-     * Remove circles.
+     * Remove circles removes circle points btn from original image.
      */
     private removeCircles() {
         const imgElement = this.imgGridId.getChildAt(0);
@@ -323,7 +353,8 @@ export class DialogContent {
         this.imgGridId.addChild(imgElement);
     }
     /**
-     * Initialize points
+     * Initialize circle points based on the receieved rectangle points and
+     * image's width & height.
      */
     private initPoints() {
         this.points = [];
@@ -339,7 +370,6 @@ export class DialogContent {
         let actualPoint = {};
         if (this.rectanglePoints.length > 0) {
             let pointIndex = 1;
-            console.log('this.rectanglePoints: ' + JSON.stringify(this.rectanglePoints));
             this.rectanglePoints.forEach((point) => {
                 const points = point.split('%');
                 let bottomCircleRadius = this.circleRadius;
@@ -377,7 +407,6 @@ export class DialogContent {
                     x: (+points[0]) * (this.imgGridId.getMeasuredWidth() / scale),
                     y: ((+points[1]) * (this.imgGridId.getMeasuredHeight() / scale)) + bottomCircleRadius, id: this.pointsCounter,
                 };
-                console.log('actualPoint : ' + JSON.stringify(actualPoint));
                 this.createCircle(actualPoint);
             });
         } else {
@@ -402,7 +431,10 @@ export class DialogContent {
         }
     }
     /**
-     * Create circles.
+     * This method creates circle points button on original image view
+     * based on the points receieved via actualPoint and also takes
+     * care of boundary checking while diplaying it.
+     * 
      * @param actualPoint Contains circle points(x,y)
      */
     private createCircle(actualPoint: any): any {
@@ -492,7 +524,8 @@ export class DialogContent {
         return circleBtn;
     }
     /**
-     * Check screen boundary.
+     * Checks the image that it is within the image view boundary or not.
+     * 
      * @param translateX Image translateX
      * @param translateY Image translateY
      */
