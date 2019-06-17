@@ -5,3 +5,30 @@
 .img-height {
     height: 100;
 }
+ActionBar {
+    background-color:  #cbfd3c;
+    color: black;
+}
+
+.action-image {
+    width: 40;
+    height: 40;
+    vertical-align: center;
+}
+
+.action-label {
+    color: #3C5AFD;
+    font-size: 24;
+    font-weight: bold;
+    vertical-align: center;
+}
+.img-gallery-checkbox-ios {
+    /*border-width: 3;*/
+    /*color: red;*/
+    /*font-size : 20;*/
+    /*fill: red;*/
+    width: 15;
+    height: 18;
+    /*border-color: red;*/
+    background-color: white
+}

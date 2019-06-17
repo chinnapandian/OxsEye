@@ -11,7 +11,6 @@ import { Image } from 'tns-core-modules/ui/image';
 
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { L } from 'nativescript-i18n/angular';
 import { OxsEyeLogger } from '../logger/oxseyelogger';
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
@@ -20,7 +19,10 @@ import * as dialogs from 'tns-core-modules/ui/dialogs';
 
 import * as Toast from 'nativescript-toast';
 
-import * as Permissions from 'nativescript-permissions';
+// import * as Permissions from 'nativescript-permissions';
+import * as fs from 'tns-core-modules/file-system';
+import * as frameModule from 'tns-core-modules/ui/frame';
+import * as utilsModule from 'tns-core-modules/utils/utils';
 
 /**
  * ImageSlideComponent is used to show image in detail view, where user can zoom-in/out.
@@ -81,8 +83,7 @@ export class ImageSlideComponent implements OnInit {
         private routerExtensions: RouterExtensions,
         private route: ActivatedRoute,
         private transformedImageProvider: TransformedImageProvider,
-        private logger: OxsEyeLogger,
-        private locale: L) {
+        private logger: OxsEyeLogger) {
         this.route.queryParams.subscribe((params) => {
             this.imgURI = params['imgURI'];
             this.imgIndex = params['imgIndex'];
@@ -274,7 +275,7 @@ export class ImageSlideComponent implements OnInit {
                 this.imageSource = null;
                 this.isDeleting = false;
                 this.isSharing = false;
-                Toast.makeText(this.locale.transform('no_image_available')).show();
+                Toast.makeText('No image available.').show();
             }
             this.onDoubleTap(args);
         }
@@ -301,49 +302,94 @@ export class ImageSlideComponent implements OnInit {
      * medias will be visible when the share button clicked.
      */
     onShare() {
-        Permissions.requestPermission(
-            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.INTERNET],
-            'Needed for sharing files').then(() => {
-                try {
-                    const uris = new java.util.ArrayList<android.net.Uri>();
-                    let filesToBeAttached = '';
-                    const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
-                    let imgFileNameOrg = this.imageFileList[this.imgNext].fileName;
-                    imgFileNameOrg = imgFileNameOrg.replace('thumb_PT_IMG', 'PT_IMG');
-                    const newFile = new java.io.File(imagePath, imgFileNameOrg);
-                    // const uri = android.support.v4.content.FileProvider.getUriForFile(
-                    //     application.android.context, 'oxs.eye.fileprovider', newFile);
-                    // application.android.context.grantUriPermission(
-                    //     'oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                    const uri = this.transformedImageProvider.getURIForFile(newFile);
-                    uris.add(uri);
-                    uris.add(this.transformedImageProvider.getOriginalImage(imgFileNameOrg));
-                    uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
 
-                    filesToBeAttached = filesToBeAttached.concat(',' + this.imageFileList[this.imgNext].filePath);
-                    if (uris.size() > 0) {
-                        const intent = new android.content.Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-                        intent.setType('image/jpeg');
-                        const message = 'Perspective correction pictures : ' + filesToBeAttached + '.';
-                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 'Perspective correction pictures...');
+        let dataToShare: any = {};
+        let dataCount = 0;
+        let documents = fs.knownFolders.documents();
 
-                        intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, uris);
-                        intent.putExtra(android.content.Intent.EXTRA_TEXT, message);
-                        intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        intent.addFlags(android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-                        application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, 'Send mail...'));
-                    }
-                } catch (error) {
-                    Toast.makeText(this.locale.transform('error_while_sending_mail') + error).show();
-                    this.logger.error('Error while sending mail. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        this.imageFileList.forEach((image) => {
+            if (image.isSelected) {
+                let transformedImgFileNameOrg = image.fileName.replace('thumb_PT_IMG', 'PT_IMG');
+                // let fileName = image.fileName;
+                let path = fs.path.join(documents.path, 'capturedimages', transformedImgFileNameOrg);
+                // let file = fs.File.fromPath(path);
+                let transformedUIImage = UIImage.imageNamed(path);
+                dataToShare[dataCount++] = transformedUIImage;
+                //Getting original captured image
+                let imgFileNameOrg = transformedImgFileNameOrg.replace('PT_IMG', 'IMG');
+                imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
+                path = fs.path.join(documents.path, 'capturedimages', imgFileNameOrg);
+                let transformedUIImageOrg = UIImage.imageNamed(path);
+                dataToShare[dataCount++] = transformedUIImageOrg;
+            }
+        });
+        try {
+            let activityController = UIActivityViewController.alloc()
+                .initWithActivityItemsApplicationActivities([dataToShare], null);
+            activityController.setValueForKey('Transformed Image(s)', 'Subject');
+            let presentViewController = activityController.popoverPresentationController;
+            if (presentViewController) {
+                var page = frameModule.topmost().currentPage;
+                if (page && page.ios.navigationItem.rightBarButtonItems &&
+                    page.ios.navigationItem.rightBarButtonItems.count > 0) {
+                    presentViewController.barButtonItem = page.ios.navigationItem.rightBarButtonItems[0];
+                } else {
+                    presentViewController.sourceView = page.ios.view;
                 }
-            }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_giving_permission') + error).show();
-                this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
-            });
+            }
+
+            utilsModule.ios.getter(UIApplication, UIApplication.sharedApplication)
+                .keyWindow
+                .rootViewController
+                .presentViewControllerAnimatedCompletion(activityController, true, null);
+        } catch (error) {
+            Toast.makeText('Error while sharing images.' + error).show();
+            this.logger.error('Error while sharing images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        }
+
+        // Permissions.requestPermission(
+        //     [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+        //     android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        //     android.Manifest.permission.INTERNET],
+        //     'Needed for sharing files').then(() => {
+        //         try {
+        //             const uris = new java.util.ArrayList<android.net.Uri>();
+        //             let filesToBeAttached = '';
+        //             const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
+        //             let imgFileNameOrg = this.imageFileList[this.imgNext].fileName;
+        //             imgFileNameOrg = imgFileNameOrg.replace('thumb_PT_IMG', 'PT_IMG');
+        //             const newFile = new java.io.File(imagePath, imgFileNameOrg);
+        //             // const uri = android.support.v4.content.FileProvider.getUriForFile(
+        //             //     application.android.context, 'oxs.eye.fileprovider', newFile);
+        //             // application.android.context.grantUriPermission(
+        //             //     'oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        //             const uri = this.transformedImageProvider.getURIForFile(newFile);
+        //             uris.add(uri);
+        //             uris.add(this.transformedImageProvider.getOriginalImage(imgFileNameOrg));
+        //             uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
+
+        //             filesToBeAttached = filesToBeAttached.concat(',' + this.imageFileList[this.imgNext].filePath);
+        //             if (uris.size() > 0) {
+        //                 const intent = new android.content.Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
+        //                 intent.setType('image/jpeg');
+        //                 const message = 'Perspective correction pictures : ' + filesToBeAttached + '.';
+        //                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 'Perspective correction pictures...');
+
+        //                 intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, uris);
+        //                 intent.putExtra(android.content.Intent.EXTRA_TEXT, message);
+        //                 intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        //                 intent.addFlags(android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+        //                 intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
+        //                 application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, 'Send mail...'));
+        //             }
+        //         } catch (error) {
+        //             Toast.makeText('Error while sending mail.' + error).show();
+        //             this.logger.error('Error while sending mail. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        //         }
+        //     }).catch((error) => {
+        //         Toast.makeText('Error in giving permission.' + error).show();
+        //         this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        //     });
     }
     /**
      * Deletes the selected image(s) when user clicks the 'delete' button in menu.
@@ -355,10 +401,10 @@ export class ImageSlideComponent implements OnInit {
      */
     onDelete(args: any) {
         dialogs.confirm({
-            title: this.locale.transform('delete'),
-            message: this.locale.transform('deleting_selected_item'),
-            okButtonText: this.locale.transform('ok'),
-            cancelButtonText: this.locale.transform('cancel'),
+            title: 'Delete',
+            message: 'Deleting selected item(s)...',
+            okButtonText: 'Ok',
+            cancelButtonText: 'Cancel',
         }).then((result) => {
             if (result) {
                 if (this.imageFileList.length > 0) {
@@ -372,9 +418,9 @@ export class ImageSlideComponent implements OnInit {
                             const thumbnailFile: File = File.fromPath(this.imageFileList[this.imgNext].thumbnailPath);
                             thumbnailFile.remove()
                                 .then(() => {
-                                    SendBroadcastImage(this.imageFileList[this.imgNext].thumbnailPath);
+                                    // SendBroadcastImage(this.imageFileList[this.imgNext].thumbnailPath);
                                     this.imageFileList.splice(this.imgNext, 1);
-                                    Toast.makeText(this.locale.transform('selected_image_deleted')).show();
+                                    Toast.makeText('Selected image deleted.').show();
                                     if (this.imageFileList.length > 0) {
                                         if (this.imageFileList.length <= this.imgNext.valueOf()) {
                                             this.imgNext = 0;
@@ -384,16 +430,16 @@ export class ImageSlideComponent implements OnInit {
                                         this.imageSource = null;
                                         this.isDeleting = false;
                                         this.isSharing = false;
-                                        Toast.makeText(this.locale.transform('no_image_available')).show();
+                                        Toast.makeText('No image available.').show();
                                     }
                                     // this.onSwipe(args);
                                 }).catch((error) => {
-                                    Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_image') + error.stack, 'long').show();
+                                    Toast.makeText('Error while deleting thumbnail image. ' + error.stack, 'long').show();
                                     this.logger.error('Error while deleting thumbnail image. ' + module.filename
                                     + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }).catch((error) => {
-                            Toast.makeText(this.locale.transform('error_while_deleting_original_image') + error.stack, 'long').show();
+                            Toast.makeText('Error while deleting original image. ' + error.stack, 'long').show();
                             this.logger.error('Error while deleting original image. ' + module.filename
                             + this.logger.ERROR_MSG_SEPARATOR + error);
                         });
@@ -401,7 +447,7 @@ export class ImageSlideComponent implements OnInit {
                     this.imageSource = null;
                     this.isDeleting = false;
                     this.isSharing = false;
-                    Toast.makeText(this.locale.transform('no_image_available')).show();
+                    Toast.makeText('No image available.').show();
                 }
             }
         });

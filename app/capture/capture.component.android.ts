@@ -44,16 +44,16 @@ export class CaptureComponent implements OnInit {
     private autofocusParams: any;
     /** Empty string variable */
     private empty: any = null;
-    /** Localization */
-    private locale: any;
-    /** Lable for save button */
-    private saveBtnLable: any;
-    /** Lable for manual button */
-    private manualBtnLable: any;
-    /** Lable for perform button */
-    private performBtnLable: any;
-    /** Lable for retake button */
-    private retakeBtnLable: any;
+    // /** Localization */
+    // private locale: any;
+    // /** Lable for save button */
+    // private saveBtnLable: any;
+    // /** Lable for manual button */
+    // private manualBtnLable: any;
+    // /** Lable for perform button */
+    // private performBtnLable: any;
+    // /** Lable for retake button */
+    // private retakeBtnLable: any;
 
     /** Boolean value to check the camera is visible or not. */
     public isCameraVisible: any;
@@ -83,8 +83,9 @@ export class CaptureComponent implements OnInit {
         private activityLoader: ActivityLoader,
         // private _changeDetectionRef: ChangeDetectorRef
         private logger: OxsEyeLogger,
+        private locale: L,
     ) {
-        this.locale = new L();
+        // this.locale = new L();
     }
 
     /**
@@ -95,7 +96,6 @@ export class CaptureComponent implements OnInit {
         console.log('Initializing OpenCV...');
         this.opencvInstance = opencv.initOpenCV();
         this.isCameraVisible = true;
-        // this._isImageBtnVisible = false;
         this.createTakePictureButton();
         this.createImageGalleryButton();
         this.createAutoFocusImage();
@@ -109,10 +109,10 @@ export class CaptureComponent implements OnInit {
      * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
-        this.saveBtnLable = this.locale.transform('save');
-        this.manualBtnLable = this.locale.transform('manual');
-        this.retakeBtnLable = this.locale.transform('retake');
-        this.performBtnLable = this.locale.transform('perform');
+        // this.saveBtnLable = this.locale.transform('save');
+        // this.manualBtnLable = this.locale.transform('manual');
+        // this.retakeBtnLable = this.locale.transform('retake');
+        // this.performBtnLable = this.locale.transform('perform');
 
         this.cam = args.object as CameraPlus;
         const flashMode = this.cam.getFlashMode();
@@ -412,10 +412,10 @@ export class CaptureComponent implements OnInit {
                 imageSourceOrg: filePathOrg,
                 isAutoCorrection: true,
                 rectanglePoints: recPointsStr,
-                saveBtnLable: this.saveBtnLable,
-                manualBtnLable: this.manualBtnLable,
-                retakeBtnLable: this.retakeBtnLable,
-                performBtnLable: this.performBtnLable,
+                // saveBtnLable: this.saveBtnLable,
+                // manualBtnLable: this.manualBtnLable,
+                // retakeBtnLable: this.retakeBtnLable,
+                // performBtnLable: this.performBtnLable,
             },
             fullscreen: fullScreen,
             viewContainerRef: this.viewContainerRef,
@@ -455,7 +455,7 @@ export class CaptureComponent implements OnInit {
 
                         this.refreshCapturedImagesinMediaStore(filePathOrg, imgURI, 'Remove');
                     } catch (error) {
-                        Toast.makeText('Could not delete the capture image.' + error, 'long').show();
+                        Toast.makeText(this.locale.transform('could_not_delete_the_capture_image') + error, 'long').show();
                         this.logger.error(module.filename + ': ' + error);
                     }
                 }
@@ -474,7 +474,7 @@ export class CaptureComponent implements OnInit {
                 this.imageSource = imgURIParam;
                 SendBroadcastImage(this.imgURI);
             } catch (error) {
-                Toast.makeText('Error while setting image in preview area' + error, 'long').show();
+                Toast.makeText(this.locale.transform('error_while_setting_image_in_preview_area') + error, 'long').show();
                 this.logger.error(module.filename + ': ' + error);
             }
         }
@@ -548,7 +548,7 @@ export class CaptureComponent implements OnInit {
                 SendBroadcastImage(thumnailOrgPath);
             }
         } catch (error) {
-            Toast.makeText('Could not sync the captured image file. ' + error, 'long').show();
+            Toast.makeText(this.locale.transform('could_not_sync_the_captured_image_file') + error, 'long').show();
             this.logger.error(module.filename + ': ' + error);
         }
     }
@@ -566,7 +566,7 @@ export class CaptureComponent implements OnInit {
             const uri = android.net.Uri.parse('file://' + thumbnailImagePath);
             this.galleryBtn.setImageURI(uri);
         } catch (error) {
-            Toast.makeText('Error while creating thumbnail image. ' + error, 'long').show();
+            Toast.makeText(this.locale.transform('error_while_creating_thumbnail_image') + error, 'long').show();
             this.logger.error(module.filename + ': ' + error);
         }
     }
@@ -602,7 +602,7 @@ export class CaptureComponent implements OnInit {
             this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
         } catch (error) {
             this.activityLoader.hide();
-            Toast.makeText('Error while performing perspective transformation process. Please retake picture', 'long').show();
+            Toast.makeText(this.locale.transform('error_while_performing_perspective_transformation'), 'long').show();
         }
     }
     /**
@@ -633,19 +633,19 @@ export class CaptureComponent implements OnInit {
                         });
                     } else {
                         this.imageSource = this.empty;
-                        Toast.makeText('Image source is bad.', 'long').show();
+                        Toast.makeText(this.locale.transform('image_source_is_bad'), 'long').show();
                     }
                 },
                 (error) => {
                     this.imageSource = this.empty;
                     this.logger.error('Error getting image source from asset. ' + module.filename
                         + this.logger.ERROR_MSG_SEPARATOR + error);
-                    Toast.makeText('Error getting image source from asset.', 'long').show();
+                    Toast.makeText(this.locale.transform('error_getting_image_source_from_asset'), 'long').show();
                 },
             );
         } else {
             this.logger.error('Image Asset was null. ' + module.filename);
-            Toast.makeText('Image Asset was null', 'long').show();
+            Toast.makeText(this.locale.transform('image_asset_was_null'), 'long').show();
             this.imageSource = this.empty;
         }
     }

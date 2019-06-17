@@ -14,7 +14,7 @@ import * as platform from 'tns-core-modules/platform';
 import * as formattedStringModule from 'tns-core-modules/text/formatted-string';
 import * as buttons from 'tns-core-modules/ui/button';
 
-import * as opencv from 'nativescript-opencv-plugin';
+// import * as opencv from 'nativescript-opencv-plugin';
 
 /** Lable for 'Manual' text */
 const LABLE_MANUAL = 'Manual';
@@ -142,9 +142,10 @@ export class DialogContent {
             + this.points[2].x + '-' + (+this.points[2].y + this.circleRadius) + '#'
             + this.points[3].x + '-' + (+this.points[3].y + this.circleRadius);
         this.imageSourceOld = this.imageSource;
-        this.imageSource = opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
+        this.imageSource = OpenCVWrapper.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
             this.imageActualSize.width + '-' + this.imageActualSize.height);
-        SendBroadcastImage(this.imageSource);
+        console.log('Manual PT :', this.imageSource);
+        // SendBroadcastImage(this.imageSource);
         setTimeout(() => {
             this.transformedImageProvider.deleteFile(this.imageSourceOld);
         }, 1000);
@@ -153,8 +154,8 @@ export class DialogContent {
         this.manualBtnText = LABLE_MANUAL;
         // this.manualPerformBtnLable = this.locale.transform('manual');
         this.removeCircles();
-        // this.pointsCounter = 0;
-        this.transformedImageProvider.DeleteFiles();
+        // // this.pointsCounter = 0;
+        // this.transformedImageProvider.DeleteFiles();
     }
     /**
      * Gets rectangle points.

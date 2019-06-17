@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
-import { File, Folder } from 'tns-core-modules/file-system';
+import { File, Folder, path, knownFolders } from 'tns-core-modules/file-system';
 import { Page } from 'tns-core-modules/ui/page';
 
 import { RouterExtensions } from 'nativescript-angular/router';
@@ -21,6 +21,9 @@ import * as dialogs from 'tns-core-modules/ui/dialogs';
 
 import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
+import * as fs from 'tns-core-modules/file-system';
+import * as frameModule from 'tns-core-modules/ui/frame';
+import * as utilsModule from 'tns-core-modules/utils/utils';
 
 /**
  * ImageGalleryComponent class is being used to display all the thumbnail 
@@ -51,10 +54,12 @@ export class ImageGalleryComponent implements OnInit {
     private orderByAscDesc: string;
     /** Stores page referrence. */
     private page;
-    // /** Lable for select/unselect All menu */
+    /** Lable for select/unselect All menu */
     // private selectUnselectAllLable: any;
     // /** Lable for sort by date menu */
     // private sortByDateLable: any;
+    /** Localization */
+    private locale: L;
 
     /**
      * Constructor for ImageGalleryComponent.
@@ -69,18 +74,17 @@ export class ImageGalleryComponent implements OnInit {
         private router: Router,
         private transformedImageProvider: TransformedImageProvider,
         private activityLoader: ActivityLoader,
-        private logger: OxsEyeLogger,
-        private locale: L) {
+        private logger: OxsEyeLogger) {
+        this.locale = new L();
         // this.selectUnselectAllLable = this.locale.transform('select_unselect_all');
         // this.sortByDateLable = this.locale.transform('sort_by_date');
     }
-
     /**
      * Initializes menu properties and checkbox to be selected image(s) and
      * load thumbnail images for gallery view to be displayed.
      */
     ngOnInit(): void {
-        this.activityLoader.show();
+        // this.activityLoader.show();
         this.isCheckBoxVisible = false;
         this.selectedCount = 0;
         this.isDeleting = false;
@@ -88,9 +92,10 @@ export class ImageGalleryComponent implements OnInit {
         this.isPopUpMenu = false;
         this.isSortByDateMenu = true;
         this.isSelectUnselectAll = true;
-        // this.loadThumbnailImages();
-        this.orderByAscDesc = ' DESC';
-        this.loadThumbnailImagesByContentResolver(this.orderByAscDesc);
+        this.loadThumbnailImagesByFileSystem();
+        // this.orderByAscDesc = ' DESC';
+
+        //      this.loadThumbnailImagesByContentResolver(this.orderByAscDesc);
     }
     /**
      * Gets the stored transformed thumbnail image list.
@@ -105,6 +110,11 @@ export class ImageGalleryComponent implements OnInit {
     setCheckboxVisible() {
         this.isCheckBoxVisible = true;
         this.isPopUpMenu = true;
+        for (let i = 0; i < this.imageList.length; i++) {
+            const checkBox = this.page.getViewById('checkbox-' + i) as CheckBox;
+            checkBox.scaleX = 1.75;
+            checkBox.scaleY = 1.75;
+        }
     }
     /**
      * This method fires when the gallery page is loaded and sets page and menu
@@ -148,13 +158,13 @@ export class ImageGalleryComponent implements OnInit {
      * @param imgIndexParam  image index
      */
     goImageSlide(imgURIParam, imgIndexParam) {
-        const navigationExtras: NavigationExtras = {
-            queryParams: {
-                imgURI: imgURIParam,
-                imgIndex: imgIndexParam,
-            },
-        };
-        this.router.navigate(['imageslide'], navigationExtras);
+        // const navigationExtras: NavigationExtras = {
+        //     queryParams: {
+        //         imgURI: imgURIParam,
+        //         imgIndex: imgIndexParam,
+        //     },
+        // };
+        // this.router.navigate(['imageslide'], navigationExtras);
     }
     /**
      * Checks whether the checkBox is been selected or not. If it is selected,
@@ -190,14 +200,14 @@ export class ImageGalleryComponent implements OnInit {
     onSelectUnSelectAllCheckBox() {
         if (this.selectedCount !== this.imageList.length && this.selectedCount > 0) {
             dialogs.action({
-                message: this.locale.transform('dialog_message'),
-                cancelButtonText: this.locale.transform('dialog_cancel_btn_text'),
-                actions: [this.locale.transform('dialog_action_select_all'), this.locale.transform('dialog_action_unselect_all')],
+                message: 'Patially selected. Do you want to perform one of the below?',
+                cancelButtonText: 'Cancel',
+                actions: ['Select All', 'Unselect All'],
             }).then((result) => {
-                if (result === this.locale.transform('dialog_action_select_all')) {
+                if (result === 'Select All') {
                     this.isSelectUnselectAll = true;
                     this.performSelectUnselectAll(this.isSelectUnselectAll);
-                } else if (result === this.locale.transform('dialog_action_unselect_all')) {
+                } else if (result === 'Unselect All') {
                     this.isSelectUnselectAll = false;
                     this.performSelectUnselectAll(this.isSelectUnselectAll);
                 }
@@ -233,52 +243,49 @@ export class ImageGalleryComponent implements OnInit {
      * medias will be visible when the share button clicked.
      */
     onShare() {
-        Permissions.requestPermission(
-            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            android.Manifest.permission.INTERNET],
-            'Needed for sharing files').then(() => {
-                try {
-                    const uris = new java.util.ArrayList<android.net.Uri>();
-                    const filesToBeAttached = '';
-                    this.imageList.forEach((image) => {
-                        if (image.isSelected) {
-                            const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
-                            const imgFileNameOrg = image.fileName.replace('thumb_PT_IMG', 'PT_IMG');
-                            const newFile = new java.io.File(imagePath, imgFileNameOrg);
-                            // const uri = android.support.v4.content.FileProvider.getUriForFile(
-                            //     application.android.context, 'oxs.eye.fileprovider', newFile);
-                            // application.android.context.grantUriPermission(
-                            //     'oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                            const uri = this.transformedImageProvider.getURIForFile(newFile);
-                            uris.add(uri);
-                            uris.add(this.transformedImageProvider.getOriginalImage(imgFileNameOrg));
-                            uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
-                        }
-                    });
-                    if (uris.size() > 0) {
-                        const intent = new android.content.Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-                        intent.setType('image/jpeg');
-                        const message = 'Perspective correction pictures : ' + filesToBeAttached + '.';
-                        intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 'Perspective correction pictures...');
-                        intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, uris);
-                        // let extra_text = new java.util.ArrayList<String>();
-                        // extra_text.add('See attached transformed image files.');
-                        intent.putExtra(android.content.Intent.EXTRA_TEXT, 'See attached transformed image files.');
-                        intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        intent.addFlags(android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                        intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-                        application.android.foregroundActivity.startActivity(
-                            android.content.Intent.createChooser(intent, 'Share images...'));
-                    }
-                } catch (error) {
-                    Toast.makeText(this.locale.transform('error_while_sharing_images') + error).show();
-                    this.logger.error('Error while sharing images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        let dataToShare: any = {};
+        let dataCount = 0;
+        let documents = fs.knownFolders.documents();
+
+        this.imageList.forEach((image) => {
+            if (image.isSelected) {
+                let transformedImgFileNameOrg = image.fileName.replace('thumb_PT_IMG', 'PT_IMG');
+                // let fileName = image.fileName;
+                let path = fs.path.join(documents.path, 'capturedimages', transformedImgFileNameOrg);
+                // let file = fs.File.fromPath(path);
+                let transformedUIImage = UIImage.imageNamed(path);
+                dataToShare[dataCount++] = transformedUIImage;
+                //Getting original captured image
+                let imgFileNameOrg = transformedImgFileNameOrg.replace('PT_IMG', 'IMG');
+                imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
+                path = fs.path.join(documents.path, 'capturedimages', imgFileNameOrg);
+                let transformedUIImageOrg = UIImage.imageNamed(path);
+                dataToShare[dataCount++] = transformedUIImageOrg;
+            }
+        });
+        try {
+            let activityController = UIActivityViewController.alloc()
+                .initWithActivityItemsApplicationActivities([dataToShare], null);
+            activityController.setValueForKey('Transformed Image(s)', 'Subject');
+            let presentViewController = activityController.popoverPresentationController;
+            if (presentViewController) {
+                var page = frameModule.topmost().currentPage;
+                if (page && page.ios.navigationItem.rightBarButtonItems &&
+                    page.ios.navigationItem.rightBarButtonItems.count > 0) {
+                    presentViewController.barButtonItem = page.ios.navigationItem.rightBarButtonItems[0];
+                } else {
+                    presentViewController.sourceView = page.ios.view;
                 }
-            }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_giving_permission') + error).show();
-                this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
-            });
+            }
+
+            utilsModule.ios.getter(UIApplication, UIApplication.sharedApplication)
+                .keyWindow
+                .rootViewController
+                .presentViewControllerAnimatedCompletion(activityController, true, null);
+        } catch (error) {
+            Toast.makeText('Error while sharing images.' + error).show();
+            this.logger.error('Error while sharing images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        }
     }
     /**
      * Deletes the selected image(s) when user clicks the 'delete' button in menu.
@@ -289,10 +296,10 @@ export class ImageGalleryComponent implements OnInit {
     onDelete() {
         if (this.selectedCount > 0) {
             dialogs.confirm({
-                title: this.locale.transform('delete'),
-                message: this.locale.transform('deleting_selected_item'),
-                okButtonText: this.locale.transform('ok'),
-                cancelButtonText: this.locale.transform('cancel'),
+                title: 'Delete',
+                message: 'Deleting selected item(s)?',
+                okButtonText: 'Ok',
+                cancelButtonText: 'Cancel',
             }).then((result) => {
                 if (result) {
                     this.selectedCount = 0;
@@ -306,27 +313,27 @@ export class ImageGalleryComponent implements OnInit {
                                     const thumbnailFile: File = File.fromPath(image.thumbnailPath);
                                     thumbnailFile.remove()
                                         .then(() => {
-                                            SendBroadcastImage(image.thumbnailPath);
+                                            // SendBroadcastImage(image.thumbnailPath);
                                             const imgIdx = this.imageList.indexOf(image);
                                             if (imgIdx >= 0) {
                                                 this.imageList.splice(imgIdx, 1);
                                             }
                                             this.onPageLoaded(this.page);
                                         }).catch((error) => {
-                                            Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_images') + error).show();
+                                            Toast.makeText('Error while deleting thumbnail images.' + error).show();
                                             this.logger.error('Error while deleting thumbnail images. ' + module.filename
                                                 + this.logger.ERROR_MSG_SEPARATOR + error);
                                         });
 
                                 }).catch((error) => {
-                                    Toast.makeText(this.locale.transform('error_while_deleting_images')).show();
+                                    Toast.makeText('Error while deleting images').show();
                                     this.logger.error('Error while deleting images. ' + module.filename
                                         + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }
 
                     });
-                    Toast.makeText(this.locale.transform('selected_images_deleted')).show();
+                    Toast.makeText('Selected images deleted.').show();
                 }
             });
         }
@@ -345,52 +352,6 @@ export class ImageGalleryComponent implements OnInit {
         }
         this.isSelectUnselectAll = !value;
     }
-    // /**
-    //  * Get original image
-    //  * @param transformedImage
-    //  */
-    // private getOriginalImage(transformedImage: string): any {
-    //     const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM/CAMERA', '.');
-
-    //     let imgFileNameOrg = transformedImage.replace('PT_IMG', 'IMG');
-    //     imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
-    //     const newFile = new java.io.File(imagePath, imgFileNameOrg);
-    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(
-    //     // application.android.context, 'oxs.eye.fileprovider', newFile);
-    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider',
-    //     // uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    //     // return uri;
-    //     return this.transformedImageProvider.getURIForFile(newFile);
-    // }
-    // /**
-    //  * Get original image
-    //  * @param transformedImage
-    //  */
-    // private getOriginalImageWithRectangle(transformedImage: string): any {
-    //     const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
-
-    //     let imgFileNameOrg = transformedImage.substring(0, transformedImage.indexOf('_transformed')) + '_contour.jpg';
-    //     const newFile = new java.io.File(imagePath, imgFileNameOrg);
-    //     // const uri = android.support.v4.content.FileProvider.getUriForFile(
-    //    // application.android.context, 'oxs.eye.fileprovider', newFile);
-    //     // application.android.context.grantUriPermission('oxs.eye.fileprovider',
-    //     // uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    //     // return uri;
-    //     return this.transformedImageProvider.getURIForFile(newFile);
-    // }
-
-    // /**
-    //  * Get URI for file.
-    //  * @param newFile
-    //  * @returns URI
-    //  */
-    // private getURIForFile(newFile: any): any {
-    //     const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
-    //     application.android.context.grantUriPermission('oxs.eye.fileprovider',
-    //     uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-    //     return uri;
-    // }
-
     /**
      * Loads thumbnail images using content resolver by order what it receives as parameter.
      * 
@@ -404,43 +365,40 @@ export class ImageGalleryComponent implements OnInit {
      * public access. The file system needs READ_EXTERNAL_STORAGE permission.
      */
     private loadThumbnailImagesByFileSystem() {
-        Permissions.requestPermission(
-            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-            android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
-            'Needed for sharing files')
-            .then(() => {
-                let capturedPicturePath = '';
-                this.transformedImageProvider.imageList = [];
-                try {
-                    capturedPicturePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + '/DCIM';
-                } catch (error) {
-                    Toast.makeText(this.locale.transform('error_while_getting_path') + error.toString()).show();
-                    this.logger.error('Error while getting path. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
-                }
-                const folders: Folder = Folder.fromPath(capturedPicturePath);
-                folders.getEntities()
-                    .then((entities) => {
-                        // entities is array with the document's files and folders.
-                        entities.forEach((entity) => {
-                            if (entity.name.startsWith('thumb_PT_IMG') && entity.name.endsWith('.png')) {
-                                const thumnailOrgPath = entity.path.replace('thumb_PT_IMG', 'PT_IMG');
-                                this.transformedImageProvider.imageList.push(new TransformedImage(
-                                    entity.name,
-                                    thumnailOrgPath,
-                                    entity.path,
-                                    false,
-                                ));
-                            }
-                        });
-                    }).catch((error) => {
-                        // Failed to obtain folder's contents.
-                        Toast.makeText(this.locale.transform('error_while_loading_images') + error, 'long').show();
-                        this.logger.error('Error while loading images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        // let capturedPicturePath = '';
+        this.transformedImageProvider.imageList = [];
+        try {
+            // capturedPicturePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + '/DCIM';
+            const folder: Folder = <Folder>knownFolders.currentApp();
+            // const folderDest = knownFolders.documents();
+            // const fileName = 'capturedimages/IMG_' + Date.now() + '.jpg';
+            // const capturedPicturePath = path.join(folder.path, 'capturedimages');
+
+            let folder0 = fs.path.join(fs.knownFolders.documents().path, 'capturedimages', 'thumbnails');
+            let folders0 = fs.Folder.fromPath(folder0);
+            folders0.getEntities()
+                .then((entities) => {
+                    // entities is array with the document's files and folders.
+                    entities.forEach((entity) => {
+                        // if (entity.name.startsWith('thumb_PT_IMG') && entity.name.endsWith('.png')) {
+                        const thumnailOrgPath = entity.path.replace('thumb_PT_IMG', 'PT_IMG');
+                        this.transformedImageProvider.imageList.push(new TransformedImage(
+                            entity.name,
+                            thumnailOrgPath,
+                            entity.path,
+                            false,
+                        ));
+                        // }
                     });
-                this.activityLoader.hide();
-            }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_giving_permission') + error, 'long').show();
-                this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
-            });
+                }).catch((error) => {
+                    // Failed to obtain folder's contents.
+                    Toast.makeText('Error while loading images.' + error, 'long').show();
+                    this.logger.error('Error while loading images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+                });
+            this.activityLoader.hide();
+        } catch (error) {
+            Toast.makeText('Error while getting path.' + error.toString()).show();
+            this.logger.error('Error while getting path. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
+        }
     }
 }

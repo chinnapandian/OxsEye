@@ -1,8 +1,13 @@
 import { OxsEyeLogger } from '../logger/oxseyelogger';
+
+import { L } from 'nativescript-i18n/angular';
+
+import { LoadingIndicator } from 'nativescript-loading-indicator';
+
 /**
  * LoadingIndicator Instance variable.
  */
-const LoadingIndicator = require('nativescript-loading-indicator').LoadingIndicator;
+// const LoadingIndicator = require('nativescript-loading-indicator').LoadingIndicator;
 
 /**
  * Activity loader class to show up application event progress dialog box.
@@ -13,13 +18,16 @@ export class ActivityLoader {
     /** Logger variable to log message in different level */
     private logger = new OxsEyeLogger();
 
+    /**Localization variable */
+    private locale = new L();
+
     /**
      * Gets LoadingIndicator options for both android and ios.
      * @returns options
      */
     private getOptions(): any {
         const options = {
-            message: 'Loading...',
+            message: this.locale.transform('activity_loader_message'),
             progress: 0.65,
             android: {
                 indeterminate: true,

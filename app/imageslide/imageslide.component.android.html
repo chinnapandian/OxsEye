@@ -6,7 +6,7 @@
         <ActionItem (tap)="onDelete()" ios.systemIcon="16" ios.position="right" android.systemIcon="ic_menu_delete" android.position="actionBar"></ActionItem>
     </ActionBar>-->
     <Page.actionBar>
-        <ActionBar title="Image Gallery" class="action-bar">
+        <ActionBar title="Image Slide" class="action-bar">
             <!--<Label text="&#xf177;" class="fa p-5 m-3"></Label>-->
             <ActionBar.titleView>
                 <!--<Label (tap)="goBack()" text="&#xf104;" class="fa"></Label>-->
@@ -15,6 +15,9 @@
 						<Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span> 
 					</FormattedString>
 				</Button>
+                <StackLayout>
+                    <Label text="{{this.locale.transform('image_slide_title')}}" class="action-bar-lable"></Label>
+                </StackLayout>
             </ActionBar.titleView>
 
             <ActionItem (tap)="onShare()" android.position="actionBar" visibility="{{ isSharing ? 'visible' : 'collapse' }}">

@@ -66,8 +66,13 @@ button {
     font-weight: bold;
 }
 .save-btn {
-    margin-left: 20 !important;
-    margin-right: 20 !important;
+    margin-left: 17 !important;
+    margin-right: 17 !important;
+}
+.action-bar-lable {
+       margin-left: 70 !important;
+       font-size: 15 !important;
+    /*margin-right: 20 !important;*/
 }
 /*.Grid-Layout { font-size: 12; color: red; }
 .landscape .Grid-Layout { font-size: 20; color: green; }*/

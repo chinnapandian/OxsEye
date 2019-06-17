@@ -20,6 +20,8 @@ import { TransformedImageProvider } from './providers/transformedimage.provider'
 
 import { OxsEyeLogger } from './logger/oxseyelogger';
 
+import { L } from 'nativescript-i18n/angular';
+
 /** This is the main application module contains all the modules used in the application. */
 @NgModule({
     bootstrap: [
@@ -42,7 +44,7 @@ import { OxsEyeLogger } from './logger/oxseyelogger';
         ImageSlideComponent,
     ],
     entryComponents: [DialogContent],
-    providers: [TransformedImageProvider, ActivityLoader, OxsEyeLogger],
+    providers: [TransformedImageProvider, ActivityLoader, OxsEyeLogger, L],
     schemas: [
         NO_ERRORS_SCHEMA,
     ],

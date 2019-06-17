@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { File } from 'tns-core-modules/file-system';
 
-import { L } from 'nativescript-i18n/angular';
 import { OxsEyeLogger } from '../logger/oxseyelogger';
 import { TransformedImage } from './transformedimage.common';
 
@@ -26,8 +25,7 @@ export class TransformedImageProvider {
     /**
      * Constructor for TransformedImageProvider
      */
-    constructor(private logger: OxsEyeLogger,
-                private locale: L) {
+    constructor(private logger: OxsEyeLogger) {
         this.imageList = [];
         this.contourImageList = [];
     }
@@ -74,12 +72,12 @@ export class TransformedImageProvider {
                     activityLoader.hide();
                 } catch (error) {
                     activityLoader.hide();
-                    Toast.makeText(this.locale.transform('error_while_loading_gallery_images'), 'long').show();
+                    Toast.makeText('Error while loading gallery images.', 'long').show();
                     this.logger.error('Error while loading gallery images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
             }).catch((error) => {
                 activityLoader.hide();
-                Toast.makeText(this.locale.transform('error_while_giving_permission'), 'long').show();
+                Toast.makeText('Error in giving permission.', 'long').show();
                 this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -161,22 +159,22 @@ export class TransformedImageProvider {
                             const tempFile: File = File.fromPath(imageUri);
                             tempFile.remove()
                                 .then(() => {
-                                    SendBroadcastImage(imageUri);
+                                    // SendBroadcastImage(imageUri);
                                 }).catch((error) => {
-                                    Toast.makeText(this.locale.transform('error_while_deleting_temporary_images')).show();
+                                    Toast.makeText('Error while deleting temporary images').show();
                                     this.logger.error('Error while deleting temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }
                     }
                 } catch (error) {
                     //           activityLoader.hide();
-                    Toast.makeText(this.locale.transform('error_while_loading_temporary_images'), 'long').show();
+                    Toast.makeText('Error while loading temporary images.', 'long').show();
                     this.logger.error('Error while loading temporary images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
 
             }).catch((error) => {
                 //   activityLoader.hide();
-                Toast.makeText(this.locale.transform('error_while_giving_permission'), 'long').show();
+                Toast.makeText('Error in giving permission.', 'long').show();
                 this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -189,9 +187,9 @@ export class TransformedImageProvider {
         const tempFile: File = File.fromPath(fileURI);
         tempFile.remove()
             .then(() => {
-                SendBroadcastImage(fileURI);
+                // SendBroadcastImage(fileURI);
             }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_deleting_temporary_files')).show();
+                Toast.makeText('Error while deleting temporary files').show();
                 this.logger.error('Error while deleting temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -207,10 +205,10 @@ export class TransformedImageProvider {
         const tempFile: File = File.fromPath(fileURI);
         tempFile.rename(renameFileto)
             .then(() => {
-                SendBroadcastImage(fileURI);
-                SendBroadcastImage(renameFileto);
+                // SendBroadcastImage(fileURI);
+                // SendBroadcastImage(renameFileto);
             }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_renaming_temporary_file')).show();
+                Toast.makeText('Error while renaming temporary file').show();
                 this.logger.error('Error while renaming temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }

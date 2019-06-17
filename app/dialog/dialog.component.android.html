@@ -5,9 +5,9 @@
             <Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"    id="imgViewId"  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>
         </GridLayout>
         <StackLayout height="10%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="10">
-            <Button class="btn-outline btn-active btn-rounded-lg" text="{{this.params.context.retakeBtnLable}}" (tap)="close('')"></Button>
-            <Button class="save-btn btn-outline btn-active btn-rounded-lg" text="{{this.params.context.saveBtnLable}}" (tap)="close(imageSource)"></Button>
-            <Button class="btn-outline btn-active btn-rounded-lg" text="{{manualPerformBtnLable}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection() : showOriginalImage()"></Button>
+            <Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform('retake')}}" (tap)="close('')"></Button>
+            <Button class="save-btn btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform('save')}}" (tap)="close(imageSource)"></Button>
+            <Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform(manualBtnText.toLowerCase())}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection() : showOriginalImage()"></Button>
         </StackLayout>
     </StackLayout>
 </Page>

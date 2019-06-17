@@ -1,11 +1,11 @@
 <Page.actionBar>
 	<ActionBar class="action-bar action-bar-height">
 		<StackLayout class="action-bar-title">
-			<Label text="Oxs &#xf06e; Eye" class="fa action-bar-fontsize"></Label>
+			<Label text="OXS &#xf06e; eye" class="fa action-bar-fontsize"></Label>
 		</StackLayout>
 	</ActionBar>
 </Page.actionBar>
-<Page class="page">
+<!--<Page class="page">-->
 
 	<GridLayout orientation="vertical">
 		<CameraPlus [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
@@ -15,9 +15,9 @@
 		</CameraPlus>
 	</GridLayout>
 
-</Page>
+<!--</Page>-->
 
-<RadSideDrawer tkExampleTitle tkToggleNavButton>
+<!--<RadSideDrawer tkExampleTitle tkToggleNavButton>
 	<StackLayout tkDrawerContent class="sideStackLayout">
 		<StackLayout class="sideTitleStackLayout">
 			<Label text="Settings Menu"></Label>
@@ -30,19 +30,7 @@
 
 					<Switch class="m-15" checked="true" (checkedChange)="onAutomaticChecked($event)" row="0" col="1"></Switch>
 				</StackLayout>
-				<!--<Label text="Social" class="sideLabel"></Label>
-                <Label text="Promotions" class="sideLabel"></Label>
-                <Label text="Labels" class="sideLabel sideLightGrayLabel"></Label>
-                <Label text="Important" class="sideLabel"></Label>
-                <Label text="Starred" class="sideLabel"></Label>
-                <Label text="Sent Mail" class="sideLabel"></Label>
-                <Label text="Drafts" class="sideLabel"></Label>
-                <Label text="Close Drawer" color="lightgray" padding="10" style="horizontal-align: center" (tap)="onCloseDrawerTap()"></Label>-->
 			</StackLayout>
 		</ScrollView>
 	</StackLayout>
-	<!--<StackLayout tkMainContent>
-        <Label [text]="mainContentText" textWrap="true" class="drawerContentText"></Label>
-        <Button text="OPEN DRAWER" (tap)="openDrawer()" class="drawerContentButton"></Button>
-    </StackLayout>-->
-</RadSideDrawer>
+</RadSideDrawer>-->

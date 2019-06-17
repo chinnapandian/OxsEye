@@ -1,0 +1,4 @@
+module OpenCVWrapper {
+    header "OpenCVWrapper.h"
+    export *
+}

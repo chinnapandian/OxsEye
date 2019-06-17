@@ -5,7 +5,11 @@
                 <Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span> 
             </FormattedString>
         </Button>
+        <StackLayout>
+			<Label text="{{this.locale.transform('image_gallery_title')}}" class="action-bar-lable"></Label>
+		</StackLayout>
     </ActionBar.titleView>
+
     <ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
         <Button horizontalAlignment="left" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-share">
 					<FormattedString>
@@ -21,10 +25,10 @@
 					</FormattedString>
 				</Button>
     </ActionItem>
-    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? 'visible' : 'collapse' }}" text="{{selectUnselectAllLable}}"
+    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? 'visible' : 'collapse' }}" text="{{this.locale.transform('select_unselect_all')}}"
         android.position="popup">
     </ActionItem>
-    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? 'visible' : 'collapse' }}" text="{{sortByDateLable}}"
+    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? 'visible' : 'collapse' }}" text="{{this.locale.transform('sort_by_date')}}"
         android.position="popup">
     </ActionItem>
 </ActionBar>
