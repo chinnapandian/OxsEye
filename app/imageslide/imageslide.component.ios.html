@@ -1,19 +1,17 @@
-
-    <ActionBar title="Slide View">
-    <ActionItem (tap)="onShare()"  visibility="{{ isSharing ? 'visible' : 'collapse' }}" ios.position="right">
+<ActionBar title="Slide View">
+    <ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}" ios.position="right">
         <StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left">
             <Image src="res://share-rounded-30.png" class="action-image"></Image>
         </StackLayout>
     </ActionItem>
-    <ActionItem (tap)="onDelete()"  visibility="{{ isDeleting ? 'visible' : 'collapse' }}" ios.position="right">
+    <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? 'visible' : 'collapse' }}" ios.position="right">
         <StackLayout orientation="horizontal" ios:horizontalAlignment="center" android:horizontalAlignment="left">
             <Image src="res://remove-30.png" class="action-image"></Image>
         </StackLayout>
     </ActionItem>
 </ActionBar>
-    
-<!--<Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">-->
-    <GridLayout (loaded)="pageLoaded($event)" #container horizontalAlignment="center" verticalAlignment="center"  (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap($event)"    backgroundColor="gray">
-        <Image src="{{ imageSource }}"  #imgSlideId  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>  
-    </GridLayout>
-<!--</Page>-->
+
+<GridLayout (loaded)="pageLoaded($event)" #container horizontalAlignment="center" verticalAlignment="center" (swipe)="onSwipe($event)"
+    (doubleTap)="onDoubleTap($event)" backgroundColor="gray">
+    <Image src="{{ imageSource }}" #imgSlideId  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>
+</GridLayout>

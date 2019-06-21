@@ -34,7 +34,7 @@ export class TransformedImageProvider {
     /**
      * Loads all the thumbnail images of transformed image by content resolver in order what
      * it's parameter has and populates the image list.
-     * 
+     *
      * @param orderByAscDesc Orderby value 'Asc'/'Desc'
      * @param activityLoader ActivityLoader instance
      */
@@ -182,7 +182,7 @@ export class TransformedImageProvider {
     }
     /**
      * Deletes the selected image file from the disk.
-     * 
+     *
      * @param fileURI Image file path
      */
     deleteFile(fileURI: string) {
@@ -199,7 +199,7 @@ export class TransformedImageProvider {
      * Renames the transformed image file name to given name. This is been used while performing
      * manual transformation using OpenCV API. As it creates temporary files behind the scene,
      * it needs to be renamed to refresh the final image in the view.
-     * 
+     *
      * @param fileURI Image file path
      * @param renameFileto Filename to be renamed to.
      */
@@ -251,7 +251,7 @@ export class TransformedImageProvider {
 
     /**
      * Gets the URI for the captured/transformed image file.
-     * 
+     *
      * @param newFile File name
      * @returns URI Returns the URI of given file name
      */
@@ -263,7 +263,7 @@ export class TransformedImageProvider {
 }
 /**
  * Broadcast image to access publicly, so that it will be available to any app.
- * 
+ *
  * @param imgURI Image file URI
  */
 export function SendBroadcastImage(imgURI) {

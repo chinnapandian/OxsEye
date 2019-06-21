@@ -114,7 +114,7 @@
 
             <tr>
                 <td class="col-md-3">templateUrl</td>
-                <td class="col-md-9"><code>./capture.component.html</code></td>
+                <td class="col-md-9"><code>./capture.component.android.html</code></td>
             </tr>
 
 
@@ -181,28 +181,8 @@
                                 <a href="#isCameraVisible">isCameraVisible</a>
                             </li>
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#locale">locale</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#manualBtnLable">manualBtnLable</a>
-                            </li>
-                            <li>
                                     <span class="modifier">Public</span>
                                 <a href="#opencvInstance">opencvInstance</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#performBtnLable">performBtnLable</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#retakeBtnLable">retakeBtnLable</a>
-                            </li>
-                            <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#saveBtnLable">saveBtnLable</a>
                             </li>
                             <li>
                                     <span class="modifier">Private</span>
@@ -337,7 +317,7 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-<code>constructor(zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, modalService: ModalDialogService, viewContainerRef: <a href="https://angular.io/api/core/ViewContainerRef" target="_blank">ViewContainerRef</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, activityLoader: <a href="../classes/ActivityLoader.html">ActivityLoader</a>, logger: <a href="../injectables/OxsEyeLogger.html">OxsEyeLogger</a>)</code>
+<code>constructor(zone: <a href="https://angular.io/api/core/NgZone" target="_blank">NgZone</a>, modalService: ModalDialogService, viewContainerRef: <a href="https://angular.io/api/core/ViewContainerRef" target="_blank">ViewContainerRef</a>, router: <a href="https://angular.io/api/router/Router" target="_blank">Router</a>, activityLoader: <a href="../classes/ActivityLoader.html">ActivityLoader</a>, logger: <a href="../injectables/OxsEyeLogger.html">OxsEyeLogger</a>, locale: L)</code>
                     </td>
                 </tr>
                         <tr>
@@ -447,6 +427,20 @@
                                                   
                                                         <td>
                                                                         <code><a href="../injectables/OxsEyeLogger.html" target="_self" >OxsEyeLogger</a></code>
+                                                        </td>
+                                                  
+                                                    <td>
+                                                            No
+                                                    </td>
+                                                    
+                                                        <td>
+                                                        </td>
+                                                </tr>
+                                                <tr>
+                                                        <td>locale</td>
+                                                  
+                                                        <td>
+                                                                    <code>L</code>
                                                         </td>
                                                   
                                                     <td>
@@ -1359,7 +1353,7 @@ the image icon for it.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-description"><p>Method to perform prespective transformation for the captured image 
+                    <div class="io-description"><p>Method to perform prespective transformation for the captured image
 and sets the transformed image URI in this.imgURI variable.</p>
 </div>
 
@@ -1429,8 +1423,8 @@ and sets the transformed image URI in this.imgURI variable.</p>
 
             <tr>
                 <td class="col-md-4">
-                    <div class="io-line">Defined in <a href="" data-line="94"
-                            class="link-to-prism">app/capture/capture.component.android.ts:94</a></div>
+                    <div class="io-line">Defined in <a href="" data-line="95"
+                            class="link-to-prism">app/capture/capture.component.android.ts:95</a></div>
                 </td>
             </tr>
 
@@ -2582,74 +2576,6 @@ flash off when it already is on or vice-versa.</p>
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="locale"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            locale</b>
-                            <a href="#locale"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="48" class="link-to-prism">app/capture/capture.component.android.ts:48</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Localization </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="manualBtnLable"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            manualBtnLable</b>
-                            <a href="#manualBtnLable"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="52" class="link-to-prism">app/capture/capture.component.android.ts:52</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Lable for manual button </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
                         <a name="opencvInstance"></a>
                         <span class="name">
                             <b>
@@ -2674,108 +2600,6 @@ flash off when it already is on or vice-versa.</p>
                 <tr>
                     <td class="col-md-4">
                         <div class="io-description"><p>OpenCV instance variable. </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="performBtnLable"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            performBtnLable</b>
-                            <a href="#performBtnLable"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="54" class="link-to-prism">app/capture/capture.component.android.ts:54</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Lable for perform button </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="retakeBtnLable"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            retakeBtnLable</b>
-                            <a href="#retakeBtnLable"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">app/capture/capture.component.android.ts:56</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Lable for retake button </p>
-</div>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-        <table class="table table-sm table-bordered">
-            <tbody>
-                <tr>
-                    <td class="col-md-4">
-                        <a name="saveBtnLable"></a>
-                        <span class="name">
-                            <b>
-                                <span class="modifier">Private</span>
-                            saveBtnLable</b>
-                            <a href="#saveBtnLable"><span class="icon ion-ios-link"></span></a>
-                        </span>
-                    </td>
-                </tr>
-                    <tr>
-                        <td class="col-md-4">
-                            <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
-
-                        </td>
-                    </tr>
-                        <tr>
-                            <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">app/capture/capture.component.android.ts:50</a></div>
-                            </td>
-                        </tr>
-
-                <tr>
-                    <td class="col-md-4">
-                        <div class="io-description"><p>Lable for save button </p>
 </div>
                     </td>
                 </tr>
@@ -2883,7 +2707,7 @@ import * as application from &#x27;tns-core-modules/application&#x27;;
     selector: &#x27;ns-capture&#x27;,
     moduleId: module.id,
     styleUrls: [&#x27;./capture.component.css&#x27;],
-    templateUrl: &#x27;./capture.component.html&#x27;,
+    templateUrl: &#x27;./capture.component.android.html&#x27;,
 })
 export class CaptureComponent implements OnInit {
     /** Camera instance variable. */
@@ -2902,16 +2726,16 @@ export class CaptureComponent implements OnInit {
     private autofocusParams: any;
     /** Empty string variable */
     private empty: any &#x3D; null;
-    /** Localization */
-    private locale: any;
-    /** Lable for save button */
-    private saveBtnLable: any;
-    /** Lable for manual button */
-    private manualBtnLable: any;
-    /** Lable for perform button */
-    private performBtnLable: any;
-    /** Lable for retake button */
-    private retakeBtnLable: any;
+    // /** Localization */
+    // private locale: any;
+    // /** Lable for save button */
+    // private saveBtnLable: any;
+    // /** Lable for manual button */
+    // private manualBtnLable: any;
+    // /** Lable for perform button */
+    // private performBtnLable: any;
+    // /** Lable for retake button */
+    // private retakeBtnLable: any;
 
     /** Boolean value to check the camera is visible or not. */
     public isCameraVisible: any;
@@ -2926,7 +2750,7 @@ export class CaptureComponent implements OnInit {
 
     /**
      * Constructor for CaptureComponent.
-     * 
+     *
      * @param zone Angular zone to run a task asynchronously.
      * @param modalService Service modal
      * @param viewContainerRef View container referrence
@@ -2941,8 +2765,9 @@ export class CaptureComponent implements OnInit {
         private activityLoader: ActivityLoader,
         // private _changeDetectionRef: ChangeDetectorRef
         private logger: OxsEyeLogger,
+        private locale: L,
     ) {
-        this.locale &#x3D; new L();
+        // this.locale &#x3D; new L();
     }
 
     /**
@@ -2953,7 +2778,6 @@ export class CaptureComponent implements OnInit {
         console.log(&#x27;Initializing OpenCV...&#x27;);
         this.opencvInstance &#x3D; opencv.initOpenCV();
         this.isCameraVisible &#x3D; true;
-        // this._isImageBtnVisible &#x3D; false;
         this.createTakePictureButton();
         this.createImageGalleryButton();
         this.createAutoFocusImage();
@@ -2963,14 +2787,14 @@ export class CaptureComponent implements OnInit {
      * This method is called when camera is loaded, where all the neccessary things like
      * displaying buttons(takePicture, gallery, flash, camera &amp; autoFocus) on camera view
      * are taken care and also initializes camera instance.
-     * 
+     *
      * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
-        this.saveBtnLable &#x3D; this.locale.transform(&#x27;save&#x27;);
-        this.manualBtnLable &#x3D; this.locale.transform(&#x27;manual&#x27;);
-        this.retakeBtnLable &#x3D; this.locale.transform(&#x27;retake&#x27;);
-        this.performBtnLable &#x3D; this.locale.transform(&#x27;perform&#x27;);
+        // this.saveBtnLable &#x3D; this.locale.transform(&#x27;save&#x27;);
+        // this.manualBtnLable &#x3D; this.locale.transform(&#x27;manual&#x27;);
+        // this.retakeBtnLable &#x3D; this.locale.transform(&#x27;retake&#x27;);
+        // this.performBtnLable &#x3D; this.locale.transform(&#x27;perform&#x27;);
 
         this.cam &#x3D; args.object as CameraPlus;
         const flashMode &#x3D; this.cam.getFlashMode();
@@ -3102,7 +2926,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Creates auto focus image button with help ImageView widget and settings
      * it&#x27;s attributes like padding, height, width, color &amp; scaleType.
-     * 
+     *
      * @returns Returns button object
      */
     createAutoFocusImageButton(): any {
@@ -3143,7 +2967,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Gets actual icon image using icon name from context.
-     * 
+     *
      * @param iconName Icon Name
      */
     getImageDrawable(iconName: any): any {
@@ -3155,7 +2979,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Creates transparent circle shape with help of GradientDrawable object
      * and sets it&#x27;s attributes like color, radius and alpha.
-     * 
+     *
      * @returns Returns shape object
      */
     createTransparentCircleDrawable(): any {
@@ -3179,7 +3003,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Creates image button with help of ImageButton widget
      * and sets it&#x27;s attributes like padding, maxHeight &amp; maxwidth.
-     * 
+     *
      * @returns Returns button object
      */
     createImageButton(): any {
@@ -3192,7 +3016,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Photo captured event fires when a picture is taken from camera, which actually
      * loads the captured image from ImageAsset.
-     * 
+     *
      * @param args Image captured event data
      */
     photoCapturedEvent(args: any): void {
@@ -3236,7 +3060,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Takes picture from camera when user press the takePicture button on camera view.
      * Then it sets the captured image URI into imageSource to be displayed in front-end.
-     * 
+     *
      * @param thisParam Contains cameraplus instance
      */
     takePicFromCam(thisParam: any): void {
@@ -3257,7 +3081,7 @@ export class CaptureComponent implements OnInit {
      * This also takes care of deleting the captured image when user wants to retake (using Retake button)
      * picture and, creates thumbnail image when user wants to save the captured image and
      * sets the transformed image in gallery icon button in camera view.
-     * 
+     *
      * @param fullScreen Option to show fullscreen dialog or not
      * @param filePathOrg Captured image file path
      * @param imgURI Transformed image file path
@@ -3270,10 +3094,10 @@ export class CaptureComponent implements OnInit {
                 imageSourceOrg: filePathOrg,
                 isAutoCorrection: true,
                 rectanglePoints: recPointsStr,
-                saveBtnLable: this.saveBtnLable,
-                manualBtnLable: this.manualBtnLable,
-                retakeBtnLable: this.retakeBtnLable,
-                performBtnLable: this.performBtnLable,
+                // saveBtnLable: this.saveBtnLable,
+                // manualBtnLable: this.manualBtnLable,
+                // retakeBtnLable: this.retakeBtnLable,
+                // performBtnLable: this.performBtnLable,
             },
             fullscreen: fullScreen,
             viewContainerRef: this.viewContainerRef,
@@ -3313,7 +3137,7 @@ export class CaptureComponent implements OnInit {
 
                         this.refreshCapturedImagesinMediaStore(filePathOrg, imgURI, &#x27;Remove&#x27;);
                     } catch (error) {
-                        Toast.makeText(&#x27;Could not delete the capture image.&#x27; + error, &#x27;long&#x27;).show();
+                        Toast.makeText(this.locale.transform(&#x27;could_not_delete_the_capture_image&#x27;) + error, &#x27;long&#x27;).show();
                         this.logger.error(module.filename + &#x27;: &#x27; + error);
                     }
                 }
@@ -3321,7 +3145,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Sets the transformed image in gallery image button.
-     * 
+     *
      * @param imgURIParam Transformed image file URI
      */
     setTransformedImage(imgURIParam: any) {
@@ -3332,7 +3156,7 @@ export class CaptureComponent implements OnInit {
                 this.imageSource &#x3D; imgURIParam;
                 SendBroadcastImage(this.imgURI);
             } catch (error) {
-                Toast.makeText(&#x27;Error while setting image in preview area&#x27; + error, &#x27;long&#x27;).show();
+                Toast.makeText(this.locale.transform(&#x27;error_while_setting_image_in_preview_area&#x27;) + error, &#x27;long&#x27;).show();
                 this.logger.error(module.filename + &#x27;: &#x27; + error);
             }
         }
@@ -3366,7 +3190,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Sets image resource to given image button.
-     * 
+     *
      * @param btn Button image instance referrence
      * @param iconName Icon name
      */
@@ -3391,7 +3215,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Refreshes the captured images in media store meaning that the new captured image will be
      * available to public access. That can be done by SendBroadcastImage method.
-     * 
+     *
      * @param filePathOrg Captured Image file path
      * @param imgURI Transformed Image file URI
      * @param action Actions &#x27;Add&#x27;/&#x27;Remove&#x27;
@@ -3406,13 +3230,13 @@ export class CaptureComponent implements OnInit {
                 SendBroadcastImage(thumnailOrgPath);
             }
         } catch (error) {
-            Toast.makeText(&#x27;Could not sync the captured image file. &#x27; + error, &#x27;long&#x27;).show();
+            Toast.makeText(this.locale.transform(&#x27;could_not_sync_the_captured_image_file&#x27;) + error, &#x27;long&#x27;).show();
             this.logger.error(module.filename + &#x27;: &#x27; + error);
         }
     }
     /**
      * Creates thumbnail image for the captured transformed image and sets it in gallery button.
-     * 
+     *
      * @param imgURI Transformed image file path
      */
     private createThumbNailImage(imgURI: string): any {
@@ -3424,7 +3248,7 @@ export class CaptureComponent implements OnInit {
             const uri &#x3D; android.net.Uri.parse(&#x27;file://&#x27; + thumbnailImagePath);
             this.galleryBtn.setImageURI(uri);
         } catch (error) {
-            Toast.makeText(&#x27;Error while creating thumbnail image. &#x27; + error, &#x27;long&#x27;).show();
+            Toast.makeText(this.locale.transform(&#x27;error_while_creating_thumbnail_image&#x27;) + error, &#x27;long&#x27;).show();
             this.logger.error(module.filename + &#x27;: &#x27; + error);
         }
     }
@@ -3449,7 +3273,7 @@ export class CaptureComponent implements OnInit {
      * This method performs perspective transformation for the captured image using OpenCV API and
      * returns the transformed image URI along with rectangle points as string which will be used to
      * draw circle points. After that it shows up the dialog modal window with the transformed image.
-     * 
+     *
      * @param filePath Captured image file path
      */
     private performPerspectiveTransformation(filePath: any): void {
@@ -3460,13 +3284,13 @@ export class CaptureComponent implements OnInit {
             this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
         } catch (error) {
             this.activityLoader.hide();
-            Toast.makeText(&#x27;Error while performing perspective transformation process. Please retake picture&#x27;, &#x27;long&#x27;).show();
+            Toast.makeText(this.locale.transform(&#x27;error_while_performing_perspective_transformation&#x27;), &#x27;long&#x27;).show();
         }
     }
     /**
-     * Method to perform prespective transformation for the captured image 
+     * Method to perform prespective transformation for the captured image
      * and sets the transformed image URI in this.imgURI variable.
-     * 
+     *
      * @param imageAsset ImageAsset object instance referrence
      */
     private loadImage(imageAsset: ImageAsset): void {
@@ -3491,19 +3315,19 @@ export class CaptureComponent implements OnInit {
                         });
                     } else {
                         this.imageSource &#x3D; this.empty;
-                        Toast.makeText(&#x27;Image source is bad.&#x27;, &#x27;long&#x27;).show();
+                        Toast.makeText(this.locale.transform(&#x27;image_source_is_bad&#x27;), &#x27;long&#x27;).show();
                     }
                 },
                 (error) &#x3D;&gt; {
                     this.imageSource &#x3D; this.empty;
                     this.logger.error(&#x27;Error getting image source from asset. &#x27; + module.filename
                         + this.logger.ERROR_MSG_SEPARATOR + error);
-                    Toast.makeText(&#x27;Error getting image source from asset.&#x27;, &#x27;long&#x27;).show();
+                    Toast.makeText(this.locale.transform(&#x27;error_getting_image_source_from_asset&#x27;), &#x27;long&#x27;).show();
                 },
             );
         } else {
             this.logger.error(&#x27;Image Asset was null. &#x27; + module.filename);
-            Toast.makeText(&#x27;Image Asset was null&#x27;, &#x27;long&#x27;).show();
+            Toast.makeText(this.locale.transform(&#x27;image_asset_was_null&#x27;), &#x27;long&#x27;).show();
             this.imageSource &#x3D; this.empty;
         }
     }
@@ -3515,11 +3339,11 @@ export class CaptureComponent implements OnInit {
         <pre class="line-numbers"><code class="language-html">&lt;Page.actionBar&gt;
 	&lt;ActionBar class&#x3D;&quot;action-bar action-bar-height&quot;&gt;
 		&lt;StackLayout class&#x3D;&quot;action-bar-title&quot;&gt;
-			&lt;Label text&#x3D;&quot;Oxs &amp;#xf06e; Eye&quot; class&#x3D;&quot;fa action-bar-fontsize&quot;&gt;&lt;/Label&gt;
+			&lt;Label text&#x3D;&quot;OXS &amp;#xf06e; eye&quot; class&#x3D;&quot;fa action-bar-fontsize&quot;&gt;&lt;/Label&gt;
 		&lt;/StackLayout&gt;
 	&lt;/ActionBar&gt;
 &lt;/Page.actionBar&gt;
-&lt;Page class&#x3D;&quot;page&quot;&gt;
+&lt;!--&lt;Page class&#x3D;&quot;page&quot;&gt;--&gt;
 
 	&lt;GridLayout orientation&#x3D;&quot;vertical&quot;&gt;
 		&lt;CameraPlus [visibility]&#x3D;&quot;isCameraVisible ? &#x27;visible&#x27; : &#x27;collapsed&#x27;&quot; debug&#x3D;&quot;true&quot; galleryPickerMode&#x3D;&quot;single&quot; showFlashIcon&#x3D;&quot;true&quot;
@@ -3529,9 +3353,9 @@ export class CaptureComponent implements OnInit {
 		&lt;/CameraPlus&gt;
 	&lt;/GridLayout&gt;
 
-&lt;/Page&gt;
+&lt;!--&lt;/Page&gt;--&gt;
 
-&lt;RadSideDrawer tkExampleTitle tkToggleNavButton&gt;
+&lt;!--&lt;RadSideDrawer tkExampleTitle tkToggleNavButton&gt;
 	&lt;StackLayout tkDrawerContent class&#x3D;&quot;sideStackLayout&quot;&gt;
 		&lt;StackLayout class&#x3D;&quot;sideTitleStackLayout&quot;&gt;
 			&lt;Label text&#x3D;&quot;Settings Menu&quot;&gt;&lt;/Label&gt;
@@ -3544,22 +3368,10 @@ export class CaptureComponent implements OnInit {
 
 					&lt;Switch class&#x3D;&quot;m-15&quot; checked&#x3D;&quot;true&quot; (checkedChange)&#x3D;&quot;onAutomaticChecked($event)&quot; row&#x3D;&quot;0&quot; col&#x3D;&quot;1&quot;&gt;&lt;/Switch&gt;
 				&lt;/StackLayout&gt;
-				&lt;!--&lt;Label text&#x3D;&quot;Social&quot; class&#x3D;&quot;sideLabel&quot;&gt;&lt;/Label&gt;
-                &lt;Label text&#x3D;&quot;Promotions&quot; class&#x3D;&quot;sideLabel&quot;&gt;&lt;/Label&gt;
-                &lt;Label text&#x3D;&quot;Labels&quot; class&#x3D;&quot;sideLabel sideLightGrayLabel&quot;&gt;&lt;/Label&gt;
-                &lt;Label text&#x3D;&quot;Important&quot; class&#x3D;&quot;sideLabel&quot;&gt;&lt;/Label&gt;
-                &lt;Label text&#x3D;&quot;Starred&quot; class&#x3D;&quot;sideLabel&quot;&gt;&lt;/Label&gt;
-                &lt;Label text&#x3D;&quot;Sent Mail&quot; class&#x3D;&quot;sideLabel&quot;&gt;&lt;/Label&gt;
-                &lt;Label text&#x3D;&quot;Drafts&quot; class&#x3D;&quot;sideLabel&quot;&gt;&lt;/Label&gt;
-                &lt;Label text&#x3D;&quot;Close Drawer&quot; color&#x3D;&quot;lightgray&quot; padding&#x3D;&quot;10&quot; style&#x3D;&quot;horizontal-align: center&quot; (tap)&#x3D;&quot;onCloseDrawerTap()&quot;&gt;&lt;/Label&gt;--&gt;
 			&lt;/StackLayout&gt;
 		&lt;/ScrollView&gt;
 	&lt;/StackLayout&gt;
-	&lt;!--&lt;StackLayout tkMainContent&gt;
-        &lt;Label [text]&#x3D;&quot;mainContentText&quot; textWrap&#x3D;&quot;true&quot; class&#x3D;&quot;drawerContentText&quot;&gt;&lt;/Label&gt;
-        &lt;Button text&#x3D;&quot;OPEN DRAWER&quot; (tap)&#x3D;&quot;openDrawer()&quot; class&#x3D;&quot;drawerContentButton&quot;&gt;&lt;/Button&gt;
-    &lt;/StackLayout&gt;--&gt;
-&lt;/RadSideDrawer&gt;</code></pre>
+&lt;/RadSideDrawer&gt;--&gt;</code></pre>
     </div>
 
     <div class="tab-pane fade " id="c-styleData">
@@ -3650,8 +3462,8 @@ button {
 <script src="../js/libs/htmlparser.js"></script>
 <script src="../js/libs/deep-iterator.js"></script>
 <script>
-        var COMPONENT_TEMPLATE = '<div><Page.actionBar>	<ActionBar class="action-bar action-bar-height">		<StackLayout class="action-bar-title">			<Label text="Oxs &#xf06e; Eye" class="fa action-bar-fontsize"></Label>		</StackLayout>	</ActionBar></Page.actionBar><Page class="page">	<GridLayout orientation="vertical">		<CameraPlus [visibility]="isCameraVisible ? \'visible\' : \'collapsed\'" debug="true" galleryPickerMode="single" showFlashIcon="true"		 showToggleIcon="true" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"		 (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"		 (imagesSelectedEvent)="imagesSelectedEvent($event)">		</CameraPlus>	</GridLayout></Page><RadSideDrawer tkExampleTitle tkToggleNavButton>	<StackLayout tkDrawerContent class="sideStackLayout">		<StackLayout class="sideTitleStackLayout">			<Label text="Settings Menu"></Label>		</StackLayout>		<ScrollView>			<StackLayout class="sideStackLayout">				<Label text="Perspective Correction" class="sideLabel sideLightGrayLabel"></Label>				<StackLayout orientation="horizontal">					<Label class="h3 m-15" text="Automatic" textWrap="true" row="0" col="0"></Label>					<Switch class="m-15" checked="true" (checkedChange)="onAutomaticChecked($event)" row="0" col="1"></Switch>				</StackLayout>				<!--<Label text="Social" class="sideLabel"></Label>                <Label text="Promotions" class="sideLabel"></Label>                <Label text="Labels" class="sideLabel sideLightGrayLabel"></Label>                <Label text="Important" class="sideLabel"></Label>                <Label text="Starred" class="sideLabel"></Label>                <Label text="Sent Mail" class="sideLabel"></Label>                <Label text="Drafts" class="sideLabel"></Label>                <Label text="Close Drawer" color="lightgray" padding="10" style="horizontal-align: center" (tap)="onCloseDrawerTap()"></Label>-->			</StackLayout>		</ScrollView>	</StackLayout>	<!--<StackLayout tkMainContent>        <Label [text]="mainContentText" textWrap="true" class="drawerContentText"></Label>        <Button text="OPEN DRAWER" (tap)="openDrawer()" class="drawerContentButton"></Button>    </StackLayout>--></RadSideDrawer></div>'
-    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'ns-app'},{'name': 'CaptureComponent', 'selector': 'ns-capture'},{'name': 'DialogContent', 'selector': 'modal-content'},{'name': 'ImageGalleryComponent', 'selector': 'ns-imagegallery'},{'name': 'ImageSlideComponent', 'selector': 'ns-imageslide'}];
+        var COMPONENT_TEMPLATE = '<div><Page.actionBar>	<ActionBar class="action-bar action-bar-height">		<StackLayout class="action-bar-title">			<Label text="OXS &#xf06e; eye" class="fa action-bar-fontsize"></Label>		</StackLayout>	</ActionBar></Page.actionBar><!--<Page class="page">-->	<GridLayout orientation="vertical">		<CameraPlus [visibility]="isCameraVisible ? \'visible\' : \'collapsed\'" debug="true" galleryPickerMode="single" showFlashIcon="true"		 showToggleIcon="true" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"		 (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"		 (imagesSelectedEvent)="imagesSelectedEvent($event)">		</CameraPlus>	</GridLayout><!--</Page>--><!--<RadSideDrawer tkExampleTitle tkToggleNavButton>	<StackLayout tkDrawerContent class="sideStackLayout">		<StackLayout class="sideTitleStackLayout">			<Label text="Settings Menu"></Label>		</StackLayout>		<ScrollView>			<StackLayout class="sideStackLayout">				<Label text="Perspective Correction" class="sideLabel sideLightGrayLabel"></Label>				<StackLayout orientation="horizontal">					<Label class="h3 m-15" text="Automatic" textWrap="true" row="0" col="0"></Label>					<Switch class="m-15" checked="true" (checkedChange)="onAutomaticChecked($event)" row="0" col="1"></Switch>				</StackLayout>			</StackLayout>		</ScrollView>	</StackLayout></RadSideDrawer>--></div>'
+    var COMPONENTS = [{'name': 'AppComponent', 'selector': 'ns-app'},{'name': 'CaptureComponent', 'selector': 'ns-capture'},{'name': 'CaptureComponent', 'selector': 'ns-capture'},{'name': 'DialogContent', 'selector': 'modal-content'},{'name': 'DialogContent', 'selector': 'modal-content'},{'name': 'ImageGalleryComponent', 'selector': 'ns-imagegallery'},{'name': 'ImageGalleryComponent', 'selector': 'ns-imagegallery'},{'name': 'ImageSlideComponent', 'selector': 'ns-imageslide'},{'name': 'ImageSlideComponent', 'selector': 'ns-imageslide'}];
     var DIRECTIVES = [];
     var ACTUAL_COMPONENT = {'name': 'CaptureComponent'};
 </script>

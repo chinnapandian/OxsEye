@@ -25,7 +25,7 @@ import * as application from 'tns-core-modules/application';
     selector: 'ns-capture',
     moduleId: module.id,
     styleUrls: ['./capture.component.css'],
-    templateUrl: './capture.component.html',
+    templateUrl: './capture.component.android.html',
 })
 export class CaptureComponent implements OnInit {
     /** Camera instance variable. */
@@ -68,7 +68,7 @@ export class CaptureComponent implements OnInit {
 
     /**
      * Constructor for CaptureComponent.
-     * 
+     *
      * @param zone Angular zone to run a task asynchronously.
      * @param modalService Service modal
      * @param viewContainerRef View container referrence
@@ -105,7 +105,7 @@ export class CaptureComponent implements OnInit {
      * This method is called when camera is loaded, where all the neccessary things like
      * displaying buttons(takePicture, gallery, flash, camera & autoFocus) on camera view
      * are taken care and also initializes camera instance.
-     * 
+     *
      * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
@@ -244,7 +244,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Creates auto focus image button with help ImageView widget and settings
      * it's attributes like padding, height, width, color & scaleType.
-     * 
+     *
      * @returns Returns button object
      */
     createAutoFocusImageButton(): any {
@@ -285,7 +285,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Gets actual icon image using icon name from context.
-     * 
+     *
      * @param iconName Icon Name
      */
     getImageDrawable(iconName: any): any {
@@ -297,7 +297,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Creates transparent circle shape with help of GradientDrawable object
      * and sets it's attributes like color, radius and alpha.
-     * 
+     *
      * @returns Returns shape object
      */
     createTransparentCircleDrawable(): any {
@@ -321,7 +321,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Creates image button with help of ImageButton widget
      * and sets it's attributes like padding, maxHeight & maxwidth.
-     * 
+     *
      * @returns Returns button object
      */
     createImageButton(): any {
@@ -334,7 +334,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Photo captured event fires when a picture is taken from camera, which actually
      * loads the captured image from ImageAsset.
-     * 
+     *
      * @param args Image captured event data
      */
     photoCapturedEvent(args: any): void {
@@ -378,7 +378,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Takes picture from camera when user press the takePicture button on camera view.
      * Then it sets the captured image URI into imageSource to be displayed in front-end.
-     * 
+     *
      * @param thisParam Contains cameraplus instance
      */
     takePicFromCam(thisParam: any): void {
@@ -399,7 +399,7 @@ export class CaptureComponent implements OnInit {
      * This also takes care of deleting the captured image when user wants to retake (using Retake button)
      * picture and, creates thumbnail image when user wants to save the captured image and
      * sets the transformed image in gallery icon button in camera view.
-     * 
+     *
      * @param fullScreen Option to show fullscreen dialog or not
      * @param filePathOrg Captured image file path
      * @param imgURI Transformed image file path
@@ -463,7 +463,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Sets the transformed image in gallery image button.
-     * 
+     *
      * @param imgURIParam Transformed image file URI
      */
     setTransformedImage(imgURIParam: any) {
@@ -508,7 +508,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Sets image resource to given image button.
-     * 
+     *
      * @param btn Button image instance referrence
      * @param iconName Icon name
      */
@@ -533,7 +533,7 @@ export class CaptureComponent implements OnInit {
     /**
      * Refreshes the captured images in media store meaning that the new captured image will be
      * available to public access. That can be done by SendBroadcastImage method.
-     * 
+     *
      * @param filePathOrg Captured Image file path
      * @param imgURI Transformed Image file URI
      * @param action Actions 'Add'/'Remove'
@@ -554,7 +554,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Creates thumbnail image for the captured transformed image and sets it in gallery button.
-     * 
+     *
      * @param imgURI Transformed image file path
      */
     private createThumbNailImage(imgURI: string): any {
@@ -591,7 +591,7 @@ export class CaptureComponent implements OnInit {
      * This method performs perspective transformation for the captured image using OpenCV API and
      * returns the transformed image URI along with rectangle points as string which will be used to
      * draw circle points. After that it shows up the dialog modal window with the transformed image.
-     * 
+     *
      * @param filePath Captured image file path
      */
     private performPerspectiveTransformation(filePath: any): void {
@@ -606,9 +606,9 @@ export class CaptureComponent implements OnInit {
         }
     }
     /**
-     * Method to perform prespective transformation for the captured image 
+     * Method to perform prespective transformation for the captured image
      * and sets the transformed image URI in this.imgURI variable.
-     * 
+     *
      * @param imageAsset ImageAsset object instance referrence
      */
     private loadImage(imageAsset: ImageAsset): void {

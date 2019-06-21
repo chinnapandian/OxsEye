@@ -75,13 +75,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="modules/AppModule.html" data-type="entity-link">AppModule</a>
                                     <li class="chapter inner">
                                         <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                            'data-target="#components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' : 'data-target="#xs-components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
+                                            'data-target="#components-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' : 'data-target="#xs-components-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' }>
                                             <span class="icon ion-md-cog"></span>
                                             <span>Components</span>
                                             <span class="icon ion-ios-arrow-down"></span>
                                         </div>
-                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' :
-                                            'id="xs-components-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
+                                        <ul class="links collapse" ${ isNormalMode ? 'id="components-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' :
+                                            'id="xs-components-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' }>
                                             <li class="link">
                                                 <a href="components/AppComponent.html"
                                                     data-type="entity-link" data-context="sub-entity" data-context-id="modules">AppComponent</a>
@@ -102,13 +102,13 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                     </li>
                                 <li class="chapter inner">
                                     <div class="simple menu-toggler" data-toggle="collapse" ${ isNormalMode ?
-                                        'data-target="#injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' : 'data-target="#xs-injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
+                                        'data-target="#injectables-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' : 'data-target="#xs-injectables-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' }>
                                         <span class="icon ion-md-arrow-round-down"></span>
                                         <span>Injectables</span>
                                         <span class="icon ion-ios-arrow-down"></span>
                                     </div>
-                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' :
-                                        'id="xs-injectables-links-module-AppModule-959ea705f112b592b54dc8e2cf5eaa0e"' }>
+                                    <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' :
+                                        'id="xs-injectables-links-module-AppModule-6febe808bb6e517dd46115a2b9fc3617"' }>
                                         <li class="link">
                                             <a href="injectables/OxsEyeLogger.html"
                                                 data-type="entity-link" data-context="sub-entity" data-context-id="modules" }>OxsEyeLogger</a>
@@ -137,13 +137,25 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                                 <a href="components/CaptureComponent.html" data-type="entity-link">CaptureComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/CaptureComponent-1.html" data-type="entity-link">CaptureComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/DialogContent.html" data-type="entity-link">DialogContent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/DialogContent-1.html" data-type="entity-link">DialogContent</a>
                             </li>
                             <li class="link">
                                 <a href="components/ImageGalleryComponent.html" data-type="entity-link">ImageGalleryComponent</a>
                             </li>
                             <li class="link">
+                                <a href="components/ImageGalleryComponent-1.html" data-type="entity-link">ImageGalleryComponent</a>
+                            </li>
+                            <li class="link">
                                 <a href="components/ImageSlideComponent.html" data-type="entity-link">ImageSlideComponent</a>
+                            </li>
+                            <li class="link">
+                                <a href="components/ImageSlideComponent-1.html" data-type="entity-link">ImageSlideComponent</a>
                             </li>
                         </ul>
                     </li>
@@ -169,10 +181,19 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             </div>
                             <ul class="links collapse" ${ isNormalMode ? 'id="injectables-links"' : 'id="xs-injectables-links"' }>
                                 <li class="link">
+                                    <a href="injectables/OxsEyeLogger.html" data-type="entity-link">OxsEyeLogger</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/OxsEyeLogger-1.html" data-type="entity-link">OxsEyeLogger</a>
+                                </li>
+                                <li class="link">
                                     <a href="injectables/TransformedImage.html" data-type="entity-link">TransformedImage</a>
                                 </li>
                                 <li class="link">
                                     <a href="injectables/TransformedImageProvider.html" data-type="entity-link">TransformedImageProvider</a>
+                                </li>
+                                <li class="link">
+                                    <a href="injectables/TransformedImageProvider-1.html" data-type="entity-link">TransformedImageProvider</a>
                                 </li>
                             </ul>
                         </li>

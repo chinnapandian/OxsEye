@@ -21,8 +21,8 @@ import * as Toast from 'nativescript-toast';
 
 // import * as Permissions from 'nativescript-permissions';
 import * as fs from 'tns-core-modules/file-system';
-import * as frameModule from 'tns-core-modules/ui/frame';
-import * as utilsModule from 'tns-core-modules/utils/utils';
+// import * as frameModule from 'tns-core-modules/ui/frame';
+// import * as utilsModule from 'tns-core-modules/utils/utils';
 
 /**
  * ImageSlideComponent is used to show image in detail view, where user can zoom-in/out.
@@ -31,7 +31,7 @@ import * as utilsModule from 'tns-core-modules/utils/utils';
     selector: 'ns-imageslide',
     moduleId: module.id,
     styleUrls: ['./imageslide.component.css'],
-    templateUrl: './imageslide.component.html',
+    templateUrl: './imageslide.component.ios.html',
 })
 export class ImageSlideComponent implements OnInit {
     /**  Used to store image source and also used in GUI */
@@ -115,7 +115,7 @@ export class ImageSlideComponent implements OnInit {
      * On pinch method, is being called while pinch event fired on image,
      * where the new scale, width & height of the transformed image have been calculated
      * to zoom-in/out.
-     * 
+     *
      * @param args PinchGestureEventData
      */
     onPinch(args: PinchGestureEventData) {
@@ -140,7 +140,7 @@ export class ImageSlideComponent implements OnInit {
      * the image area. Here the image's tralateX/translateY values are been calculated
      * based on the image's scale, width & height. And also it takes care of image boundary
      * checking.
-     * 
+     *
      * @param args PanGestureEventData
      */
     onPan(args: PanGestureEventData) {
@@ -215,10 +215,10 @@ export class ImageSlideComponent implements OnInit {
         }
     }
     /**
-     * Double tap method fires on when user taps two times on transformed image. 
-     * Actually it brings the image to it's original positions and also adds 
+     * Double tap method fires on when user taps two times on transformed image.
+     * Actually it brings the image to it's original positions and also adds
      * circle points if it is original image.
-     * 
+     *
      * @param args GestureEventData
      */
     onDoubleTap(args: GestureEventData) {
@@ -235,7 +235,7 @@ export class ImageSlideComponent implements OnInit {
     /**
      * Page loaded method which is been called when imageslide page is loaded,
      * where it sets the selected image in the source for display.
-     * 
+     *
      * @param args any object
      */
     pageLoaded(args: any) {
@@ -250,7 +250,7 @@ export class ImageSlideComponent implements OnInit {
      * it checks that the swipe is right direct or left direction, based on that it pulls the image from
      * the image list and display it in view. After that, it sets the image in default position by calling
      * onDoubleTap method.
-     * 
+     *
      * @param args SwipeGestureEventData
      */
     onSwipe(args: SwipeGestureEventData) {
@@ -303,100 +303,35 @@ export class ImageSlideComponent implements OnInit {
      */
     onShare() {
 
-        let dataToShare: any = {};
+        const dataToShare: any = {};
         let dataCount = 0;
-        let documents = fs.knownFolders.documents();
-
-        this.imageFileList.forEach((image) => {
-            if (image.isSelected) {
-                let transformedImgFileNameOrg = image.fileName.replace('thumb_PT_IMG', 'PT_IMG');
-                // let fileName = image.fileName;
-                let path = fs.path.join(documents.path, 'capturedimages', transformedImgFileNameOrg);
-                // let file = fs.File.fromPath(path);
-                let transformedUIImage = UIImage.imageNamed(path);
-                dataToShare[dataCount++] = transformedUIImage;
-                //Getting original captured image
-                let imgFileNameOrg = transformedImgFileNameOrg.replace('PT_IMG', 'IMG');
-                imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
-                path = fs.path.join(documents.path, 'capturedimages', imgFileNameOrg);
-                let transformedUIImageOrg = UIImage.imageNamed(path);
-                dataToShare[dataCount++] = transformedUIImageOrg;
-            }
-        });
+        const documents = fs.knownFolders.documents();
         try {
-            let activityController = UIActivityViewController.alloc()
-                .initWithActivityItemsApplicationActivities([dataToShare], null);
-            activityController.setValueForKey('Transformed Image(s)', 'Subject');
-            let presentViewController = activityController.popoverPresentationController;
-            if (presentViewController) {
-                var page = frameModule.topmost().currentPage;
-                if (page && page.ios.navigationItem.rightBarButtonItems &&
-                    page.ios.navigationItem.rightBarButtonItems.count > 0) {
-                    presentViewController.barButtonItem = page.ios.navigationItem.rightBarButtonItems[0];
-                } else {
-                    presentViewController.sourceView = page.ios.view;
-                }
-            }
+            const thumbnailImgFileName = this.imageFileList[this.imgNext].fileName;
 
-            utilsModule.ios.getter(UIApplication, UIApplication.sharedApplication)
-                .keyWindow
-                .rootViewController
-                .presentViewControllerAnimatedCompletion(activityController, true, null);
+            const transformedImgFileNameOrg = thumbnailImgFileName.replace('thumb_PT_IMG', 'PT_IMG');
+            let imgFilePath = fs.path.join(documents.path, 'capturedimages', transformedImgFileNameOrg);
+            const transformedUIImage = UIImage.imageNamed(imgFilePath);
+            dataToShare[dataCount++] = transformedUIImage;
+
+            // Getting original captured image
+            let imgFileNameOrg = transformedImgFileNameOrg.replace('PT_IMG', 'IMG');
+            imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
+            imgFilePath = fs.path.join(documents.path, 'capturedimages', imgFileNameOrg);
+            const transformedUIImageOrg = UIImage.imageNamed(imgFilePath);
+            dataToShare[dataCount++] = transformedUIImageOrg;
+            this.transformedImageProvider.share(dataToShare);
         } catch (error) {
             Toast.makeText('Error while sharing images.' + error).show();
             this.logger.error('Error while sharing images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
         }
-
-        // Permissions.requestPermission(
-        //     [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-        //     android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        //     android.Manifest.permission.INTERNET],
-        //     'Needed for sharing files').then(() => {
-        //         try {
-        //             const uris = new java.util.ArrayList<android.net.Uri>();
-        //             let filesToBeAttached = '';
-        //             const imagePath = new java.io.File(android.os.Environment.getExternalStorageDirectory() + '/DCIM', '.');
-        //             let imgFileNameOrg = this.imageFileList[this.imgNext].fileName;
-        //             imgFileNameOrg = imgFileNameOrg.replace('thumb_PT_IMG', 'PT_IMG');
-        //             const newFile = new java.io.File(imagePath, imgFileNameOrg);
-        //             // const uri = android.support.v4.content.FileProvider.getUriForFile(
-        //             //     application.android.context, 'oxs.eye.fileprovider', newFile);
-        //             // application.android.context.grantUriPermission(
-        //             //     'oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        //             const uri = this.transformedImageProvider.getURIForFile(newFile);
-        //             uris.add(uri);
-        //             uris.add(this.transformedImageProvider.getOriginalImage(imgFileNameOrg));
-        //             uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
-
-        //             filesToBeAttached = filesToBeAttached.concat(',' + this.imageFileList[this.imgNext].filePath);
-        //             if (uris.size() > 0) {
-        //                 const intent = new android.content.Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-        //                 intent.setType('image/jpeg');
-        //                 const message = 'Perspective correction pictures : ' + filesToBeAttached + '.';
-        //                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 'Perspective correction pictures...');
-
-        //                 intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, uris);
-        //                 intent.putExtra(android.content.Intent.EXTRA_TEXT, message);
-        //                 intent.addFlags(android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        //                 intent.addFlags(android.content.Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        //                 intent.setFlags(android.content.Intent.FLAG_ACTIVITY_NEW_TASK);
-        //                 application.android.foregroundActivity.startActivity(android.content.Intent.createChooser(intent, 'Send mail...'));
-        //             }
-        //         } catch (error) {
-        //             Toast.makeText('Error while sending mail.' + error).show();
-        //             this.logger.error('Error while sending mail. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
-        //         }
-        //     }).catch((error) => {
-        //         Toast.makeText('Error in giving permission.' + error).show();
-        //         this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
-        //     });
     }
     /**
      * Deletes the selected image(s) when user clicks the 'delete' button in menu.
      * This will show up a dialog window for confirmation for the selected image(s)
      * to be deleted. If user says 'Ok', then those image(s) will be removed from the
      * device, otherwise can be cancelled.
-     * 
+     *
      * @param args any boject
      */
     onDelete(args: any) {
@@ -436,12 +371,12 @@ export class ImageSlideComponent implements OnInit {
                                 }).catch((error) => {
                                     Toast.makeText('Error while deleting thumbnail image. ' + error.stack, 'long').show();
                                     this.logger.error('Error while deleting thumbnail image. ' + module.filename
-                                    + this.logger.ERROR_MSG_SEPARATOR + error);
+                                        + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }).catch((error) => {
                             Toast.makeText('Error while deleting original image. ' + error.stack, 'long').show();
                             this.logger.error('Error while deleting original image. ' + module.filename
-                            + this.logger.ERROR_MSG_SEPARATOR + error);
+                                + this.logger.ERROR_MSG_SEPARATOR + error);
                         });
                 } else {
                     this.imageSource = null;

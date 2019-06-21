@@ -23,14 +23,14 @@ import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
 
 /**
- * ImageGalleryComponent class is being used to display all the thumbnail 
+ * ImageGalleryComponent class is being used to display all the thumbnail
  * images of transformed images in gallery view.
  */
 @Component({
     selector: 'ns-imagegallery',
     moduleId: module.id,
     styleUrls: ['./imagegallery.component.css'],
-    templateUrl: './imagegallery.component.html',
+    templateUrl: './imagegallery.component.android.html',
 })
 export class ImageGalleryComponent implements OnInit {
     /** Boolean value to make the sharing menu visible or not. */
@@ -58,7 +58,7 @@ export class ImageGalleryComponent implements OnInit {
 
     /**
      * Constructor for ImageGalleryComponent.
-     * 
+     *
      * @param routerExtensions Router extension instance
      * @param router Router instance
      * @param transformedImageProvider Transformed image provider instance
@@ -109,7 +109,7 @@ export class ImageGalleryComponent implements OnInit {
     /**
      * This method fires when the gallery page is loaded and sets page and menu
      * properties value to true/false based on thumbnail image list count.
-     * 
+     *
      * @param args Page loaded event data
      */
     onPageLoaded(args) {
@@ -143,7 +143,7 @@ export class ImageGalleryComponent implements OnInit {
     /**
      * Goes to Image slide page when user does double tap on image and also navigates with
      * transformed image URI and index of it.
-     * 
+     *
      * @param imgURIParam Transformed image file URI
      * @param imgIndexParam  image index
      */
@@ -160,7 +160,7 @@ export class ImageGalleryComponent implements OnInit {
      * Checks whether the checkBox is been selected or not. If it is selected,
      * the delete/share menus are visible, otherwise they are not visible.
      * And also sets the same value in the image list.
-     * 
+     *
      * @param event Checkbox event data
      * @param imagePath transformed image file path
      * @param index image index in the list
@@ -335,7 +335,7 @@ export class ImageGalleryComponent implements OnInit {
      * Sets all the checkBox checked value based on what it receives value as parameter.
      * And also sets the checkBox's page property value based on the current vlaue like
      * if already has true, then sets false, otherwise it sets true.
-     * 
+     *
      * @param value Checkbox value
      */
     private performSelectUnselectAll(value: any) {
@@ -393,7 +393,7 @@ export class ImageGalleryComponent implements OnInit {
 
     /**
      * Loads thumbnail images using content resolver by order what it receives as parameter.
-     * 
+     *
      * @param orderByAscDescParam OrderBy value 'Asc'/'Desc'
      */
     private loadThumbnailImagesByContentResolver(orderByAscDescParam: string) {

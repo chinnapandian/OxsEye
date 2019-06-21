@@ -33,7 +33,7 @@ export class OxsEyeLogger {
       });
   }
   /** Method to log message in debug level
-   * 
+   *
    * @param message Message to be written to log file
    * @param optionalParams optional parameters to be written if any along with original message
    */
@@ -41,7 +41,7 @@ export class OxsEyeLogger {
     this.append('DEBUG', `${message} ${JSON.stringify(optionalParams)}`);
   }
   /** Method to log message in info level
-   * 
+   *
    * @param message Message to be written to log file
    * @param optionalParams optional parameters to be written if any along with original message
    */
@@ -49,25 +49,25 @@ export class OxsEyeLogger {
     this.append('INFO ', `${message} ${JSON.stringify(optionalParams)}`);
   }
   /** Method to log message in warning level
-   * 
+   *
    * @param message Message to be written to log file
    * @param optionalParams optional parameters to be written if any along with original message
-  */
+   */
   public warn(message?: any, ...optionalParams: any[]): void {
     this.append('WARN ', `${message} ${JSON.stringify(optionalParams)}`);
   }
   /** Method to log message in error level
-   * 
+   *
    * @param message Message to be written to log file
    * @param optionalParams optional parameters to be written if any along with original message
-  */
+   */
   public error(message?: any, ...optionalParams: any[]): void {
     this.append('ERROR', `${message} ${JSON.stringify(optionalParams)}`);
   }
   /** Method to append message in log file OxsEye.log.
    * Acutally, it reads the existing contents and adds it with new coming
    * message and writes to the log file.
-   * 
+   *
    * @param type indicates what type of message is it, like 'debug', 'info', 'warn' or 'error'
    */
   private append(type: string, message: string) {

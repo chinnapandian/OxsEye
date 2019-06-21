@@ -23,12 +23,12 @@ ActionBar {
     vertical-align: center;
 }
 .img-gallery-checkbox-ios {
-    /*border-width: 3;*/
+    border-width: 1;
     /*color: red;*/
     /*font-size : 20;*/
     /*fill: red;*/
-    width: 15;
+    width: 17;
     height: 18;
-    /*border-color: red;*/
+    border-color: black;
     background-color: white
 }

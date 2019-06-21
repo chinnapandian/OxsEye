@@ -56,7 +56,7 @@
             <h3>File</h3>
         </p>
         <p class="comment">
-            <code>app/logger/oxseyelogger.android.ts</code>
+            <code>app/logger/oxseyelogger.ios.ts</code>
         </p>
 
             <p class="comment">
@@ -145,7 +145,7 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">app/logger/oxseyelogger.android.ts:14</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">app/logger/oxseyelogger.ios.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -189,7 +189,7 @@
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="73"
-                            class="link-to-prism">app/logger/oxseyelogger.android.ts:73</a></div>
+                            class="link-to-prism">app/logger/oxseyelogger.ios.ts:73</a></div>
                 </td>
             </tr>
 
@@ -284,7 +284,7 @@ message and writes to the log file.</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="40"
-                            class="link-to-prism">app/logger/oxseyelogger.android.ts:40</a></div>
+                            class="link-to-prism">app/logger/oxseyelogger.ios.ts:40</a></div>
                 </td>
             </tr>
 
@@ -379,7 +379,7 @@ message and writes to the log file.</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="64"
-                            class="link-to-prism">app/logger/oxseyelogger.android.ts:64</a></div>
+                            class="link-to-prism">app/logger/oxseyelogger.ios.ts:64</a></div>
                 </td>
             </tr>
 
@@ -474,7 +474,7 @@ message and writes to the log file.</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="48"
-                            class="link-to-prism">app/logger/oxseyelogger.android.ts:48</a></div>
+                            class="link-to-prism">app/logger/oxseyelogger.ios.ts:48</a></div>
                 </td>
             </tr>
 
@@ -569,7 +569,7 @@ message and writes to the log file.</p>
             <tr>
                 <td class="col-md-4">
                     <div class="io-line">Defined in <a href="" data-line="56"
-                            class="link-to-prism">app/logger/oxseyelogger.android.ts:56</a></div>
+                            class="link-to-prism">app/logger/oxseyelogger.ios.ts:56</a></div>
                 </td>
             </tr>
 
@@ -671,7 +671,7 @@ message and writes to the log file.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">app/logger/oxseyelogger.android.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">app/logger/oxseyelogger.ios.ts:14</a></div>
                             </td>
                         </tr>
 
@@ -705,7 +705,7 @@ message and writes to the log file.</p>
                     </tr>
                         <tr>
                             <td class="col-md-4">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">app/logger/oxseyelogger.android.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">app/logger/oxseyelogger.ios.ts:12</a></div>
                             </td>
                         </tr>
 
@@ -741,10 +741,10 @@ export class OxsEyeLogger {
 
   /** Constructor for OxsEyeLogger */
   public constructor() {
-    Permissions.requestPermission(
-      [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-      android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
-      &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
+    // Permissions.requestPermission(
+    //   [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+    //   android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+    //   &#x27;Needed for sharing files&#x27;).then(() &#x3D;&gt; {
         const appRootPath &#x3D; knownFolders.currentApp();
         if (!this.file) {
           this.file &#x3D; File.fromPath(appRootPath.path + &#x27;/log/oxseye.log&#x27;);
@@ -753,10 +753,10 @@ export class OxsEyeLogger {
           });
         }
         this.file &#x3D; File.fromPath(appRootPath.path + &#x27;/log/oxseye.log&#x27;);
-      }).catch(() &#x3D;&gt; {
-        Toast.makeText(&#x27;Error while giving permission to oxseye.log file.&#x27;, &#x27;long&#x27;).show();
-        console.log(&#x27;Permission is not granted (sadface)&#x27;);
-      });
+      // }).catch(() &#x3D;&gt; {
+      //   Toast.makeText(&#x27;Error while giving permission to oxseye.log file.&#x27;, &#x27;long&#x27;).show();
+      //   console.log(&#x27;Permission is not granted (sadface)&#x27;);
+      // });
   }
   /** Method to log message in debug level
    *
@@ -836,7 +836,7 @@ export class OxsEyeLogger {
        <script>
             var COMPODOC_CURRENT_PAGE_DEPTH = 1;
             var COMPODOC_CURRENT_PAGE_CONTEXT = 'injectable';
-            var COMPODOC_CURRENT_PAGE_URL = 'OxsEyeLogger.html';
+            var COMPODOC_CURRENT_PAGE_URL = 'OxsEyeLogger-1.html';
        </script>
 
        <script src="../js/libs/custom-elements.min.js"></script>

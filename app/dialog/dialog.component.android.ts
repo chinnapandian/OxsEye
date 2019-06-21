@@ -6,6 +6,7 @@ import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'tn
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
 import { OxsEyeLogger } from '../logger/oxseyelogger';
+
 import { L } from 'nativescript-i18n/angular';
 
 import * as orientation from 'nativescript-orientation';
@@ -28,7 +29,7 @@ const LABLE_PERFORM = 'Perform';
     selector: 'modal-content',
     moduleId: module.id,
     styleUrls: ['./dialog.component.css'],
-    templateUrl: './dialog.component.html',
+    templateUrl: './dialog.component.android.html',
 })
 export class DialogContent {
     /** Transformed Image source. */
@@ -88,7 +89,7 @@ export class DialogContent {
 
     /**
      * Constructor for DialogContent class.
-     * 
+     *
      * @param params contains captured image file information
      * @param transformedImageProvider transformed image provider instance
      */
@@ -105,7 +106,7 @@ export class DialogContent {
     }
     /**
      * Close method, which close the dialog window opened after captured image from camera.
-     * And returns back to the place where the dialog window got triggered, along with 
+     * And returns back to the place where the dialog window got triggered, along with
      * the parameter 'result'
      * @param result Which is nothing but empty string or transformed image URI string
      */
@@ -158,7 +159,7 @@ export class DialogContent {
     }
     /**
      * Gets rectangle points.
-     * 
+     *
      * @param event Gesture event data
      */
     // getPoints(event: GestureEventData) {
@@ -232,7 +233,7 @@ export class DialogContent {
      * the image area. Here the image's tralateX/translateY values are been calculated
      * based on the image's scale, width & height. And also it takes care of image boundary
      * checking.
-     * 
+     *
      * @param args PanGesture event data
      */
     onPan(args: PanGestureEventData) {
@@ -289,8 +290,8 @@ export class DialogContent {
         }
     }
     /**
-     * Double tap method fires on when user taps two times on transformed image. 
-     * Actually it brings the image to it's original positions and also adds 
+     * Double tap method fires on when user taps two times on transformed image.
+     * Actually it brings the image to it's original positions and also adds
      * circle points if it is original image.
      */
     onDoubleTap() {
@@ -315,7 +316,7 @@ export class DialogContent {
      * where all the necessary values for the image to be displayed in the window
      * have been initialized, like transformedImageSource, originalImageSource &
      * rectangle points.
-     * 
+     *
      * @param args Page loaded event data
      */
     pageLoaded(args: { object: any; }) {
@@ -436,7 +437,7 @@ export class DialogContent {
      * This method creates circle points button on original image view
      * based on the points receieved via actualPoint and also takes
      * care of boundary checking while diplaying it.
-     * 
+     *
      * @param actualPoint Contains circle points(x,y)
      */
     private createCircle(actualPoint: any): any {
@@ -527,7 +528,7 @@ export class DialogContent {
     }
     /**
      * Checks the image that it is within the image view boundary or not.
-     * 
+     *
      * @param translateX Image translateX
      * @param translateY Image translateY
      */

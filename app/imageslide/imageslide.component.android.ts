@@ -29,7 +29,7 @@ import * as Permissions from 'nativescript-permissions';
     selector: 'ns-imageslide',
     moduleId: module.id,
     styleUrls: ['./imageslide.component.css'],
-    templateUrl: './imageslide.component.html',
+    templateUrl: './imageslide.component.android.html',
 })
 export class ImageSlideComponent implements OnInit {
     /**  Used to store image source and also used in GUI */
@@ -114,7 +114,7 @@ export class ImageSlideComponent implements OnInit {
      * On pinch method, is being called while pinch event fired on image,
      * where the new scale, width & height of the transformed image have been calculated
      * to zoom-in/out.
-     * 
+     *
      * @param args PinchGestureEventData
      */
     onPinch(args: PinchGestureEventData) {
@@ -139,7 +139,7 @@ export class ImageSlideComponent implements OnInit {
      * the image area. Here the image's tralateX/translateY values are been calculated
      * based on the image's scale, width & height. And also it takes care of image boundary
      * checking.
-     * 
+     *
      * @param args PanGestureEventData
      */
     onPan(args: PanGestureEventData) {
@@ -214,10 +214,10 @@ export class ImageSlideComponent implements OnInit {
         }
     }
     /**
-     * Double tap method fires on when user taps two times on transformed image. 
-     * Actually it brings the image to it's original positions and also adds 
+     * Double tap method fires on when user taps two times on transformed image.
+     * Actually it brings the image to it's original positions and also adds
      * circle points if it is original image.
-     * 
+     *
      * @param args GestureEventData
      */
     onDoubleTap(args: GestureEventData) {
@@ -234,7 +234,7 @@ export class ImageSlideComponent implements OnInit {
     /**
      * Page loaded method which is been called when imageslide page is loaded,
      * where it sets the selected image in the source for display.
-     * 
+     *
      * @param args any object
      */
     pageLoaded(args: any) {
@@ -249,7 +249,7 @@ export class ImageSlideComponent implements OnInit {
      * it checks that the swipe is right direct or left direction, based on that it pulls the image from
      * the image list and display it in view. After that, it sets the image in default position by calling
      * onDoubleTap method.
-     * 
+     *
      * @param args SwipeGestureEventData
      */
     onSwipe(args: SwipeGestureEventData) {
@@ -350,7 +350,7 @@ export class ImageSlideComponent implements OnInit {
      * This will show up a dialog window for confirmation for the selected image(s)
      * to be deleted. If user says 'Ok', then those image(s) will be removed from the
      * device, otherwise can be cancelled.
-     * 
+     *
      * @param args any boject
      */
     onDelete(args: any) {
@@ -388,7 +388,8 @@ export class ImageSlideComponent implements OnInit {
                                     }
                                     // this.onSwipe(args);
                                 }).catch((error) => {
-                                    Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_image') + error.stack, 'long').show();
+                                    Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_image')
+                                    + error.stack, 'long').show();
                                     this.logger.error('Error while deleting thumbnail image. ' + module.filename
                                     + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });

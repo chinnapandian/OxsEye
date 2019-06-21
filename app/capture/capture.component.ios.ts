@@ -3,27 +3,23 @@ import { Router } from '@angular/router';
 import { CameraPlus } from '@nstudio/nativescript-camera-plus';
 import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular/modal-dialog';
 import { ImageAsset } from 'tns-core-modules/image-asset';
-import { ImageSource, fromFile } from 'tns-core-modules/image-source';
-import { Folder, path, knownFolders } from "tns-core-modules/file-system";
+import { fromFile, ImageSource } from 'tns-core-modules/image-source';
+
+import { Folder, knownFolders, path } from 'tns-core-modules/file-system';
 
 import { ActivityLoader } from '../activityloader/activityloader.common';
 import { DialogContent } from '../dialog/dialog.component';
-import { SendBroadcastImage } from '../providers/transformedimage.provider';
 
 import { L } from 'nativescript-i18n/angular';
 import { OxsEyeLogger } from '../logger/oxseyelogger';
 
 import { Color } from 'tns-core-modules/color';
-// import { OpenCvCameraPreview } from 'nativescript-opencv';
-// import * as cv from 'nativescript-opencv';
 
 import * as opencv from 'nativescript-opencv-plugin';
 import * as Toast from 'nativescript-toast';
 import * as fs from 'tns-core-modules/file-system';
 
-
 import * as application from 'tns-core-modules/application';
-// import * as buttonModule from "tns-core-modules/ui/button";
 
 /**
  * Capture component class, which is being used to capture image from camera.
@@ -32,7 +28,7 @@ import * as application from 'tns-core-modules/application';
     selector: 'ns-capture',
     moduleId: module.id,
     styleUrls: ['./capture.component.css'],
-    templateUrl: './capture.component.html',
+    templateUrl: './capture.component.ios.html',
 })
 
 export class CaptureComponent implements OnInit {
@@ -77,16 +73,17 @@ export class CaptureComponent implements OnInit {
     /** Flash button variable */
     private flashBtn: any;
     /** Indicates whether flash is on/off */
-    private flashEnabled: boolean = false;
+    private flashEnabled = false;
 
     /**
      * Constructor for CaptureComponent.
-     * 
+     *
      * @param zone Angular zone to run a task asynchronously.
      * @param modalService Service modal
      * @param viewContainerRef View container referrence
      * @param router Router
      * @param activityLoader Activity loader indication
+     * @param logger Oxs Eye logger instance
      */
     constructor(
         private zone: NgZone,
@@ -99,28 +96,18 @@ export class CaptureComponent implements OnInit {
     ) {
         this.locale = new L();
     }
-
-
     /**
      * Initialization method initializes OpenCV module and buttons like
      * takePicture, gallery and autoFocus buttons in camera view.
      */
     ngOnInit(): void {
         console.log('Initializing OpenCV...');
-        console.log(OpenCVWrapper.openCVVersionString());
-        // console.log('OpenCVWrapper.getOpenCVMat' + OpenCVWrapper.getOpenCVMat());
-        //         let alert = UIAlertController(title: "My Alert", message: "This is an alert.", preferredStyle: .alert) 
-        // alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in 
-        // NSLog("The \"OK\" alert occured.")
-        // }));
-        // console.log(OpenCVWrapper.getOpenCVMat());
-        //  this.opencvInstance = opencv.initOpenCV();
         this.isCameraVisible = true;
         this.createButtons();
-        // this.createTakePictureButton();
-        // this.createImageGalleryButton();
-        // this.createAutoFocusImage();
     }
+    /**
+     * Method to create buttons (take picutre, gallery, flash and switchCamera) on camera view.
+     */
     createButtons() {
         const width = this.cam.width;
         const height = this.cam.height;
@@ -133,7 +120,7 @@ export class CaptureComponent implements OnInit {
      * This method is called when camera is loaded, where all the neccessary things like
      * displaying buttons(takePicture, gallery, flash, camera & autoFocus) on camera view
      * are taken care and also initializes camera instance.
-     * 
+     *
      * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
@@ -154,62 +141,6 @@ export class CaptureComponent implements OnInit {
         if (flashMode === 'on') {
             this.cam.toggleFlash();
         }
-        // let testStr = OpenCVWrapper.performPerspectiveCorrectionManual('/var/mobile/Containers/Data/Application/B2A61C6B-EE7E-4EE8-8735-E510781340E2/Library/Application Support/LiveSync/app/capturedimages/IMG_1559892332017.jpg', 'StringPoints', 'Size');
-        // console.log('Method testing ....', testStr);
-        // Todo: const cb = new android.hardware.Camera.AutoFocusMoveCallback(
-
-        //     {
-        //         _this: this,
-        //         onAutoFocusMoving(start: any, camera: any) {
-        //             const animate = this._this.autofocusBtn.animate();
-        //             if (!start) {
-        //                 animate.scaleX(1);
-        //                 animate.scaleY(1);
-        //                 // Green color
-        //                 const color = android.graphics.Color.parseColor('#008000');
-        //                 this._this.autofocusBtn.setColorFilter(color);
-        //             } else {
-        //                 animate.scaleX(0.50);
-        //                 animate.scaleY(0.50);
-        //                 animate.setDuration(100);
-        //                 // Red color
-        //                 const color = android.graphics.Color.parseColor('#ff0000');
-        //                 this._this.autofocusBtn.setColorFilter(color);
-
-        //                 animate.start();
-        //             }
-        //         },
-        //     });
-        // if (this.cam.camera) {
-        //     this.cam.camera.setAutoFocusMoveCallback(cb);
-        // }
-        // if (args.data) {
-        //     this.cam.showFlashIcon = true;
-        //     this.cam.showToggleIcon = true;
-        //     try {
-        //         this.initImageGalleryButton();
-        //         this.initCameraButton();
-        //         this.initAutoFocusImageButton();
-        //     } catch (e) {
-        //         this.takePicBtn = null;
-        //         this.galleryBtn = null;
-        //         this.autofocusBtn = null;
-        //         this.takePicParams = null;
-        //         this.galleryParams = null;
-        //         this.autofocusParams = null;
-        //         this.cam.showToggleIcon = true;
-
-        //         this.createTakePictureButton();
-        //         this.createImageGalleryButton();
-        //         this.createAutoFocusImage();
-        //         this.initImageGalleryButton();
-        //         this.initCameraButton();
-        //         this.initAutoFocusImageButton();
-        //         this.cam._initFlashButton();
-        //         this.cam._initToggleCameraButton();
-        //     }
-        // }
-
         // TEST THE ICONS SHOWING/HIDING
         // this.cam.showCaptureIcon = true;
         // this.cam.showFlashIcon = true;
@@ -217,53 +148,24 @@ export class CaptureComponent implements OnInit {
         // this.cameraPlus.showToggleIcon = false;
     }
     /**
-     * This method initializes camera button in camera view, actually
-     * it removes an existing one if exists and adds it.
-     */
-    initCameraButton() {
-        this.cam.nativeView.removeView(this.takePicBtn);
-        this.cam.nativeView.addView(this.takePicBtn, this.takePicParams);
-    }
-    /**
-     * This method initializes gallery button in camera view, actually
-     * it removes an existing one if exists and adds it. And also sets
-     * the image icon for it.
-     */
-    initImageGalleryButton() {
-        this.cam.nativeView.removeView(this.galleryBtn);
-        this.cam.nativeView.addView(this.galleryBtn, this.galleryParams);
-        this.setImageResource(this.galleryBtn, 'ic_photo_library_white');
-    }
-    /**
-     * This method initializes autoFocus button in camera view, actually
-     * it removes an existing one if exists and adds it.
-     */
-    initAutoFocusImageButton() {
-        this.cam.nativeView.removeView(this.autofocusBtn);
-        this.cam.nativeView.addView(this.autofocusBtn, this.autofocusParams);
-    }
-    /**
      * Creates take picture button. Actually it creates image button and setting
      * it's properties like image icon, shape and color along with click event listener in it.
      */
     createTakePictureButton(width: any, height: any) {
         const _this = this;
-        let picOutline = createImageButton(_this, CGRectMake(width - 69, height - 80, 50, 50), null
-            , null, null, createIcon('picOutline', null, null), null
-        );
+        const picOutline = createImageButton(_this, CGRectMake(width - 69, height - 80, 50, 50), null
+            , null, null, createIcon('picOutline', null, null), null);
         picOutline.transform = CGAffineTransformMakeScale(1.5, 1.5);
-        this.cam.ios.addSubview(picOutline); //snapPicture
-        var takePicBtn = createImageButton(_this, CGRectMake(width - 70, height - 80.7, 50, 50), null, 'snapPicture', null, createIcon('takePic', null, null), null);
+        this.cam.ios.addSubview(picOutline);
+        const takePicBtn = createImageButton(_this, CGRectMake(width - 70, height - 80.7, 50, 50), null,
+            'snapPicture', null, createIcon('takePic', null, null), null);
         this.cam.ios.addSubview(takePicBtn);
         this.cam._swifty._owner.get().confirmPhotos = false;
-        // this.cam._swifty.snapPicture =  function (options) {
-        //     alert('snapPicture....');
-        // };
     }
 
     /**
      * Creates flash button in the camera view
-     * 
+     *
      * @param width width of the camera view
      */
     createFlashButton(width: any, height: any) {
@@ -273,11 +175,12 @@ export class CaptureComponent implements OnInit {
 
     /**
      * Creates switch camera button in the camera view
-     * 
+     *
      * @param width width of the camera view
      */
     createSwitchCameraButton(width: any, height: any) {
-        var switchCameraBtn = createImageButton(this, CGRectMake(width - 85, 80, 100, 50), null, 'switchCam', null, createIcon('toggle', CGSizeMake(65, 50), null), null);
+        const switchCameraBtn = createImageButton(this, CGRectMake(width - 85, 80, 100, 50), null,
+            'switchCam', null, createIcon('toggle', CGSizeMake(65, 50), null), null);
         switchCameraBtn.transform = CGAffineTransformMakeScale(0.75, 0.75);
         this.cam.nativeView.addSubview(switchCameraBtn);
     }
@@ -288,103 +191,18 @@ export class CaptureComponent implements OnInit {
      */
     createImageGalleryButton(height: any) {
         const _this = this;
-        // this.cam._swifty.openGallery = openGallery;
         this.cam._swifty.chooseFromLibrary = goImageGallery;
-        // this.cam._swifty.openGallery();
-        this.galleryBtn = createImageButton(_this, CGRectMake(20, height - 80, 50, 50), null, 'openGallery', null, createIcon('gallery', null, null), null);
+        this.galleryBtn = createImageButton(_this, CGRectMake(20, height - 80, 50, 50), null,
+            'openGallery', null, createIcon('gallery', null, null), null);
         this.galleryBtn.transform = CGAffineTransformMakeScale(0.75, 0.75);
 
         this.cam.ios.addSubview(_this.galleryBtn);
-        // let x =  this.cam._swifty;
-        // var z = Object.getPrototypeOf(x);
-        // z.prototype.openGallery1 = function () {
-        //     console.log('Gallery testing...');
-        // }
-
     }
-    chooseFromLibrary() {
-        alert('chooseFromLibrary');
-    }
-    /**
-     * Creates auto focus image button. Actually it creates image button and setting
-     * it's properties like image icon, shape and color along with click event listener in it.
-     */
-    createAutoFocusImage() {
-        const _this = this;
-        this.autofocusBtn = this.createAutoFocusImageButton();
-        this.setImageResource(this.autofocusBtn, 'ic_auto_focus_black');
-
-        // let openGalleryDrawable = this.getImageDrawable('ic_auto_focus_black');
-        // this.autofocusBtn.setImageResource(openGalleryDrawable);
-        const shape = this.createAutofocusShape();
-        this.autofocusBtn.setBackgroundDrawable(shape);
-        this.createAutoFocusImageParams();
-    }
-    /**
-     * Creates auto focus image button with help ImageView widget and settings
-     * it's attributes like padding, height, width, color & scaleType.
-     * 
-     * @returns Returns button object
-     */
-    createAutoFocusImageButton(): any {
-        const btn = new android.widget.ImageView(application.android.context);
-        btn.setPadding(34, 34, 34, 34);
-        btn.setMaxHeight(158);
-        btn.setMaxWidth(158);
-        btn.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-        const color = android.graphics.Color.parseColor('#008000'); // Green color
-        btn.setColorFilter(color);
-        return btn;
-    }
-    /**
-     * Gets actual icon image using icon name from context.
-     * 
-     * @param iconName Icon Name
-     */
-    getImageDrawable(iconName: any): any {
-        const drawableId = application.android.context
-            .getResources()
-            .getIdentifier(iconName, 'drawable', application.android.context.getPackageName());
-        return drawableId;
-    }
-    /**
-     * Creates transparent circle shape with help of GradientDrawable object
-     * and sets it's attributes like color, radius and alpha.
-     * 
-     * @returns Returns shape object
-     */
-    createTransparentCircleDrawable(): any {
-        const shape = new android.graphics.drawable.GradientDrawable();
-        shape.setColor(0x99000000);
-        shape.setCornerRadius(96);
-        shape.setAlpha(150);
-        return shape;
-    }
-    /**
-     * Creates auto focus shape using ShapeDrawable object and
-     * sets alpha.
-     * @returns Returns shape object
-     */
-    createAutofocusShape(): any {
-
-        const shape = new android.graphics.drawable.ShapeDrawable();
-        shape.setAlpha(0);
-        return shape;
-    }
-
-    // createImageButton(): any {
-    //     const btn = new android.widget.ImageButton(application.android.context);
-    //     btn.setPadding(34, 34, 34, 34);
-    //     btn.setMaxHeight(58);
-    //     btn.setMaxWidth(58);
-    //     return btn;
-    // }
-
 
     /**
      * Photo captured event fires when a picture is taken from camera, which actually
      * loads the captured image from ImageAsset.
-     * 
+     *
      * @param capturedData Image captured event data
      */
     photoCapturedEvent(capturedData: any): void {
@@ -417,7 +235,6 @@ export class CaptureComponent implements OnInit {
      * flash off when it already is on or vice-versa.
      */
     toggleFlashOnCam(): void {
-        alert("Clicked Flash");
         this.cam.toggleFlash();
     }
 
@@ -434,16 +251,11 @@ export class CaptureComponent implements OnInit {
     toggleTheCamera(): void {
         this.cam.toggleCamera();
     }
-    // /**
-    //  * Open camera library.
-    //  */
-    // openCamPlusLibrary(): void {
-    //     this.cam.chooseFromLibrary();
-    // }
+
     /**
      * Takes picture from camera when user press the takePicture button on camera view.
      * Then it sets the captured image URI into imageSource to be displayed in front-end.
-     * 
+     *
      * @param thisParam Contains cameraplus instance
      */
     takePicFromCam(thisParam: any): void {
@@ -453,27 +265,20 @@ export class CaptureComponent implements OnInit {
         this.imageSource = this.imgURI;
     }
 
-    imagesGalleryEvent(args: any): void {
-        this.router.navigate(['imagegallery']);
-    }
     /**
      * It takes to image gallery view when user clicks on gallery button on camera view.
      */
-    // goImageGallery() {
-    //     console.log('calling gallery....');
-    //     return new Promise(function (resolve, reject) {
-    //     this._owner.get().sendEvent('imageGalleryEvent');
-    //     resolve();
-    //     });
-    //     // this.router.navigate(['imagegallery']);
-    // }
+    imagesGalleryEvent(args: any): void {
+        this.router.navigate(['imagegallery']);
+    }
+
     /**
      * Shows the captured picture dialog window after taking picture. This is modal window along with
      * reuired options like capture image URI, transformed image URI, rectangle points and etc.
      * This also takes care of deleting the captured image when user wants to retake (using Retake button)
      * picture and, creates thumbnail image when user wants to save the captured image and
      * sets the transformed image in gallery icon button in camera view.
-     * 
+     *
      * @param fullScreen Option to show fullscreen dialog or not
      * @param filePathOrg Captured image file path
      * @param imgURI Transformed image file path
@@ -537,7 +342,7 @@ export class CaptureComponent implements OnInit {
     }
     /**
      * Sets the transformed image in gallery image button.
-     * 
+     *
      * @param imgURIParam Transformed image file URI
      */
     setTransformedImage(imgURIParam: any) {
@@ -553,93 +358,15 @@ export class CaptureComponent implements OnInit {
             }
         }
     }
-
-    /**
-     * Creates layout params using LayoutParams widget for takePicture button
-     * and sets it's params like height, width, margin & rules.
-     */
-    private createTakePictureParams() {
-        this.takePicParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
-        this.takePicParams.width = '100';
-        this.takePicParams.height = '100';
-        this.takePicParams.setMargins(8, 8, 8, 8);
-        // ALIGN_PARENT_BOTTOM
-        this.takePicParams.addRule(12);
-        // HORIZONTAL_CENTER
-        this.takePicParams.addRule(11);
-    }
-    /**
-     * Creates layout params using LayoutParams widget for autoFocus button
-     * and sets it's params like height, width, margin & rules.
-     */
-    private createAutoFocusImageParams() {
-        this.autofocusParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
-        this.autofocusParams.width = '300';
-        this.autofocusParams.height = '300';
-        this.autofocusParams.setMargins(8, 8, 8, 8);
-        // ALIGN_PARENT_CENTER
-        this.autofocusParams.addRule(13);
-    }
-    /**
-     * Sets image resource to given image button.
-     * 
-     * @param btn Button image instance referrence
-     * @param iconName Icon name
-     */
-    private setImageResource(btn: any, iconName: any) {
-        const openGalleryDrawable = this.getImageDrawable(iconName);
-        btn.setImageResource(openGalleryDrawable);
-    }
-    /**
-     * Creates layout params using LayoutParams widget for gallery button
-     * and sets it's params like height, width, margin & rules.
-     */
-    private createImageGallerryParams() {
-        this.galleryParams = new android.widget.RelativeLayout.LayoutParams(-2, -2);
-        this.galleryParams.width = '100';
-        this.galleryParams.height = '100';
-        this.galleryParams.setMargins(8, 8, 8, 8);
-        // ALIGN_PARENT_BOTTOM
-        this.galleryParams.addRule(12);
-        // ALIGN_PARENT_LEFT
-        this.galleryParams.addRule(9);
-    }
-    /**
-     * Refreshes the captured images in media store meaning that the new captured image will be
-     * available to public access. That can be done by SendBroadcastImage method.
-     * 
-     * @param filePathOrg Captured Image file path
-     * @param imgURI Transformed Image file URI
-     * @param action Actions 'Add'/'Remove'
-     */
-    private refreshCapturedImagesinMediaStore(filePathOrg: string, imgURI: string, action: string) {
-        try {
-            SendBroadcastImage(filePathOrg);
-            SendBroadcastImage(imgURI);
-            // this thumbnail image will be available only in 'Add' case.
-            if (action === 'Add') {
-                const thumnailOrgPath = imgURI.replace('PT_IMG', 'thumb_PT_IMG');
-                SendBroadcastImage(thumnailOrgPath);
-            }
-        } catch (error) {
-            Toast.makeText('Could not sync the captured image file. ' + error, 'long').show();
-            this.logger.error(module.filename + ': ' + error);
-        }
-    }
     /**
      * Creates thumbnail image for the captured transformed image and sets it in gallery button.
-     * 
+     *
      * @param imgURI Transformed image file path
      */
     private createThumbNailImage(imgURI: string): any {
         try {
-            // Todo: const thumbnailImagePath = opencv.createThumbnailImage(imgURI);
-            let thumbnailImagePath = OpenCVWrapper.createThumbnailImage(imgURI);
-            // com.maas.opencv4nativescript.OpenCVUtils.createThumbnailImage(dstImgURI);
-
-            // const uri = android.net.Uri.parse('file://' + thumbnailImagePath);
-            // thumbnailImagePath = thumbnailImagePath.toString().substring(7);
-            let buttonImage = UIImage.imageNamed(thumbnailImagePath);
+            const thumbnailImagePath = OpenCVWrapper.createThumbnailImage(imgURI);
+            const buttonImage = UIImage.imageNamed(thumbnailImagePath);
             this.galleryBtn.setImageForState(buttonImage, UIControlState.Normal);
             this.galleryBtn.setImageForState(buttonImage, UIControlState.Highlighted);
             this.galleryBtn.setImageForState(buttonImage, UIControlState.Selected);
@@ -649,27 +376,11 @@ export class CaptureComponent implements OnInit {
         }
     }
 
-    // /**
-    //  * Perform adaptive threshold.
-    //  * @param thresholdValue Threshold value
-    //  */
-    // private performAdaptiveThreshold(thresholdValue: any): void {
-    //     this.zone.run(() => {
-    //         this.imgEmpty = this.imgURI + '?ts=' + new Date().getTime();
-    //         this.imageSource = this.imgEmpty;
-    //     });
-    //     this.zone.run(() => {
-    //         this.imgURI = opencv.performAdaptiveThreshold(this.wrappedImage, this.fileName, thresholdValue);
-    //         // this._isImageBtnVisible = true;
-    //         this.imageSource = this.imgURI;
-    //     });
-    // }
-
     /**
      * This method performs perspective transformation for the captured image using OpenCV API and
      * returns the transformed image URI along with rectangle points as string which will be used to
      * draw circle points. After that it shows up the dialog modal window with the transformed image.
-     * 
+     *
      * @param filePath Captured image file path
      */
     private performPerspectiveTransformation(filePath: any): void {
@@ -690,63 +401,35 @@ export class CaptureComponent implements OnInit {
         }
     }
     /**
-     * Method to perform prespective transformation for the captured image 
+     * Method to perform prespective transformation for the captured image
      * and sets the transformed image URI in this.imgURI variable.
-     * 
+     *
      * @param imageAsset ImageAsset object instance referrence
      */
     private loadImage(capturedData: any): void {
-        let cameraPlus = capturedData.object as CameraPlus;
-        let imageAsset: PHAsset = capturedData.data;
-        // imageAsset.
+        const cameraPlus = capturedData.object as CameraPlus;
+        const imageAsset: PHAsset = capturedData.data;
+
         if (capturedData.data) {
-
-            // let _uriRequestOptions = PHImageRequestOptions.alloc().init();
-            //                             _uriRequestOptions.synchronous = true;
-
-            //                             PHImageManager.defaultManager().requestImageDataForAssetOptionsResultHandler(imageAsset, _uriRequestOptions, function (data, uti, orientation, info) {
-
-            //                                     let uri = info.objectForKey("PHImageFileURLKey");
-            //                                     let newUri = uri.toString();
-            //                                     let fileName = newUri.replace(/^.*[\\\/]/, '');
-
-            //                                     // t.copyImageFiles(rawData, fileName);
-
-            //                             });
-
-
             this.imageSource = new ImageSource();
 
             this.imageSource.fromAsset(capturedData.data).then(
                 (imgSrc) => {
                     if (imgSrc) {
                         this.zone.run(() => {
-
-                            // const img: ImageSource = <ImageSource>fromFile(imgSrc);
-                            // const folder: Folder = <Folder>knownFolders.currentApp();
-                            var folder = fs.path.join(fs.knownFolders.documents().path);
-        // let folders0 = fs.Folder.fromPath(folder0);
-                            // const folderDest = knownFolders.documents();
+                            const folder = fs.path.join(fs.knownFolders.documents().path);
                             const fileName = 'capturedimages/IMG_' + Date.now() + '.jpg';
                             const pathDest = path.join(folder, fileName);
-                            const saved: boolean = imgSrc.saveToFile(pathDest, "jpg");
+                            const saved: boolean = imgSrc.saveToFile(pathDest, 'jpg');
                             if (saved) {
                                 // UIImageWriteToSavedPhotosAlbum(capturedData.data.nativeImage, null, null, null);
                                 // imgSrc.saveToAlbum(this.imageSource, false, false, function () {
                                 //     alert('The photo was saved!');
                                 // });
                                 console.log('Org File Path: ' + pathDest);
-
-                                // const fp = (cameraPlus.ios) ? cameraPlus.ios : cameraPlus.android;
-                                // this.imageSourceOrg = fp;
                                 this.imgURI = '';
                                 this.imgURI = pathDest;
-
-                                // if (fp.indexOf('.png') > 0) {
-                                //     this.imgURI = fp;
                                 this.imageSource = this.imgURI;
-                                // } else {
-                                //     this.imgURI = '';
                                 this.performPerspectiveTransformation(pathDest);
                             }
                         });
@@ -769,38 +452,31 @@ export class CaptureComponent implements OnInit {
         }
     }
 }
-var goImageGallery = function (_this: any): any {
-    var _this = this;
-    return new Promise(function (resolve, reject) {
+/**
+ * Function to trigger image gallery event method to go to image gallery page.
+ *
+ */
+const goImageGallery = function(): any {
+    const _this = this;
+    return new Promise((resolve, reject) => {
         _this._owner.get().sendEvent('imagesGalleryEvent');
         resolve();
     });
-    //    this._owner.get().sendEvent('imagesSelectedEvent', this);
 };
-
-var openGallery = function () {
-    console.log("testing....gallery....");
-    alert("openGallery...");
-
-};
-var chooseFromLibrary1 = function () {
-    alert('chooseFromLibrary1');
-}
-var snapPicture = function () {
-    alert('snapPicture');
-}
 
 /** Overide method to display flash button on camera view.
  * This is actually same as it's parent except the button location (x,y)
  */
-var flashBtnHandler = function () {
-    if (this._flashBtn)
+const flashBtnHandler = function() {
+    if (this._flashBtn) {
         this._flashBtn.removeFromSuperview();
-    if (this.flashEnabled) {
-        this._flashBtn = createImageButton(this, CGRectMake(20, 80, 50, 50), null, 'toggleFlash', null, createIcon('flash', null, null), null);
     }
-    else {
-        this._flashBtn = createImageButton(this, CGRectMake(20, 80, 50, 50), null, 'toggleFlash', null, createIcon('flashOff', null, null), null);
+    if (this.flashEnabled) {
+        this._flashBtn = createImageButton(this, CGRectMake(20, 80, 50, 50), null,
+            'toggleFlash', null, createIcon('flash', null, null), null);
+    } else {
+        this._flashBtn = createImageButton(this, CGRectMake(20, 80, 50, 50), null,
+            'toggleFlash', null, createIcon('flashOff', null, null), null);
     }
     this._flashBtn.transform = CGAffineTransformMakeScale(0.75, 0.75);
     this.view.addSubview(this._flashBtn);
@@ -808,12 +484,12 @@ var flashBtnHandler = function () {
 
 /**
  * Creates icon for the given types (flashOn, flashOff, toggle, pictureOutLine, takePicture, Gallery)
- * 
+ *
  * @param type type of icon to be created
  * @param size size of the icon
  * @param color color of the icon
  */
-var createIcon = function (type, size, color): any {
+const createIcon = (type, size, color): any => {
     switch (type) {
         case 'flash':
             UIGraphicsBeginImageContextWithOptions(size || CGSizeMake(50, 50), false, 0);
@@ -840,18 +516,18 @@ var createIcon = function (type, size, color): any {
             drawGallery(color);
             break;
     }
-    var img = UIGraphicsGetImageFromCurrentImageContext();
+    const img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return img;
 };
 /**
  * Draws flashOn icon using UIBezierPath for the flashON button.
- * 
+ *
  * @param color color of the flashOff icon
  */
-var drawFlash = function (color: any) {
-    var iconColor = new Color(color || '#fff').ios;
-    var bezierPath = UIBezierPath.bezierPath();
+const drawFlash = (color: any) => {
+    const iconColor = new Color(color || '#fff').ios;
+    const bezierPath = UIBezierPath.bezierPath();
     bezierPath.moveToPoint(CGPointMake(23.17, 0.58));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(11.19, 13.65), CGPointMake(22.79, 0.97), CGPointMake(17.38, 6.83));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(0, 26.66), CGPointMake(3.2, 22.41), CGPointMake(-0.07, 26.24));
@@ -874,12 +550,12 @@ var drawFlash = function (color: any) {
 };
 /**
  * Draws flashOff icon using UIBezierPath for the flashOff button.
- * 
+ *
  * @param color color of the flashOff icon
  */
-var drawFlashOff = function (color: any) {
-    var iconColor = new Color(color || '#fff').ios;
-    var bezierPath = UIBezierPath.bezierPath();
+const drawFlashOff = (color: any) => {
+    const iconColor = new Color(color || '#fff').ios;
+    const bezierPath = UIBezierPath.bezierPath();
     bezierPath.moveToPoint(CGPointMake(21.13, 4.5));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(15.1, 12.28), CGPointMake(19.18, 7.01), CGPointMake(16.45, 10.51));
     bezierPath.addLineToPoint(CGPointMake(12.66, 15.45));
@@ -903,7 +579,7 @@ var drawFlashOff = function (color: any) {
     bezierPath.closePath();
     iconColor.setFill();
     bezierPath.fill();
-    var bezier2Path = UIBezierPath.bezierPath();
+    const bezier2Path = UIBezierPath.bezierPath();
     bezier2Path.moveToPoint(CGPointMake(7.18, 22.6));
     bezier2Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(4.59, 26.7), CGPointMake(5.43, 24.91), CGPointMake(4.54, 26.32));
     bezier2Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(10.42, 27.48), CGPointMake(4.68, 27.3), CGPointMake(4.91, 27.33));
@@ -923,12 +599,12 @@ var drawFlashOff = function (color: any) {
 };
 /**
  * Draws the toggle icon using UIBezierPath for switch camera button
- * 
+ *
  * @param color color of toggle icon
  */
-var drawToggle = function (color: any) {
-    var iconColor = new Color(color || '#fff').ios;
-    var bezierPath = UIBezierPath.bezierPath();
+const drawToggle =  (color: any) => {
+    const iconColor = new Color(color || '#fff').ios;
+    const bezierPath = UIBezierPath.bezierPath();
     bezierPath.moveToPoint(CGPointMake(17.91, 3.03));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(14.69, 6.2), CGPointMake(16.11, 5.72), CGPointMake(15.7, 6.1));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(13.41, 5.51), CGPointMake(13.75, 6.31), CGPointMake(13.52, 6.17));
@@ -978,7 +654,7 @@ var drawToggle = function (color: any) {
     bezierPath.closePath();
     iconColor.setFill();
     bezierPath.fill();
-    var bezier2Path = UIBezierPath.bezierPath();
+    const bezier2Path = UIBezierPath.bezierPath();
     bezier2Path.moveToPoint(CGPointMake(28.28, 11.26));
     bezier2Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(21.77, 14.43), CGPointMake(26.11, 11.78), CGPointMake(22.85, 13.38));
     bezier2Path.addLineToPoint(CGPointMake(21.02, 15.16));
@@ -1001,7 +677,7 @@ var drawToggle = function (color: any) {
     bezier2Path.closePath();
     iconColor.setFill();
     bezier2Path.fill();
-    var bezier3Path = UIBezierPath.bezierPath();
+    const bezier3Path = UIBezierPath.bezierPath();
     bezier3Path.moveToPoint(CGPointMake(15.14, 20.91));
     bezier3Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(12.06, 24.74), CGPointMake(13.52, 22.83), CGPointMake(12.14, 24.54));
     bezier3Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(14.35, 25.09), CGPointMake(11.99, 24.95), CGPointMake(12.89, 25.09));
@@ -1028,12 +704,12 @@ var drawToggle = function (color: any) {
 };
 /**
  * Draws picture outline icon using UIBezierPath for taking picture button
- * 
+ *
  * @param color Color of the picture outline
  */
-var drawPicOutline = function (color: any) {
-    var iconColor = new Color(color || '#fff').ios;
-    var bezierPath = UIBezierPath.bezierPath();
+const drawPicOutline = (color: any) => {
+    const iconColor = new Color(color || '#fff').ios;
+    const bezierPath = UIBezierPath.bezierPath();
     bezierPath.moveToPoint(CGPointMake(17.13, 0.63));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(6.13, 7.21), CGPointMake(12.82, 1.77), CGPointMake(9.31, 3.87));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(0.91, 15.85), CGPointMake(3.7, 9.79), CGPointMake(2.11, 12.44));
@@ -1061,13 +737,13 @@ var drawPicOutline = function (color: any) {
 };
 /**
  * Draws circle icon using UIBezierPath
- * 
+ *
  * @param color color of the circle icon
  */
 
-var drawCircle = function (color) {
-    var iconColor = new Color(color || '#fff').ios;
-    var bezier2Path = UIBezierPath.bezierPath();
+const drawCircle = (color) => {
+    const iconColor = new Color(color || '#fff').ios;
+    const bezier2Path = UIBezierPath.bezierPath();
     bezier2Path.moveToPoint(CGPointMake(17.88, 0.51));
     bezier2Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(0, 23.08), CGPointMake(7.47, 3.09), CGPointMake(0.04, 12.49));
     bezier2Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(17.83, 45.25), CGPointMake(0, 33.39), CGPointMake(7.47, 42.66));
@@ -1082,12 +758,12 @@ var drawCircle = function (color) {
 };
 /**
  * Draws gallery icon using UIBezierPath
- * 
+ *
  * @param color color of the gallery icon
  */
-var drawGallery = function (color) {
-    var iconColor = new Color(color || '#fff').ios;
-    var bezierPath = UIBezierPath.bezierPath();
+const drawGallery =  (color) => {
+    const iconColor = new Color(color || '#fff').ios;
+    const bezierPath = UIBezierPath.bezierPath();
     bezierPath.moveToPoint(CGPointMake(1.42, 0.13));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(0.11, 1.46), CGPointMake(0.9, 0.31), CGPointMake(0.25, 0.98));
     bezierPath.addCurveToPointControlPoint1ControlPoint2(CGPointMake(0, 17.28), CGPointMake(0.03, 1.72), CGPointMake(0, 6.61));
@@ -1147,7 +823,7 @@ var drawGallery = function (color) {
     bezierPath.closePath();
     iconColor.setFill();
     bezierPath.fill();
-    var bezier2Path = UIBezierPath.bezierPath();
+    const bezier2Path = UIBezierPath.bezierPath();
     bezier2Path.moveToPoint(CGPointMake(17.8, 12.38));
     bezier2Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(15.42, 15.92), CGPointMake(16.27, 12.89), CGPointMake(15.26, 14.38));
     bezier2Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(17.54, 18.78), CGPointMake(15.54, 17.16), CGPointMake(16.34, 18.25));
@@ -1159,7 +835,7 @@ var drawGallery = function (color) {
     bezier2Path.closePath();
     iconColor.setFill();
     bezier2Path.fill();
-    var bezier3Path = UIBezierPath.bezierPath();
+    const bezier3Path = UIBezierPath.bezierPath();
     bezier3Path.moveToPoint(CGPointMake(33.75, 17.49));
     bezier3Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(29.87, 22.24), CGPointMake(33.63, 17.56), CGPointMake(31.88, 19.7));
     bezier3Path.addCurveToPointControlPoint1ControlPoint2(CGPointMake(25.94, 27.01), CGPointMake(27.58, 25.15), CGPointMake(26.12, 26.92));
@@ -1184,24 +860,21 @@ var drawGallery = function (color) {
 /**
  * Creates image button with help of UIButton widget
  * and sets it's attributes like color, state, size and action event.
- * 
+ *
  * @returns Returns button object
  */
-var createImageButton = function (target: any, frame: any, label: any, eventName: any, align: any, img: any, imgSelected: any
-): any {
-    var btn;
+const createImageButton = (target: any, frame: any, label: any, eventName: any, align: any, img: any, imgSelected: any): any => {
+    let btn;
     if (frame) {
         btn = UIButton.alloc().initWithFrame(frame);
-    }
-    else {
+    } else {
         btn = UIButton.alloc().init();
     }
     if (label) {
         btn.setTitleForState(label, 0);
         btn.setTitleColorForState(new Color('#fff').ios, 0);
         btn.titleLabel.font = UIFont.systemFontOfSize(19);
-    }
-    else if (img) {
+    } else if (img) {
         btn.setImageForState(img, 0);
         if (imgSelected) {
             btn.setImageForState(img, 1);
@@ -1210,7 +883,7 @@ var createImageButton = function (target: any, frame: any, label: any, eventName
     }
     if (align) {
         btn.contentHorizontalAlignment =
-            align == 'right' ? 2 : 1;
+            align === 'right' ? 2 : 1;
     }
     if (eventName) {
         btn.addTargetActionForControlEvents(target, eventName, 64);

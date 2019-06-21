@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 
-import { File, Folder, path, knownFolders } from 'tns-core-modules/file-system';
+import { File, Folder, knownFolders, path } from 'tns-core-modules/file-system';
 import { Page } from 'tns-core-modules/ui/page';
 
 import { RouterExtensions } from 'nativescript-angular/router';
@@ -22,18 +22,16 @@ import * as dialogs from 'tns-core-modules/ui/dialogs';
 import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
 import * as fs from 'tns-core-modules/file-system';
-import * as frameModule from 'tns-core-modules/ui/frame';
-import * as utilsModule from 'tns-core-modules/utils/utils';
 
 /**
- * ImageGalleryComponent class is being used to display all the thumbnail 
+ * ImageGalleryComponent class is being used to display all the thumbnail
  * images of transformed images in gallery view.
  */
 @Component({
     selector: 'ns-imagegallery',
     moduleId: module.id,
     styleUrls: ['./imagegallery.component.css'],
-    templateUrl: './imagegallery.component.html',
+    templateUrl: './imagegallery.component.ios.html',
 })
 export class ImageGalleryComponent implements OnInit {
     /** Boolean value to make the sharing menu visible or not. */
@@ -54,16 +52,12 @@ export class ImageGalleryComponent implements OnInit {
     private orderByAscDesc: string;
     /** Stores page referrence. */
     private page;
-    /** Lable for select/unselect All menu */
-    // private selectUnselectAllLable: any;
-    // /** Lable for sort by date menu */
-    // private sortByDateLable: any;
     /** Localization */
     private locale: L;
 
     /**
      * Constructor for ImageGalleryComponent.
-     * 
+     *
      * @param routerExtensions Router extension instance
      * @param router Router instance
      * @param transformedImageProvider Transformed image provider instance
@@ -119,7 +113,7 @@ export class ImageGalleryComponent implements OnInit {
     /**
      * This method fires when the gallery page is loaded and sets page and menu
      * properties value to true/false based on thumbnail image list count.
-     * 
+     *
      * @param args Page loaded event data
      */
     onPageLoaded(args) {
@@ -153,24 +147,24 @@ export class ImageGalleryComponent implements OnInit {
     /**
      * Goes to Image slide page when user does double tap on image and also navigates with
      * transformed image URI and index of it.
-     * 
+     *
      * @param imgURIParam Transformed image file URI
      * @param imgIndexParam  image index
      */
     goImageSlide(imgURIParam, imgIndexParam) {
-        // const navigationExtras: NavigationExtras = {
-        //     queryParams: {
-        //         imgURI: imgURIParam,
-        //         imgIndex: imgIndexParam,
-        //     },
-        // };
-        // this.router.navigate(['imageslide'], navigationExtras);
+        const navigationExtras: NavigationExtras = {
+            queryParams: {
+                imgURI: imgURIParam,
+                imgIndex: imgIndexParam,
+            },
+        };
+        this.router.navigate(['imageslide'], navigationExtras);
     }
     /**
      * Checks whether the checkBox is been selected or not. If it is selected,
      * the delete/share menus are visible, otherwise they are not visible.
      * And also sets the same value in the image list.
-     * 
+     *
      * @param event Checkbox event data
      * @param imagePath transformed image file path
      * @param index image index in the list
@@ -243,45 +237,28 @@ export class ImageGalleryComponent implements OnInit {
      * medias will be visible when the share button clicked.
      */
     onShare() {
-        let dataToShare: any = {};
+        const dataToShare: any = {};
         let dataCount = 0;
-        let documents = fs.knownFolders.documents();
+        const documents = fs.knownFolders.documents();
 
         this.imageList.forEach((image) => {
             if (image.isSelected) {
-                let transformedImgFileNameOrg = image.fileName.replace('thumb_PT_IMG', 'PT_IMG');
+                const transformedImgFileNameOrg = image.fileName.replace('thumb_PT_IMG', 'PT_IMG');
                 // let fileName = image.fileName;
-                let path = fs.path.join(documents.path, 'capturedimages', transformedImgFileNameOrg);
+                let imgFilepath = fs.path.join(documents.path, 'capturedimages', transformedImgFileNameOrg);
                 // let file = fs.File.fromPath(path);
-                let transformedUIImage = UIImage.imageNamed(path);
+                const transformedUIImage = UIImage.imageNamed(imgFilepath);
                 dataToShare[dataCount++] = transformedUIImage;
-                //Getting original captured image
+                // Getting original captured image
                 let imgFileNameOrg = transformedImgFileNameOrg.replace('PT_IMG', 'IMG');
                 imgFileNameOrg = imgFileNameOrg.substring(0, imgFileNameOrg.indexOf('_transformed')) + '.jpg';
-                path = fs.path.join(documents.path, 'capturedimages', imgFileNameOrg);
-                let transformedUIImageOrg = UIImage.imageNamed(path);
+                imgFilepath = fs.path.join(documents.path, 'capturedimages', imgFileNameOrg);
+                const transformedUIImageOrg = UIImage.imageNamed(imgFilepath);
                 dataToShare[dataCount++] = transformedUIImageOrg;
             }
         });
         try {
-            let activityController = UIActivityViewController.alloc()
-                .initWithActivityItemsApplicationActivities([dataToShare], null);
-            activityController.setValueForKey('Transformed Image(s)', 'Subject');
-            let presentViewController = activityController.popoverPresentationController;
-            if (presentViewController) {
-                var page = frameModule.topmost().currentPage;
-                if (page && page.ios.navigationItem.rightBarButtonItems &&
-                    page.ios.navigationItem.rightBarButtonItems.count > 0) {
-                    presentViewController.barButtonItem = page.ios.navigationItem.rightBarButtonItems[0];
-                } else {
-                    presentViewController.sourceView = page.ios.view;
-                }
-            }
-
-            utilsModule.ios.getter(UIApplication, UIApplication.sharedApplication)
-                .keyWindow
-                .rootViewController
-                .presentViewControllerAnimatedCompletion(activityController, true, null);
+            this.transformedImageProvider.share(dataToShare);
         } catch (error) {
             Toast.makeText('Error while sharing images.' + error).show();
             this.logger.error('Error while sharing images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
@@ -342,7 +319,7 @@ export class ImageGalleryComponent implements OnInit {
      * Sets all the checkBox checked value based on what it receives value as parameter.
      * And also sets the checkBox's page property value based on the current vlaue like
      * if already has true, then sets false, otherwise it sets true.
-     * 
+     *
      * @param value Checkbox value
      */
     private performSelectUnselectAll(value: any) {
@@ -354,7 +331,7 @@ export class ImageGalleryComponent implements OnInit {
     }
     /**
      * Loads thumbnail images using content resolver by order what it receives as parameter.
-     * 
+     *
      * @param orderByAscDescParam OrderBy value 'Asc'/'Desc'
      */
     private loadThumbnailImagesByContentResolver(orderByAscDescParam: string) {
@@ -369,19 +346,20 @@ export class ImageGalleryComponent implements OnInit {
         this.transformedImageProvider.imageList = [];
         try {
             // capturedPicturePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + '/DCIM';
-            const folder: Folder = <Folder>knownFolders.currentApp();
+            const folder: Folder = knownFolders.currentApp() as Folder;
             // const folderDest = knownFolders.documents();
             // const fileName = 'capturedimages/IMG_' + Date.now() + '.jpg';
             // const capturedPicturePath = path.join(folder.path, 'capturedimages');
 
-            let folder0 = fs.path.join(fs.knownFolders.documents().path, 'capturedimages', 'thumbnails');
-            let folders0 = fs.Folder.fromPath(folder0);
+            const folder0 = fs.path.join(fs.knownFolders.documents().path, 'capturedimages', 'thumbnails');
+            const folders0 = fs.Folder.fromPath(folder0);
             folders0.getEntities()
                 .then((entities) => {
                     // entities is array with the document's files and folders.
                     entities.forEach((entity) => {
                         // if (entity.name.startsWith('thumb_PT_IMG') && entity.name.endsWith('.png')) {
-                        const thumnailOrgPath = entity.path.replace('thumb_PT_IMG', 'PT_IMG');
+                        let thumnailOrgPath = entity.path.replace('thumb_PT_IMG', 'PT_IMG');
+                        thumnailOrgPath = thumnailOrgPath.replace('thumbnails/', '');
                         this.transformedImageProvider.imageList.push(new TransformedImage(
                             entity.name,
                             thumnailOrgPath,
