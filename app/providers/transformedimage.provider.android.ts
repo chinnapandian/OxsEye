@@ -84,56 +84,55 @@ export class TransformedImageProvider {
             });
     }
     /**
-     * TODO: this is not been used now. but if needed later uncomment and use it.
      * Loads possible contour images
      */
-    // LoadPossibleContourImages() {
+    LoadPossibleContourImages(fileName: any) {
 
-    //     this.contourImageList = [];
-    //     Permissions.requestPermission(
-    //         [android.Manifest.permission.READ_EXTERNAL_STORAGE,
-    //         android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
-    //         'Needed for sharing files').then(() => {
-    //             const MediaStore = android.provider.MediaStore;
-    //             let cursor = null;
-    //             try {
-    //                 const context = application.android.context;
-    //                 const columns = [MediaStore.MediaColumns.DATA];
-    //                 //      let orderBy = MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
-    //                 const uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-    //                 const where = MediaStore.MediaColumns.DATA + ' like "%contourImage%"';
-    //                 cursor = context.getContentResolver().query(uri, columns, where, null, null);
-    //                 if (cursor && cursor.getCount() > 0) {
-    //                     while (cursor.moveToNext()) {
-    //                         const columnIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
-    //                         const imageUri = cursor.getString(columnIndex) + '';
-    //                         const name = imageUri.substring(imageUri.lastIndexOf('contourImage'));
-    //                         // let image = { fileUri: imageUri, text: name };
-    //                         //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
-    //                         //   let thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
-    //                         this.contourImageList.push(new TransformedImage(
-    //                             name,
-    //                             imageUri,
-    //                             imageUri,
-    //                             false,
-    //                         ));
+        this.contourImageList = [];
+        Permissions.requestPermission(
+            [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+            'Needed for sharing files').then(() => {
+                const MediaStore = android.provider.MediaStore;
+                let cursor = null;
+                try {
+                    const context = application.android.context;
+                    const columns = [MediaStore.MediaColumns.DATA];
+                    //      let orderBy = MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
+                    const uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    const where = MediaStore.MediaColumns.DATA + ' like "%'+ fileName + 'transformed%"';
+                    cursor = context.getContentResolver().query(uri, columns, where, null, null);
+                    if (cursor && cursor.getCount() > 0) {
+                        while (cursor.moveToNext()) {
+                            const columnIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
+                            const imageUri = cursor.getString(columnIndex) + '';
+                            const name = imageUri.substring(imageUri.lastIndexOf('transformed'));
+                            // let image = { fileUri: imageUri, text: name };
+                            //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
+                            //   let thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
+                            this.contourImageList.push(new TransformedImage(
+                                name,
+                                imageUri,
+                                imageUri,
+                                false,
+                            ));
 
-    //                         //   }
-    //                     }
-    //                 }
-    //                 //         activityLoader.hide();
-    //             } catch (error) {
-    //                 //           activityLoader.hide();
-    //                 Toast.makeText('Error while loading contour images.', 'long').show();
-    //                 this.logger.error('Error while loading contour images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
-    //             }
+                            //   }
+                        }
+                    }
+                    //         activityLoader.hide();
+                } catch (error) {
+                    //           activityLoader.hide();
+                    Toast.makeText('Error while loading contour images.', 'long').show();
+                    this.logger.error('Error while loading contour images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
+                }
 
-    //         }).catch((error) => {
-    //             //   activityLoader.hide();
-    //             Toast.makeText('Error in giving permission.', 'long').show();
-    //             this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
-    //         });
-    // }
+            }).catch((error) => {
+                //   activityLoader.hide();
+                Toast.makeText('Error in giving permission.', 'long').show();
+                this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
+            });
+    }
 
     /**
      * Deletes all the temporary files used to perform transformation. Actually it creates

@@ -5,10 +5,10 @@
 .img-height {
     height: 100;
 }
-ActionBar {
+/*ActionBar {
     background-color:  #cbfd3c;
     color: black;
-}
+}*/
 
 .action-image {
     width: 40;
@@ -21,6 +21,9 @@ ActionBar {
     font-size: 24;
     font-weight: bold;
     vertical-align: center;
+}
+.img-gallery-back {
+    width: 15 !important;
 }
 .img-gallery-checkbox-ios {
     border-width: 1;

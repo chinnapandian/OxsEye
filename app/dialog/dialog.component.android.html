@@ -1,13 +1,41 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">
-    <StackLayout orientation="vertical" margin="20" horizontalAlignment="center" verticalAlignment="center">
-        <GridLayout id="imgGridId" height="90%"  (doubleTap)="onDoubleTap()"
-            borderLeftWidth="1" borderBottomWidth="1" borderRightWidth="1" borderTopWidth="1" backgroundColor="gray">
-            <Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"    id="imgViewId"  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>
+    <StackLayout  class="modal-view-style" orientation="vertical" margin="10" horizontalAlignment="center" verticalAlignment="center">
+        <GridLayout id="imgGridId" height="83%" (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap()" borderLeftWidth="1" borderBottomWidth="1"
+            borderRightWidth="1" borderTopWidth="1" backgroundColor="gray">
+            <Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"    id="imgViewId" (longPress)="enableDelete()"  (pan)="onPan($event)" (pinch)="onPinch($event)"
+                 backgroundColor="gray"></Image>
+            <Button horizontalAlignment="center" verticalAlignment="bottom" marginBottom="5" (Tap)="onDelete($event)" visibility="{{ isDeleting ? 'visible' : 'collapse' }}" class="btn-active btn-rounded-lg  btn-outline btn-delete">
+                <FormattedString>
+                    <Span class="fa delete-icon-fontsize" text="&#xf1f8;"></Span>
+                </FormattedString>
+            </Button>
         </GridLayout>
-        <StackLayout height="10%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="10">
+        <ScrollView orientation="horizontal" height="7%" marginTop="5">
+            <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">
+                <ng-template ngFor let-i="index" let-image [ngForOf]="imageList">
+                    <GridLayout id="img-grid-{{i}}" class="bg-primary p-5 m-5 bordered img-rounded" width="90%" height="90%" horizontalAlignment="center"
+                        verticalAlignment="center" backgroundColor="gray">
+                        <Image src="{{ image.thumbnailPath }}" loadMode="async" stretch="aspectFill" (Tap)="selectImage(image.filePath,i, $event)"
+                            class="captured-img-height"></Image>
+                    </GridLayout>
+                </ng-template>
+            </WrapLayout>
+        </ScrollView>
+        <StackLayout height="10%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="5">
             <Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform('retake')}}" (tap)="close('')"></Button>
             <Button class="save-btn btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform('save')}}" (tap)="close(imageSource)"></Button>
-            <Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform(manualBtnText.toLowerCase())}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection() : showOriginalImage()"></Button>
+               <!--<Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform(manualBtnText.toLowerCase())}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection() : showOriginalImage()"></Button>-->
         </StackLayout>
     </StackLayout>
 </Page>
+  
+    <!--<Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 chevron-btn-left img-gallery-back1">
+                <FormattedString>
+                    <Span class="fa previous-image-icon-fontsize" text="&#xf053;"></Span> 
+                </FormattedString>
+            </Button>
+             <Button horizontalAlignment="right" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 chevron-btn-right img-gallery-back1">
+                <FormattedString>
+                    <Span class="fa next-image-icon-fontsize" text="&#xf054;"></Span> 
+                </FormattedString>
+            </Button>-->

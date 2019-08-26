@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oxs.Eye</string>
+    <string name="title_activity_kimera">Oxs.Eye</string>
+    <item name="gallery_btn" type="id"></item>
+    <item name="threshold_btn_plus" type="id"></item>
+    <string name="save">Save</string>
+    <string name="retake">Retake</string>
+    <string name="manual">Manual</string>
+    <string name="perform">Perform</string>
+    <string name="select_unselect_all">Select/Unselect All</string>
+    <string name="sort_by_date">Sort By Date</string>
+    <string name="dialog_message">Partial selection. Please tap on one of the following options or cancel button.</string>
+    <string name="dialog_cancel_btn_text">Cancel</string>
+    <string name="dialog_action_select_all">Select All</string>
+    <string name="dialog_action_unselect_all">Unselect All</string>
+    <string name="error_while_sharing_images">Error While Sharing Images</string>
+    <string name="error_while_giving_permission">Error While Giving Permission</string>
+    <string name="error_while_deleting_thumbnail_images">Error While Deleting Thumbnail Images</string>
+    <string name="error_while_deleting_images">Error While Deleting Images</string>
+    <string name="selected_images_deleted">Selected Images Deleted</string>
+    <string name="error_while_getting_path">Error While Getting Path</string>
+    <string name="error_while_loading_images">Error While Loading Images</string>
+    <string name="delete">Delete</string>
+    <string name="deleting_selected_item">Deleting selected item(s)?</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="could_not_delete_the_capture_image">Could not delete the captured image</string>
+    <string name="error_while_setting_image_in_preview_area">Error while setting image in preview area</string>
+    <string name="could_not_sync_the_captured_image_file">Could not sync the captured image file</string>
+    <string name="error_while_performing_perspective_transformation">Error while performing perspective transformation process. Please retake picture</string>
+    <string name="image_source_is_bad">Image source is bad</string>
+    <string name="error_getting_image_source_from_asset">Error while getting image source from asset</string>
+    <string name="image_asset_was_null">Image asset was null</string>
+    <string name="rectangle_points_info">Please move around the four red circle(s) on image if needed and click "Perform" button</string>
+    <string name="no_image_available">No image available</string>
+    <string name="error_while_sending_mail">Error while sending mail</string>
+    <string name="selected_image_deleted">Selected image deleted</string>
+    <string name="error_while_deleting_original_image">Error while deleting original image</string>
+    <string name="activity_loader_message">Loading...</string>
+    <string name="error_while_loading_gallery_images">Error while loading gallery images</string>
+    <string name="error_while_deleting_temporary_images">Error while deleting temporary images</string>
+    <string name="error_while_deleting_temporary_files">Error while deleting temporary files</string>
+    <string name="error_while_renaming_temporary_file">Error while renaming temporary file</string>
+    <string name="error_while_loading_temporary_images">Error while loading temporary images</string>
+    <string name="image_gallery_title">Image Gallery</string>
+    <string name="image_slide_title">Image Slide</string>
+    <string name="no_image_captured">No image captured. Please click the capture button once rectangle in green color found</string>
+</resources>

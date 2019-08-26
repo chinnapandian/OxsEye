@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 import { setTimeout } from 'tns-core-modules/timer';
-import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'tns-core-modules/ui/gestures';
+import { GestureEventData, PanGestureEventData, PinchGestureEventData, SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
 
-import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
+import { SendBroadcastImage, TransformedImage, TransformedImageProvider } from '../providers/transformedimage.provider';
+
+import { File, Folder } from 'tns-core-modules/file-system';
 
 import { OxsEyeLogger } from '../logger/oxseyelogger';
 
@@ -14,6 +16,7 @@ import * as Toast from 'nativescript-toast';
 import * as platform from 'tns-core-modules/platform';
 import * as formattedStringModule from 'tns-core-modules/text/formatted-string';
 import * as buttons from 'tns-core-modules/ui/button';
+import * as dialogs from 'tns-core-modules/ui/dialogs';
 
 import * as opencv from 'nativescript-opencv-plugin';
 
@@ -29,7 +32,7 @@ const LABLE_PERFORM = 'Perform';
     selector: 'modal-content',
     moduleId: module.id,
     styleUrls: ['./dialog.component.css'],
-    templateUrl: './dialog.component.android.html',
+    templateUrl: './dialog.component.html',
 })
 export class DialogContent {
     /** Transformed Image source. */
@@ -80,6 +83,10 @@ export class DialogContent {
     private rectanglePoints: any;
     /** To get accurate position, need to adjust the radius value */
     private circleRadius = 17;
+    /** Index value of the transformed image */
+    private imgNext = 0;
+    /** Boolean value to make the deleting menu visible or not. */
+    public isDeleting: boolean;
     /** Lable for Manua/Perform button */
     // private manualPerformBtnLable: any;
     // private _dragImageItem: Image;
@@ -94,9 +101,9 @@ export class DialogContent {
      * @param transformedImageProvider transformed image provider instance
      */
     constructor(private params: ModalDialogParams,
-                private transformedImageProvider: TransformedImageProvider,
-                private logger: OxsEyeLogger,
-                private locale: L) {
+        private transformedImageProvider: TransformedImageProvider,
+        private logger: OxsEyeLogger,
+        private locale: L) {
         this.manualBtnText = LABLE_MANUAL;
         // this.manualPerformBtnLable = this.locale.transform('manual');
         this.points = [];
@@ -185,6 +192,12 @@ export class DialogContent {
     //         this.logger.error(module.filename + ': ' + error);
     //     }
     // }
+
+    get imageList(): Array<TransformedImage> {
+        console.log("imageList:" + JSON.stringify(this.transformedImageProvider.contourImageList));
+        return this.transformedImageProvider.contourImageList;
+        // return this.contourList;
+    }
     /**
      * Show original image, is being used to show original captured image
      * when the 'Manual' button is been pressed, this is where user can select desired points
@@ -337,7 +350,88 @@ export class DialogContent {
         this.imgView.translateY = 0;
         this.imgView.scaleX = 1;
         this.imgView.scaleY = 1;
+        // this.imgView.rotate = 90;
         orientation.setOrientation('portrait');
+        this.imgNext = 0;
+        const fileName = this.imageSource.substring(this.imageSource.lastIndexOf('PT_IMG'), this.imageSource.lastIndexOf('transformed'))
+        this.transformedImageProvider.LoadPossibleContourImages(fileName);
+        setTimeout(() => {
+            const selectedImgGrid = page.getViewById('img-grid-0');
+            selectedImgGrid.backgroundColor = 'Black';
+        }, 500);
+        this.isDeleting = false;
+        //  setTimeout(() => {
+        //    page.actionBarHidden = true;
+        // }, 1000);
+    }
+
+    private enableDelete() {
+        if (this.imageList.length > 0) {
+            this.isDeleting = !this.isDeleting;
+        }
+    }
+    /**
+    * Deletes the selected image(s) when user clicks the 'delete' button in menu.
+    * This will show up a dialog window for confirmation for the selected image(s)
+    * to be deleted. If user says 'Ok', then those image(s) will be removed from the
+    * device, otherwise can be cancelled.
+    */
+    private onDelete(event: any) {
+        // if (this.selectedCount > 0) {
+        dialogs.confirm({
+            title: this.locale.transform('delete'),
+            message: this.locale.transform('deleting_selected_item'),
+            okButtonText: this.locale.transform('ok'),
+            cancelButtonText: this.locale.transform('cancel'),
+        }).then((result) => {
+            if (result) {
+                this.isDeleting = false;
+                this.imageList.forEach((image) => {
+                    if (image.filePath == this.imageSource) {
+                        const file: File = File.fromPath(image.filePath);
+                        file.remove()
+                            .then(() => {
+                                // const thumbnailFile: File = File.fromPath(image.thumbnailPath);
+                                // thumbnailFile.remove()
+                                //     .then(() => {
+                                SendBroadcastImage(image.filePath);
+
+                                // this.pageLoaded(event);
+                                // }).catch((error) => {
+                                //     Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_images') + error).show();
+                                //     this.logger.error('Error while deleting thumbnail images. ' + module.filename
+                                //         + this.logger.ERROR_MSG_SEPARATOR + error);
+                                // });
+                                const imgIdx = this.imageList.indexOf(image);
+                                this.imgNext = imgIdx;
+                                this.nextImage();
+                                // if (this.imgNext >= (this.transformedImageProvider.contourImageList.length - 1)) {
+                                //     this.imgNext--;
+                                // }
+                                // if (this.imgNext >= 0) {
+                                this.imageSource = this.transformedImageProvider.contourImageList[this.imgNext].filePath;
+                                this.setImageSelected(this.imgNext, this.transformedImageProvider.contourImageList.length, event);
+                                // }
+                                if (imgIdx >= 0) {
+                                    this.imageList.splice(imgIdx, 1);
+                                    Toast.makeText(this.locale.transform('selected_images_deleted')).show();
+                                }
+                                if (this.imageList.length == 0) {
+                                    this.imageSource = '';
+                                    this.isDeleting = false;
+                                }
+
+                            }).catch((error) => {
+                                Toast.makeText(this.locale.transform('error_while_deleting_images')).show();
+                                this.logger.error('Error while deleting images. ' + module.filename
+                                    + this.logger.ERROR_MSG_SEPARATOR + error);
+                            });
+                    }
+
+                });
+            }
+        });
+        // }
     }
     /**
      * Add circles method adds circle points btn in original image.
@@ -354,6 +448,73 @@ export class DialogContent {
         const imgElement = this.imgGridId.getChildAt(0);
         this.imgGridId.removeChildren();
         this.imgGridId.addChild(imgElement);
+    }
+
+    /**
+     * Moves the image left/right while swipe with a fingure. Actually when a finger is swiped
+     * it checks that the swipe is right direct or left direction, based on that it pulls the image from
+     * the image list and display it in view. After that, it sets the image in default position by calling
+     * onDoubleTap method.
+     *
+     * @param args SwipeGestureEventData
+     */
+    onSwipe(args: SwipeGestureEventData) {
+        // if (this.dragImageItem.scaleX === 1 && this.dragImageItem.scaleY === 1) {
+        if (args.direction === 2 || !args.direction) {
+            this.nextImage();
+        } else if (args.direction === 1) {
+            this.previousImage();
+        }
+        // // this.imgIndex = this.imgNext;
+        // if (this.imageFileList.length > 0) {
+        this.imageSource = this.transformedImageProvider.contourImageList[this.imgNext].filePath;
+        this.setImageSelected(this.imgNext, this.transformedImageProvider.contourImageList.length, args);
+        // } else {
+        //     this.imageSource = null;
+        //     Toast.makeText(this.locale.transform('no_image_available')).show();
+        // }
+
+        // this.onDoubleTap(args);
+        // }
+    }
+    /**
+     * Method to move to previous image
+     */
+    private previousImage() {
+        this.imgNext--;
+        if (this.imgNext < 0 || this.imgNext >= this.transformedImageProvider.contourImageList.length) {
+            this.imgNext = (this.transformedImageProvider.contourImageList.length - 1);
+        }
+    }
+    /**
+     * Method to move to next image.
+     */
+    private nextImage() {
+        this.imgNext++;
+        if (this.imgNext <= 0 || this.imgNext >= this.transformedImageProvider.contourImageList.length) {
+            this.imgNext = 0;
+        }
+
+    }
+    /**
+     * Select the image tapped by user and makes it with selected sign in black color.
+     * @param imgURIPath  the image URI path
+     * @param index  the index of the selected image
+     * @param event the event handler object
+     */
+    private selectImage(imgURIPath: any, index: any, event: any) {
+        this.imageSource = imgURIPath;
+        this.setImageSelected(index, event.view.parent.parent._childrenCount, event);
+    }
+
+    private setImageSelected(index: any, noOfImages: any, event: any) {
+        for (let i = 0; i < noOfImages; i++) {
+            const selectedImgGrid = event.view.page.getViewById('img-grid-' + i);
+            selectedImgGrid.backgroundColor = 'gray';
+            if (i == index) {
+                selectedImgGrid.backgroundColor = 'Black';
+            }
+        }
     }
     /**
      * Initialize circle points based on the receieved rectangle points and

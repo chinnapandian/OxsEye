@@ -29,7 +29,7 @@ const LABLE_PERFORM = 'Perform';
     selector: 'modal-content',
     moduleId: module.id,
     styleUrls: ['./dialog.component.css'],
-    templateUrl: './dialog.component.ios.html',
+    templateUrl: './dialog.component.html',
 })
 export class DialogContent {
     /** Transformed Image source. */

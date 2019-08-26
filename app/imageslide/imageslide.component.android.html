@@ -10,9 +10,9 @@
             <!--<Label text="&#xf177;" class="fa p-5 m-3"></Label>-->
             <ActionBar.titleView>
                 <!--<Label (tap)="goBack()" text="&#xf104;" class="fa"></Label>-->
-                <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-back">
+                <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-back">
 					<FormattedString>
-						<Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span> 
+						<Span class="fa action-item-back-icon-fontsize" text="&#xf104;"></Span> 
 					</FormattedString>
 				</Button>
                 <StackLayout>
@@ -22,7 +22,7 @@
 
             <ActionItem (tap)="onShare()" android.position="actionBar" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
                 <!--<Label text="&#xf1e1;" class="fa p-5 m-3"></Label>-->
-                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-share">
+                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-share">
 					<FormattedString>
 						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 
 					</FormattedString>
@@ -30,7 +30,7 @@
             </ActionItem>
             <ActionItem (tap)="onDelete($event)" android.position="actionBar" visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
                 <!--<Label text="&#xf1f8;" class="fa p-5 m-3 btn-active"></Label>-->
-                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-slide-delete">
+                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-delete">
 					<FormattedString>
 						<Span class="fa action-item-icon-fontsize" text="&#xf1f8;"></Span> 
 					</FormattedString>

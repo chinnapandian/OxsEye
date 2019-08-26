@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CameraPlus } from '@nstudio/nativescript-camera-plus';
+// import { CameraPlus } from 'nativescript-opencv-camera-plus';
 import { registerElement } from 'nativescript-angular/element-registry';
 // import { NativeScriptI18nModule, L } from "nativescript-i18n/angular";
 // registerElement('L', () => L as any);

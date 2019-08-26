@@ -3,10 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 
 import { File } from 'tns-core-modules/file-system';
 import { ImageSource } from 'tns-core-modules/image-source';
-import { SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
 import { Page } from 'tns-core-modules/ui/page';
 
-import { GestureEventData, PanGestureEventData, PinchGestureEventData } from 'tns-core-modules/ui/gestures';
+import { GestureEventData, PanGestureEventData, PinchGestureEventData, SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
 import { Image } from 'tns-core-modules/ui/image';
 
 import { RouterExtensions } from 'nativescript-angular/router';
@@ -29,7 +28,7 @@ import * as Permissions from 'nativescript-permissions';
     selector: 'ns-imageslide',
     moduleId: module.id,
     styleUrls: ['./imageslide.component.css'],
-    templateUrl: './imageslide.component.android.html',
+    templateUrl: './imageslide.component.html',
 })
 export class ImageSlideComponent implements OnInit {
     /**  Used to store image source and also used in GUI */

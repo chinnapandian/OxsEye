@@ -1,8 +1,8 @@
 <ActionBar title="Image Gallery" class="action-bar">
     <ActionBar.titleView>
-        <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-back">
+        <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-gallery-back">
             <FormattedString>
-                <Span class="fa action-item-icon-fontsize" text="&#xf104;"></Span> 
+                <Span class="fa action-item-back-icon-fontsize" text="&#xf104;"></Span> 
             </FormattedString>
         </Button>
         <StackLayout>
@@ -11,7 +11,7 @@
     </ActionBar.titleView>
 
     <ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
-        <Button horizontalAlignment="left" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn img-gallery-share">
+        <Button horizontalAlignment="left" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-gallery-share">
 					<FormattedString>
 						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 
 					</FormattedString>
@@ -19,7 +19,7 @@
     </ActionItem>
 
     <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
-        <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline activebar-btn p-l-15">
+        <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn p-l-15">
 					<FormattedString>
 						<Span class="fa action-item-icon-fontsize"  text="&#xf1f8;"></Span> 
 					</FormattedString>
@@ -54,6 +54,4 @@
             </ActivityIndicator>-->
         </WrapLayout>
     </ScrollView>
-
-    
 </Page>

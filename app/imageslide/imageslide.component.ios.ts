@@ -31,7 +31,7 @@ import * as fs from 'tns-core-modules/file-system';
     selector: 'ns-imageslide',
     moduleId: module.id,
     styleUrls: ['./imageslide.component.css'],
-    templateUrl: './imageslide.component.ios.html',
+    templateUrl: './imageslide.component.html',
 })
 export class ImageSlideComponent implements OnInit {
     /**  Used to store image source and also used in GUI */

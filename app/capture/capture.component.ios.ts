@@ -28,7 +28,7 @@ import * as application from 'tns-core-modules/application';
     selector: 'ns-capture',
     moduleId: module.id,
     styleUrls: ['./capture.component.css'],
-    templateUrl: './capture.component.ios.html',
+    templateUrl: './capture.component.html',
 })
 
 export class CaptureComponent implements OnInit {

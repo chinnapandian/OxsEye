@@ -30,7 +30,7 @@ import * as Toast from 'nativescript-toast';
     selector: 'ns-imagegallery',
     moduleId: module.id,
     styleUrls: ['./imagegallery.component.css'],
-    templateUrl: './imagegallery.component.android.html',
+    templateUrl: './imagegallery.component.html',
 })
 export class ImageGalleryComponent implements OnInit {
     /** Boolean value to make the sharing menu visible or not. */

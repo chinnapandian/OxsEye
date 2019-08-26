@@ -31,7 +31,7 @@ import * as fs from 'tns-core-modules/file-system';
     selector: 'ns-imagegallery',
     moduleId: module.id,
     styleUrls: ['./imagegallery.component.css'],
-    templateUrl: './imagegallery.component.ios.html',
+    templateUrl: './imagegallery.component.html',
 })
 export class ImageGalleryComponent implements OnInit {
     /** Boolean value to make the sharing menu visible or not. */

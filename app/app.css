@@ -40,11 +40,32 @@ refer to http://docs.nativescript.org/ui/theme.
 .action-item-icon-fontsize {
     font-size: 30 !important;
 }
+.action-item-back-icon-fontsize {
+    font-size: 40 !important;
+}
+.previous-image-icon-fontsize {
+    font-size: 60 !important;
+}
+.next-image-icon-fontsize {
+    font-size: 60 !important;
+}
 .activebar-btn {
     height: 40;
     width: 40;
      margin-left: 10;
       margin-right: 10;
+}
+.chevron-btn-left {
+    height: 60;
+    width: 60;
+     margin-left: 1;
+      margin-right: 10;
+}
+.chevron-btn-right {
+    height: 60;
+    width: 60;
+     margin-left: 10;
+      margin-right: 1;
 }
 .circle {
     width: 35;

@@ -7,13 +7,28 @@
 </Page.actionBar>
 <!--<Page class="page">-->
 
-	<GridLayout orientation="vertical">
-		<CameraPlus [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
+	<!--<GridLayout>-->
+		<!--<StackLayout orientation="horizontal"  marginTop="10">-->
+		<CameraPlus  [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
+		 showToggleIcon="false" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"
+		 (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"
+		 (imagesSelectedEvent)="imagesSelectedEvent($event)" (unloaded)="onUnloaded($event)" (sliderpoistion)="setSliderPoistion()">
+		</CameraPlus>
+
+		<!--<CameraPlus  [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
 		 showToggleIcon="true" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"
 		 (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"
 		 (imagesSelectedEvent)="imagesSelectedEvent($event)">
-		</CameraPlus>
-	</GridLayout>
+		</CameraPlus>-->
+		 <!--<Slider  value="20"  minValue="15" maxValue="100"></Slider>-->
+		<!--</StackLayout>-->
+	<!--</GridLayout>-->
+	<StackLayout orientation="vertical" width="45%">
+		<Label id="thresholdLabelId" class="h1 threshold-label" [text]="threshold" textWrap="true"></Label>
+	</StackLayout>
+	<!--<StackLayout orientation="vertical" horizontalAlignment="right" id="sliderId" width="35%" [marginTop]="screenHeight">
+	 <Slider value="50"  (valueChange)="onCannyThresholdValueChange($event)" minValue="0" maxValue="250"></Slider>
+	</StackLayout>-->
 
 <!--</Page>-->
 
