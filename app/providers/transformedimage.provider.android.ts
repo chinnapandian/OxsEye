@@ -23,13 +23,41 @@ export class TransformedImageProvider {
      */
     public contourImageList: any;
 
+    public imagesCount = 0;
+
+    private isImageCountOnly: any;
+
+
+    private cameraLightThresholdValue = 0;
+    private cameraLightTimeOutValue = 0;
+    private adaptiveThresholdValue = 0;
+    private isContourRequired = true;
+    // private isContourRequiredOld = true;
+
     /**
      * Constructor for TransformedImageProvider
      */
     constructor(private logger: OxsEyeLogger,
-                private locale: L) {
+        private locale: L) {
         this.imageList = [];
         this.contourImageList = [];
+        this.isImageCountOnly = false;
+    }
+    private populateImageList(cursor: any, mediaStore: any) {
+        while (cursor.moveToNext()) {
+            const columnIndex = cursor.getColumnIndex(mediaStore.MediaColumns.DATA);
+            const imageUri = cursor.getString(columnIndex) + '';
+            const name = imageUri.substring(imageUri.lastIndexOf('thumb_PT_IMG'));
+            // let image = { fileUri: imageUri, text: name };
+            //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
+            const thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
+            this.imageList.push(new TransformedImage(
+                name,
+                thumnailOrgPath,
+                imageUri,
+                false,
+            ));
+        }
     }
     /**
      * Loads all the thumbnail images of transformed image by content resolver in order what
@@ -38,38 +66,42 @@ export class TransformedImageProvider {
      * @param orderByAscDesc Orderby value 'Asc'/'Desc'
      * @param activityLoader ActivityLoader instance
      */
-    loadThumbnailImagesByContentResolver(orderByAscDesc: string, activityLoader: any) {
+    loadThumbnailImagesByContentResolver(orderByAscDesc: string, activityLoader: any, view: any) {
         Permissions.requestPermission(
             [android.Manifest.permission.READ_EXTERNAL_STORAGE,
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
             'Needed for sharing files').then(() => {
-                const MediaStore = android.provider.MediaStore;
+                const mediaStore = android.provider.MediaStore;
                 this.imageList = [];
                 let cursor = null;
                 try {
                     const context = application.android.context;
-                    const columns = [MediaStore.MediaColumns.DATA, MediaStore.MediaColumns.DATE_ADDED];
-                    const orderBy = MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc;
-                    const uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    const where = MediaStore.MediaColumns.DATA + ' like "%thumb_PT_IMG%"';
+                    const columns = [mediaStore.MediaColumns.DATA, mediaStore.MediaColumns.DATE_ADDED];
+                    const orderBy = mediaStore.MediaColumns.DATE_ADDED + orderByAscDesc;
+                    const uri = mediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+                    const where = mediaStore.MediaColumns.DATA + ' like "%thumb_PT_IMG%"';
                     cursor = context.getContentResolver().query(uri, columns, where, null, orderBy);
                     if (cursor && cursor.getCount() > 0) {
-                        while (cursor.moveToNext()) {
-                            const columnIndex = cursor.getColumnIndex(MediaStore.MediaColumns.DATA);
-                            const imageUri = cursor.getString(columnIndex) + '';
-                            const name = imageUri.substring(imageUri.lastIndexOf('thumb_PT_IMG'));
-                            // let image = { fileUri: imageUri, text: name };
-                            //  if (imageUri.indexOf('PT_IMG') > 0 && imageUri.endsWith('.png')) {
-                            const thumnailOrgPath = imageUri.replace('thumb_PT_IMG', 'PT_IMG');
-                            this.imageList.push(new TransformedImage(
-                                name,
-                                thumnailOrgPath,
-                                imageUri,
-                                false,
-                            ));
-
-                            //   }
+                        if (this.isImageCountOnly) {
+                            this.imagesCount = 0;
+                            this.imagesCount = cursor.getCount();
+                            if (view) {
+                                view.setText(this.imagesCount + '');
+                               view.setVisibility(android.view.View.VISIBLE);
+                            }
+                            console.log('Image count.. :' + this.imagesCount);
+                        } else {
+                            this.populateImageList(cursor, mediaStore);
                         }
+                        this.isImageCountOnly = false;
+                    } else {
+                        if (view) {
+                            view.setText('0');
+                            view.setVisibility(android.view.View.INVISIBLE);
+                        }
+                        this.imagesCount = 0;
+                        this.imageList = [];
+                        this.isImageCountOnly = false;
                     }
                     activityLoader.hide();
                 } catch (error) {
@@ -82,6 +114,21 @@ export class TransformedImageProvider {
                 Toast.makeText(this.locale.transform('error_while_giving_permission'), 'long').show();
                 this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
+    }
+    /**
+     * Gets count of transformed image by content resolver in order what
+     * it's parameter has and returns the image list count.
+     *
+     * @param orderByAscDesc Orderby value 'Asc'/'Desc'
+     * @param activityLoader ActivityLoader instance
+     *
+     * @returns captured images count
+     */
+    getThumbnailImagesCountByContentResolver(orderByAscDesc: string, activityLoader: any, view: any) {
+        this.isImageCountOnly = true;
+        this.loadThumbnailImagesByContentResolver(orderByAscDesc, activityLoader, view);
+        console.log('Image count..1 :' + this.imagesCount);
+        // return this.imageCount;
     }
     /**
      * Loads possible contour images
@@ -100,7 +147,7 @@ export class TransformedImageProvider {
                     const columns = [MediaStore.MediaColumns.DATA];
                     //      let orderBy = MediaStore.MediaColumns.DATE_ADDED + orderByAscDesc; //MediaStore.Images.Media._ID;
                     const uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-                    const where = MediaStore.MediaColumns.DATA + ' like "%'+ fileName + 'transformed%"';
+                    const where = MediaStore.MediaColumns.DATA + ' like "%' + fileName + 'transformed%"';
                     cursor = context.getContentResolver().query(uri, columns, where, null, null);
                     if (cursor && cursor.getCount() > 0) {
                         while (cursor.moveToNext()) {

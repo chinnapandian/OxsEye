@@ -67,6 +67,7 @@ export class ImageSlideComponent implements OnInit {
     private isGotDefaultLocation = false;
     /** Contains image default screen location */
     private defaultScreenLocation: any;
+    
 
     /**
      * ImageSlideComponent constructor.
@@ -119,19 +120,48 @@ export class ImageSlideComponent implements OnInit {
     onPinch(args: PinchGestureEventData) {
 
         if (args.state === 1) {
+            console.log('args.state == 1');
             this.startScale = this.dragImageItem.scaleX;
             this.isPinchSelected = true;
 
         } else if (args.scale && args.scale !== 1) {
+            console.log('args.state !== 1');
             this.newScale = this.startScale * args.scale;
-            this.newScale = Math.min(15, this.newScale);
-            this.newScale = Math.max(0.1, this.newScale);
+            this.newScale = Math.min(8, this.newScale);
+            this.newScale = Math.max(0.125, this.newScale);
             this.dragImageItem.scaleX = this.newScale;
             this.dragImageItem.scaleY = this.newScale;
 
             this.dragImageItem.width = this.dragImageItem.getMeasuredWidth() * this.newScale;
             this.dragImageItem.height = this.dragImageItem.getMeasuredHeight() * this.newScale;
         }
+
+    //     let item = this.dragImageItem;
+    //     if (args.state === 1) {
+    //         this.isPinchSelected = true;
+    //     const newOriginX = args.getFocusX() - item.translateX;
+    //     const newOriginY = args.getFocusY() - item.translateY;
+
+    //     const oldOriginX = item.originX * item.getMeasuredWidth();
+    //     const oldOriginY = item.originY * item.getMeasuredHeight();
+
+    //     item.translateX += (oldOriginX - newOriginX) * (1 - item.scaleX);
+    //     item.translateY += (oldOriginY - newOriginY) * (1 - item.scaleY);
+
+    //     item.originX = newOriginX / item.getMeasuredWidth();
+    //     item.originY = newOriginY / item.getMeasuredHeight();
+
+    //     this.startScale = item.scaleX;
+    // }
+
+    // else if (args.scale && args.scale !== 1) {
+    //     let newScale = this.startScale * args.scale;
+    //     newScale = Math.min(8, newScale);
+    //     newScale = Math.max(0.125, newScale);
+
+    //     item.scaleX = newScale;
+    //     item.scaleY = newScale;
+    // }
     }
     /**
      * On pan/move method, which moves image when user press & drag with a finger around
@@ -142,6 +172,18 @@ export class ImageSlideComponent implements OnInit {
      * @param args PanGestureEventData
      */
     onPan(args: PanGestureEventData) {
+    //     let item = this.dragImageItem;
+    //     if (args.state === 1) {
+    //     this.prevDeltaX = 0;
+    //     this.prevDeltaY = 0;
+    // }
+    // else if (args.state === 2) {
+    //     item.translateX += args.deltaX - this.prevDeltaX;
+    //     item.translateY += args.deltaY - this.prevDeltaY;
+
+    //     this.prevDeltaX = args.deltaX;
+    //     this.prevDeltaY = args.deltaY;
+    // }
         const screenLocation = this.dragImageItem.getLocationOnScreen();
         let centerPointX = (this.dragImageItem.getMeasuredWidth() / 4) * (this.newScale);
         let centerPointY = (this.dragImageItem.getMeasuredHeight() / 4) * (this.newScale);
@@ -223,8 +265,8 @@ export class ImageSlideComponent implements OnInit {
         this.dragImageItem.animate({
             translate: { x: 0, y: 0 },
             scale: { x: 1, y: 1 },
-            curve: 'easeIn',
-            duration: 10,
+            curve: 'easeOut',
+            duration: 300,
         });
         this.newScale = 1;
         this.oldTranslateY = 0;
@@ -242,6 +284,10 @@ export class ImageSlideComponent implements OnInit {
         }
         this.oldTranslateY = 0;
         this.oldTranslateX = 0;
+        // this.dragImageItem.translateX = 0;
+        // this.dragImageItem.translateY = 0;
+        // this.dragImageItem.scaleX = 1;
+        // this.dragImageItem.scaleY = 1;
     }
     /**
      * Moves the image left/right while swipe with a fingure. Actually when a finger is swiped
@@ -388,14 +434,14 @@ export class ImageSlideComponent implements OnInit {
                                     // this.onSwipe(args);
                                 }).catch((error) => {
                                     Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_image')
-                                    + error.stack, 'long').show();
+                                        + error.stack, 'long').show();
                                     this.logger.error('Error while deleting thumbnail image. ' + module.filename
-                                    + this.logger.ERROR_MSG_SEPARATOR + error);
+                                        + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }).catch((error) => {
                             Toast.makeText(this.locale.transform('error_while_deleting_original_image') + error.stack, 'long').show();
                             this.logger.error('Error while deleting original image. ' + module.filename
-                            + this.logger.ERROR_MSG_SEPARATOR + error);
+                                + this.logger.ERROR_MSG_SEPARATOR + error);
                         });
                 } else {
                     this.imageSource = null;

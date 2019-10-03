@@ -9,15 +9,19 @@ import { NativeScriptI18nModule } from 'nativescript-i18n/angular';
 import { AppRoutingModule } from './app.routing';
 
 import { AppComponent } from './app.component';
-
+// @ts-ignore
 import { CaptureComponent } from './capture/capture.component';
+// @ts-ignore
 import { DialogContent } from './dialog/dialog.component';
+// @ts-ignore
 import { ImageGalleryComponent } from './imagegallery/imagegallery.component';
+// @ts-ignore
 import { ImageSlideComponent } from './imageslide/imageslide.component';
 
 import { ActivityLoader } from './activityloader/activityloader.common';
+// @ts-ignore
 import { TransformedImageProvider } from './providers/transformedimage.provider';
-
+// @ts-ignore
 import { OxsEyeLogger } from './logger/oxseyelogger';
 
 import { L } from 'nativescript-i18n/angular';

@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes } from '@angular/router';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
+// @ts-ignore
 import { CaptureComponent } from './capture/capture.component';
+// @ts-ignore
 import { ImageGalleryComponent } from './imagegallery/imagegallery.component';
+// @ts-ignore
 import { ImageSlideComponent } from './imageslide/imageslide.component';
 
 const routes: Routes = [

@@ -311,7 +311,11 @@ export class ImageGalleryComponent implements OnInit {
                                             if (imgIdx >= 0) {
                                                 this.imageList.splice(imgIdx, 1);
                                             }
+                                            if(this.imageList.length > 0){
                                             this.onPageLoaded(this.page);
+                                            } else {
+                                                this.routerExtensions.back();
+                                            }
                                         }).catch((error) => {
                                             Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_images') + error).show();
                                             this.logger.error('Error while deleting thumbnail images. ' + module.filename
@@ -397,7 +401,7 @@ export class ImageGalleryComponent implements OnInit {
      * @param orderByAscDescParam OrderBy value 'Asc'/'Desc'
      */
     private loadThumbnailImagesByContentResolver(orderByAscDescParam: string) {
-        this.transformedImageProvider.loadThumbnailImagesByContentResolver(orderByAscDescParam, this.activityLoader);
+        this.transformedImageProvider.loadThumbnailImagesByContentResolver(orderByAscDescParam, this.activityLoader, null);
     }
     /**
      * Loads all the transformed thumbnail images from the file system and stores in the image list for

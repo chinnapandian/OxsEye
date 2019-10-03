@@ -7,33 +7,70 @@
 </Page.actionBar>
 <!--<Page class="page">-->
 
-	<!--<GridLayout>-->
-		<!--<StackLayout orientation="horizontal"  marginTop="10">-->
-		<CameraPlus  [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
-		 showToggleIcon="false" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"
-		 (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"
-		 (imagesSelectedEvent)="imagesSelectedEvent($event)" (unloaded)="onUnloaded($event)" (sliderpoistion)="setSliderPoistion()">
-		</CameraPlus>
+<!--<GridLayout>-->
+<!--<StackLayout orientation="horizontal"  marginTop="10">-->
+<CameraPlus [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="false"
+ showToggleIcon="false" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"
+ (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"
+ (imagesSelectedEvent)="imagesSelectedEvent($event)" (unloaded)="onUnloaded($event)" (sliderpoistion)="setSliderPoistion()">
+</CameraPlus>
 
-		<!--<CameraPlus  [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
+<!--<CameraPlus  [visibility]="isCameraVisible ? 'visible' : 'collapsed'" debug="true" galleryPickerMode="single" showFlashIcon="true"
 		 showToggleIcon="true" showCaptureIcon="false" showGalleryIcon="false" autoFocus="true" confirmSaveText="CONFIRM!" confirmRetakeText="RETAKE!"
 		 (loaded)="camLoaded($event)" (toggleCameraEvent)="toggleCameraEvent($event)" (photoCapturedEvent)="photoCapturedEvent($event)"
 		 (imagesSelectedEvent)="imagesSelectedEvent($event)">
 		</CameraPlus>-->
-		 <!--<Slider  value="20"  minValue="15" maxValue="100"></Slider>-->
-		<!--</StackLayout>-->
-	<!--</GridLayout>-->
-	<StackLayout orientation="vertical" width="45%">
-		<Label id="thresholdLabelId" class="h1 threshold-label" [text]="threshold" textWrap="true"></Label>
-	</StackLayout>
-	<!--<StackLayout orientation="vertical" horizontalAlignment="right" id="sliderId" width="35%" [marginTop]="screenHeight">
+<!--<Slider  value="20"  minValue="15" maxValue="100"></Slider>-->
+<!--</StackLayout>-->
+<!--</GridLayout>-->
+<StackLayout orientation="vertical" width="45%">
+	<Label id="thresholdLabelId" class="h1 threshold-label" [text]="threshold" textWrap="true"></Label>
+</StackLayout>
+<!--<StackLayout orientation="vertical" horizontalAlignment="right" id="sliderId" width="35%" [marginTop]="screenHeight">
 	 <Slider value="50"  (valueChange)="onCannyThresholdValueChange($event)" minValue="0" maxValue="250"></Slider>
 	</StackLayout>-->
 
 <!--</Page>-->
 
-<!--<RadSideDrawer tkExampleTitle tkToggleNavButton>
-	<StackLayout tkDrawerContent class="sideStackLayout">
+<RadSideDrawer tkExampleTitle tkToggleNavButton>
+	<GridLayout tkDrawerContent rows="56, *" class="sideStackLayout">
+		<StackLayout class="sideTitleStackLayout">
+			<Label text="Settings Menu" class="h2"></Label>
+		</StackLayout>
+		<ScrollView row="1">
+			<StackLayout class="sideStackLayout">
+				<Label text="Camera Light" class="h3 sideLightGrayLabel"></Label>
+
+				<StackLayout orientation="horizontal" class="input-field">
+					<Label width="60%"  text="Threshold value" class="m-r-30 sideLabel font-weight-bold"></Label>
+					<TextField width="40%" #thresholdVal [text]='this.transformedImageProvider.cameraLightThresholdValue' keyboardType="number" returnKeyType="done" (returnPress)="submitCameraLightThresholdValue(thresholdVal.text)"
+					 autocorrect="false" class="input"></TextField>
+				</StackLayout>
+				<StackLayout orientation="horizontal" class="input-field">
+					<Label width="60%" text="Time out(in seconds)" class="m-r-30 sideLabel font-weight-bold"></Label>
+					<TextField width="40%" #timeOutVal [text]='this.transformedImageProvider.cameraLightTimeOutValue' keyboardType="number" returnKeyType="done" (returnPress)="submitCameraLightTimeOutValue(timeOutVal.text)"
+					 autocorrect="false" class="input"></TextField>
+				</StackLayout>
+				<Label text="Perspective Transformation" class="h3 sideLightGrayLabel"></Label>
+				<StackLayout orientation="horizontal" class="input-field">
+					<Label width="75%" text="Adaptive threshold value" class="m-r-10 sideLabel font-weight-bold"></Label>
+					<TextField width="25%" #adaptiveThresholdVal [text]='this.transformedImageProvider.adaptiveThresholdValue' keyboardType="number" returnKeyType="done" (returnPress)="submitAdaptiveThresholdValue(adaptiveThresholdVal.text)"
+					 autocorrect="false" class="input"></TextField>
+				</StackLayout>
+				<StackLayout orientation="horizontal" class="input-field">
+					<Label width="65%" class="sideLabel font-weight-bold" text="Rectangle detection"></Label>
+
+					<Switch width="32%" class="" [checked]="this.transformedImageProvider.isContourRequired" (checkedChange)="rectangleAvailable($event)"></Switch>
+				</StackLayout>
+				<Label text="Close"  class="text-center p-10 text-primary"  (tap)="toggleDrawer()"></Label>
+			</StackLayout>
+		</ScrollView>
+	</GridLayout>
+	<!--<StackLayout tkMainContent>
+		<Button text="&#xf0c9;" (tap)="toggleDrawer()" class="fa drawerMenuIcon btn1 btn-active btn-rounded-lg btn-outline1"></Button>
+	</StackLayout>-->
+
+	<!--<StackLayout tkDrawerContent class="sideStackLayout">
 		<StackLayout class="sideTitleStackLayout">
 			<Label text="Settings Menu"></Label>
 		</StackLayout>
@@ -47,5 +84,67 @@
 				</StackLayout>
 			</StackLayout>
 		</ScrollView>
-	</StackLayout>
+	</StackLayout>-->
+</RadSideDrawer>
+
+<!--<RadSideDrawer [drawerTransition]="sideDrawerTransition">
+  <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
+    <StackLayout row="0" class="sidedrawer-header">
+      <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
+      <Label class="sidedrawer-header-brand" text="User Name"></Label>
+      <Label class="footnote" text="username@mail.com"></Label>
+    </StackLayout>
+
+    <ScrollView row="1">
+      <StackLayout class="sidedrawer-content">
+        <Button text="home" [nsRouterLink]="['/home']" (tap)="hideDrawer()" class="btn btn-primary"></Button>
+        <Button text="browse" [nsRouterLink]="['/browse']" (tap)="hideDrawer()" class="btn btn-primary"></Button>
+        <Button text="search" (tap)="goSearch()" class="btn btn-primary"></Button>
+      </StackLayout>
+    </ScrollView>
+  </GridLayout>
+</RadSideDrawer>-->
+
+<!--
+RadSideDrawer is a UI component part of the Progress NativeScript UI set of components.
+Learn more about the RadSideDrawer UI component and how it can be customized in this documentation article:
+http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawer/getting-started
+-->
+<!--<RadSideDrawer [drawerTransition]="sideDrawerTransition">
+	<GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
+		<StackLayout row="0" class="sidedrawer-header">
+			<Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
+			<Label class="sidedrawer-header-brand" text="User Name"></Label>
+			<Label class="footnote" text="username@mail.com"></Label>
+		</StackLayout>
+
+		<ScrollView row="1">
+			<StackLayout class="sidedrawer-content">
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isPageSelected('/home')" (tap)="onNavItemTap('/home')">
+					<Label col="1" text="Privacy & Security" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isPageSelected('/browse')" (tap)="onNavItemTap('/browse')">
+					<Label col="1" text="Terms & Conditions" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isPageSelected('/search')" (tap)="onNavItemTap('/search')">
+					<Label col="1" text="User Settings" class="p-r-10"></Label>
+				</GridLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isPageSelected('/featured')" (tap)="onNavItemTap('/featured')">
+					<Label col="1" text="Call Support" class="p-r-10"></Label>
+				</GridLayout>
+
+				<StackLayout class="hr-light"></StackLayout>
+
+				<GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isPageSelected('/settings')" (tap)="onNavItemTap('/settings')">
+					<Label col="1" text="Sign out" class="p-r-10"></Label>
+				</GridLayout>
+			</StackLayout>
+
+		</ScrollView>
+
+	</GridLayout>
+	
 </RadSideDrawer>-->

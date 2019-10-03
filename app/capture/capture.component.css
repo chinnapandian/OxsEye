@@ -47,6 +47,19 @@ button {
     /*horizontal-align: left;*/
 }
 
+/*.drawerMenuIcon {
+    margin: 10;
+    background-color: transparent;
+    width: 50;
+    height: 50;
+    horizontal-align: left;
+    color: white;
+    font-size:24px;
+    font-weight: bold;
+    border-width: 1;
+    border-color: lightslategray;
+}*/
+
 .sideStackLayout {
     background-color: gray;
 }
@@ -59,8 +72,12 @@ button {
 
 .sideLabel {
     padding: 10;
+    color: white;
+    /*font-weight: bold;*/
 }
 
 .sideLightGrayLabel {
+    padding: 5;
     background-color: lightgray;
+    color: black;
 }
