@@ -1,4 +1,12 @@
-import { Component, NgZone, OnInit, ViewContainerRef, ChangeDetectorRef, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    ChangeDetectorRef,
+    Component,
+    NgZone,
+    OnInit,
+    ViewChild,
+    ViewContainerRef
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { CameraPlus } from '@nstudio/nativescript-camera-plus';
 import { ModalDialogOptions, ModalDialogService } from 'nativescript-angular/modal-dialog';
@@ -11,12 +19,15 @@ import { DialogContent } from '../dialog/dialog.component';
 // @ts-ignore
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
-import { L } from 'nativescript-i18n/angular';
+// import { L } from 'nativescript-i18n/angular';
+
 // @ts-ignore
 import { OxsEyeLogger } from '../logger/oxseyelogger';
 
-import * as opencv from 'nativescript-opencv-plugin';
 import * as Toast from 'nativescript-toast';
+// @ts-ignore
+import * as opencv from 'nativescript-opencv-plugin';
+
 import * as fs from 'tns-core-modules/file-system';
 
 import * as application from 'tns-core-modules/application';
@@ -29,17 +40,23 @@ import { Label } from "tns-core-modules/ui/label";
 import { DrawerTransitionBase, RadSideDrawer, SlideInOnTopTransition } from "nativescript-ui-sidedrawer";
 import { RadSideDrawerComponent } from "nativescript-ui-sidedrawer/angular";
 import { Switch } from "tns-core-modules/ui/switch";
+import { localize } from "nativescript-localize";
 
- /**
- * Capture component class, which is being used to capture image from camera.
- */
+declare var android: any;
+declare var java: any;
+declare var org: any;
+
+// declare var global:any;
+/**
+* Capture component class, which is being used to capture image from camera.
+*/
 @Component({
     selector: 'ns-capture',
     moduleId: module.id,
     styleUrls: ['./capture.component.css'],
     templateUrl: './capture.component.html',
 })
-export class CaptureComponent implements OnInit {
+export class CaptureComponent implements OnInit, AfterViewInit {
     /** Camera instance variable. */
     private cam: any;
     /** Gallery button. */
@@ -103,7 +120,6 @@ export class CaptureComponent implements OnInit {
 
     private isFirstTime = false;
     private oneMilliSecond = 1000;
-    
 
     /**
      * Constructor for CaptureComponent.
@@ -124,16 +140,17 @@ export class CaptureComponent implements OnInit {
         private activityLoader: ActivityLoader,
         private changeDetectionRef: ChangeDetectorRef,
         private logger: OxsEyeLogger,
-        private locale: L,
+        // private locale: L,
         private transformedImageProvider: TransformedImageProvider,
     ) {
         this.isFirstTime = true;
     }
 
-    @ViewChild(RadSideDrawerComponent) public drawerComponent: RadSideDrawerComponent;
+    @ViewChild(RadSideDrawerComponent, { static: true }) public drawerComponent: RadSideDrawerComponent;
 
     ngAfterViewInit() {
-        console.log(' ngAfterViewInit..: ');
+        console.log(' ngAfterViewInit...');
+        console.log(localize('app_name'));
         this.drawer = this.drawerComponent.sideDrawer;
         // this.drawer = <RadSideDrawer>application.getRootView();
         this.changeDetectionRef.detectChanges();
@@ -184,7 +201,7 @@ export class CaptureComponent implements OnInit {
     submitAdaptiveThresholdValue(textVal) {
         console.log("submitAdaptiveThresholdValue :" + textVal);
         // this.cam.ocvCameraView.adaptiveThreshold = textVal;
-        this.transformedImageProvider.adaptiveThreshold = textVal;
+        this.transformedImageProvider.adaptiveThresholdValue = textVal;
     }
     // openDrawer() {
     //     this.drawer.showDrawer();
@@ -197,7 +214,7 @@ export class CaptureComponent implements OnInit {
      * takePicture, gallery and autoFocus buttons in camera view.
      */
     ngOnInit(): void {
-        console.log('Initializing OpenCV...');
+        console.log('Initializing OpenCV....');
         this.opencvInstance = opencv.initOpenCV();
         this.isCameraVisible = true;
         // this.isLabelVisible = false;
@@ -240,26 +257,40 @@ export class CaptureComponent implements OnInit {
         //     minusPercentageWidth = 0.85;
         //     minusPercentageHeight = 0.70;
         // }
+        // this.initThresholdButtonPlus();
+        // this.initThresholdButtonMinus();
+        // // this.screenHeight = (screen.mainScreen.heightDIPs * percentage);
+        // // this.labelHeight = plusPercentageHeight;// * 0.65;
+        this.initButtons();
+    }
+    initButtons() {
         this.initThresholdButtonPlus();
         this.initThresholdButtonMinus();
         // this.screenHeight = (screen.mainScreen.heightDIPs * percentage);
         // this.labelHeight = plusPercentageHeight;// * 0.65;
+        this.initImageGalleryButton();
+        this.initCameraButton();
+        // this.initThresholdButtonPlus();
+        // this.initThresholdButtonMinus();
+        this.initAutoFocusImageButton();
+        this.initBadgeView();
+        this.initMenuButton();
     }
     onUnloaded(args: any) {
-        let cameraPlus: any = args.object as CameraPlus;
-        if (cameraPlus) {
-            if (cameraPlus.ocvCameraView) {
-                cameraPlus.ocvCameraView.disableView();
-            }
-            cameraPlus._nativeView.removeView(cameraPlus.ocvCameraView);
-            // this.isContourRequiredOld = this.isContourRequired;
-        }
-        console.log('onUnloaded called');
+        // let cameraPlus: any = args.object as CameraPlus;
+        // if (cameraPlus) {
+        //     if (cameraPlus.ocvCameraView) {
+        //         cameraPlus.ocvCameraView.disableView();
+        //     }
+        //     cameraPlus._nativeView.removeView(cameraPlus.ocvCameraView);
+        //     // this.isContourRequiredOld = this.isContourRequired;
+        // }
+        console.log('onUnloaded called...');
     }
     onCannyThresholdValueChange(threshold: any, sound: any) {
         let audioManager = application.android.context.getSystemService(android.content.Context.AUDIO_SERVICE);
         audioManager.playSoundEffect(sound, 0.5);
-        console.log('onCannyThresholdValueChange called', threshold);
+        console.log('onCannyThresholdValueChange called..', threshold);
         this.cam.ocvCameraView.cannyThreshold = threshold;
         const label = <Label>this.cam.page.getViewById("thresholdLabelId");
         label.text = threshold;
@@ -279,10 +310,10 @@ export class CaptureComponent implements OnInit {
      * @param args CameraPlus instance referrence.
      */
     camLoaded(args: any): void {
-        // this.saveBtnLable = this.locale.transform('save');
-        // this.manualBtnLable = this.locale.transform('manual');
-        // this.retakeBtnLable = this.locale.transform('retake');
-        // this.performBtnLable = this.locale.transform('perform');
+        // this.saveBtnLable = localize('save');
+        // this.manualBtnLable = localize('manual');
+        // this.retakeBtnLable = localize('retake');
+        // this.performBtnLable = localize('perform');
 
         this.cam = args.object as CameraPlus;
         const flashMode = this.cam.getFlashMode();
@@ -319,7 +350,7 @@ export class CaptureComponent implements OnInit {
                 },
             });
         if (this.cam.camera) {
-            console.log('camLoaded called..');
+            console.log('camLoaded called...');
             this.cam.camera.setAutoFocusMoveCallback(cb);
             if (this.isFirstTime) {
                 this.transformedImageProvider.cameraLightThresholdValue = this.cam.ocvCameraView.mFlashThreshold;
@@ -339,13 +370,14 @@ export class CaptureComponent implements OnInit {
             this.cam.showFlashIcon = false;
             this.cam.showToggleIcon = false;
             try {
-                this.initImageGalleryButton();
-                this.initCameraButton();
-                // this.initThresholdButtonPlus();
-                // this.initThresholdButtonMinus();
-                this.initAutoFocusImageButton();
-                this.initBadgeView();
-                this.initMenuButton();
+                // this.initImageGalleryButton();
+                // this.initCameraButton();
+                // // this.initThresholdButtonPlus();
+                // // this.initThresholdButtonMinus();
+                // this.initAutoFocusImageButton();
+                // this.initBadgeView();
+                // this.initMenuButton();
+                this.initButtons();
                 this.transformedImageProvider.getThumbnailImagesCountByContentResolver(' DESC', this.activityLoader, this.badgeView);
                 // if (this.transformedImageProvider.imageList.length == 0) {
                 //     this.cam._nativeView.removeView(this.badgeView);
@@ -458,12 +490,14 @@ export class CaptureComponent implements OnInit {
     * the image icon for it.
     */
     initThresholdButtonPlus() {
-        console.log('initThresholdButtonPlus called...');
+        console.log('initThresholdButtonPlus called..');
         this.cam._nativeView.removeView(this.thresholdBtnPlus);
         // const btnY = screen.mainScreen.heightPixels * percentageHeight;
         // const btnX = screen.mainScreen.widthPixels * percentageWidth;//widthDIPs;// * 0.75;
         // this.thresholdBtnPlusParams.setMargins(btnX, btnY, 18, 18);
         this.cam._nativeView.addView(this.thresholdBtnPlus, this.thresholdBtnPlusParams);
+        this.setImageResource(this.thresholdBtnPlus, 'ic_add_circle_white');
+        this.cam._nativeView.bringChildToFront(this.thresholdBtnPlus);
     }
     /**
      * This method initializes minus threshold button in camera view, actually
@@ -477,8 +511,8 @@ export class CaptureComponent implements OnInit {
         // const btnX = screen.mainScreen.widthPixels * percentageWidth;//widthDIPs;// * 0.75;
         // this.thresholdBtnMinusParams.setMargins(btnX, btnY, 18, 18);
         this.cam._nativeView.addView(this.thresholdBtnMinus, this.thresholdBtnMinusParams);
-        // this.setImageResource(this.thresholdBtnMinus, 'ic_minus_circle_white');
-        // this.cam._nativeView.bringChildToFront(this.thresholdBtnMinus);
+        this.setImageResource(this.thresholdBtnMinus, 'ic_minus_circle_white');
+        this.cam._nativeView.bringChildToFront(this.thresholdBtnMinus);
     }
     /**
      * This method initializes menu button in camera view, actually
@@ -505,19 +539,23 @@ export class CaptureComponent implements OnInit {
      */
     createTakePictureButton() {
         const _this = this;
-        this.takePicBtn = this.createTakePicButton();
-        this.setImageResource(this.takePicBtn, 'ic_camera_alt_white');
-        const shape = this.createTransparentCircleDrawable();
-        this.takePicBtn.setBackgroundDrawable(shape);
-        const color = android.graphics.Color.parseColor('#ffffff'); // white color
-        this.takePicBtn.setColorFilter(color);
-        this.takePicBtn.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
-        this.takePicBtn.setOnClickListener(new android.view.View.OnClickListener({
-            onClick(args: any) {
-                _this.takePicFromCam(_this);
-            },
-        }));
-        this.createTakePictureParams();
+        if (this.takePicBtn) {
+            this.initCameraButton();
+        } else {
+            this.takePicBtn = this.createTakePicButton();
+            this.setImageResource(this.takePicBtn, 'ic_camera_alt_white');
+            const shape = this.createTransparentCircleDrawable();
+            this.takePicBtn.setBackgroundDrawable(shape);
+            const color = android.graphics.Color.parseColor('#ffffff'); // white color
+            this.takePicBtn.setColorFilter(color);
+            this.takePicBtn.setScaleType(android.widget.ImageView.ScaleType.CENTER_CROP);
+            this.takePicBtn.setOnClickListener(new android.view.View.OnClickListener({
+                onClick(args: any) {
+                    _this.takePicFromCam(_this);
+                },
+            }));
+            this.createTakePictureParams();
+        }
     }
     /**
      * Creates auto focus image button. Actually it creates image button and setting
@@ -557,7 +595,7 @@ export class CaptureComponent implements OnInit {
     createMenuButton() {
         const _this = this;
         this.menuBtn = this.createImageButton();
-        this.menuBtn.setId('gb12');
+        this.menuBtn.setId('mb12');
         this.setImageResource(this.menuBtn, 'ic_menu_white');
 
         // let openGalleryDrawable = this.getImageDrawable('ic_photo_library_white');
@@ -601,10 +639,10 @@ export class CaptureComponent implements OnInit {
         // let openGalleryDrawable = this.getImageDrawable('ic_photo_library_white');
         // this.galleryBtn.setImageResource(openGalleryDrawable);
 
-        const galleryBtnId = application.android.context.getResources()
-            .getIdentifier('gallery_btn', 'id', application.android.context.getPackageName());
+        // const galleryBtnId = application.android.context.getResources()
+        //     .getIdentifier('gallery_btn', 'id', application.android.context.getPackageName());
 
-        this.galleryBtn.setTag(galleryBtnId, 'gallery-btn-tag');
+        // this.galleryBtn.setTag(galleryBtnId, 'gallery-btn-tag');
         this.galleryBtn.setContentDescription('gallery-btn-dec');
         const shape = this.createTransparentCircleDrawable();
         this.galleryBtn.setBackgroundDrawable(shape);
@@ -624,10 +662,10 @@ export class CaptureComponent implements OnInit {
         // let openGalleryDrawable = this.getImageDrawable('ic_photo_library_white');
         // this.galleryBtn.setImageResource(openGalleryDrawable);
 
-        const galleryBtnPlusId = application.android.context.getResources()
-            .getIdentifier('threshold_btn_plus', 'id', application.android.context.getPackageName());
+        // const galleryBtnPlusId = application.android.context.getResources()
+        //     .getIdentifier('threshold_btn_plus', 'id', application.android.context.getPackageName());
 
-        this.thresholdBtnPlus.setTag(galleryBtnPlusId, 'threshold-btn-plus-tag');
+        // this.thresholdBtnPlus.setTag(galleryBtnPlusId, 'threshold-btn-plus-tag');
         this.thresholdBtnPlus.setContentDescription('threshold-btn-plus-dec');
         const shape = this.createCircleDrawableForThresholdBtn();
         this.thresholdBtnPlus.setBackgroundDrawable(shape);
@@ -908,7 +946,7 @@ export class CaptureComponent implements OnInit {
     //  * @param args Camera toggle event data
     //  */
     toggleCameraEvent(args: any): void {
-        console.log('camera toggled');
+        console.log('camera toggled...');
     }
 
     /**
@@ -947,8 +985,8 @@ export class CaptureComponent implements OnInit {
         if (!this.transformedImageProvider.isContourRequired) {
             thisParam.cam.ocvCameraView.sortedRecPointsList.clear();
         }
-        thisParam.activityLoader.show();
         thisParam.cam.takePicture({ saveToGallery: true });
+        thisParam.activityLoader.show();
         this.imgURI = '';
         this.imageSource = this.imgURI;
     }
@@ -982,8 +1020,8 @@ export class CaptureComponent implements OnInit {
                 // retakeBtnLable: this.retakeBtnLable,
                 // performBtnLable: this.performBtnLable,
             },
-            fullscreen: fullScreen,
-            viewContainerRef: this.viewContainerRef,
+            // fullscreen: fullScreen,
+            viewContainerRef: this.viewContainerRef
         };
         this.activityLoader.hide();
         this.modalService.showModal(DialogContent, options)
@@ -996,20 +1034,26 @@ export class CaptureComponent implements OnInit {
                     // 	}
                     // }
                     // if (!this.imgURIList.isEmpty()) {
+                    let capturedCount = 0;
                     if (dialogResult.length > 0) {
                         this.setTransformedImage(this.imgURI);
                         // for (let i = 0; i < this.imgURIList.size(); i++) {
                         dialogResult.forEach(transformedImg => {
                             // const imgURITemp = transformedImg.filePath;
-                            this.createThumbNailImage(transformedImg.filePath);
-                            this.refreshCapturedImagesinMediaStore(filePathOrg, transformedImg.filePath, 'Add');
+                            if (transformedImg.isSelected) {
+                                this.removeSelectedCapturedImageFromStorage(transformedImg.filePath);
+                            } else {
+                                this.createThumbNailImage(transformedImg.filePath);
+                                this.refreshCapturedImagesinMediaStore(filePathOrg, transformedImg.filePath, 'Add');
+                                capturedCount++;
+                            }
                         });
                         // const imgURITemp = this.imgURIList.get(i);
                         // this.createThumbNailImage(imgURITemp);
                         // this.refreshCapturedImagesinMediaStore(filePathOrg, imgURITemp, 'Add');
                         // }
                         this.badgeView.setVisibility(android.view.View.VISIBLE);
-                        this.transformedImageProvider.imagesCount += dialogResult.length;
+                        this.transformedImageProvider.imagesCount += capturedCount;
                         const badgeView = this.badgeView;
                         const imgCount = this.transformedImageProvider.imagesCount;
                         setTimeout(function () {
@@ -1019,42 +1063,57 @@ export class CaptureComponent implements OnInit {
                     this.cam.camera.startPreview();
                     // this.setCameraLightOnOff(this.cam.camera);
                 } else {
-                    try {
-                        const imgFileOrg: fs.File = fs.File.fromPath(filePathOrg);
-                        if (imgFileOrg) {
-                            imgFileOrg.removeSync();
-                        }
-                        // if (!this.imgURIList.isEmpty()) {
-                        if (dialogResult.length > 0) {
-                            // for (let i = 0; i < this.imgURIList.size(); i++) {
-                            dialogResult.forEach(transformedImg => {
-                                // const imgURITemp = this.imgURIList.get(i);
-                                const imgURIFile: fs.File = fs.File.fromPath(transformedImg.filePath);
-                                if (imgURIFile) {
-                                    imgURIFile.removeSync();
-                                }
-                                // // Todo : to be removed later
-                                // const imgUriContourPath = imgURI.substring(0, imgURI.indexOf('_transformed')) + '_contour.jpg';
-                                // const imgURIContourFile: fs.File = fs.File.fromPath(imgUriContourPath);
-                                // if (imgURIContourFile) {
-                                //     imgURIContourFile.removeSync();
-                                //     SendBroadcastImage(imgUriContourPath);
-                                // }
-                                // // Todo - End
-
-                                this.refreshCapturedImagesinMediaStore(filePathOrg, transformedImg.filePath, 'Remove');
-                            });
-                        }
-                        this.cam.camera.startPreview();
-                        // this.setCameraLightOnOff(this.cam.camera);
-                    } catch (error) {
-                        Toast.makeText(this.locale.transform('could_not_delete_the_capture_image') + error, 'long').show();
-                        this.logger.error(module.filename + ': ' + error);
-                        this.cam.camera.startPreview();
-                        // this.setCameraLightOnOff(this.cam.camera);
-                    }
+                    this.removeSelectedCapturedImageFromStorage(filePathOrg);
+                    this.removeCapturedImagesFromStorage(dialogResult);
                 }
             });
+    }
+
+    private removeSelectedCapturedImageFromStorage(filePathOrg: any) {
+        try {
+            const imgFileOrg: fs.File = fs.File.fromPath(filePathOrg);
+            if (imgFileOrg) {
+                imgFileOrg.removeSync();
+                this.refreshCapturedImagesinMediaStore(filePathOrg, filePathOrg, 'Remove');
+            }
+        } catch (error) {
+            Toast.makeText(localize('could_not_delete_the_capture_image') + error, 'long').show();
+            this.logger.error(module.filename + ': removeSelectedCapturedImageFromStorage : ' + error);
+            this.cam.camera.startPreview();
+            // this.setCameraLightOnOff(this.cam.camera);
+        }
+    }
+    private removeCapturedImagesFromStorage(capturedImgList: any) {
+        try {
+            if (!this.imgURIList.isEmpty()) {
+                // if (capturedImgList.length > 0) {
+                for (let i = 0; i < this.imgURIList.size(); i++) {
+                    // this.imgURIList.forEach(transformedImg => {
+                    const transformedImg = this.imgURIList.get(i);
+                    const imgURIFile: fs.File = fs.File.fromPath(transformedImg);
+                    if (imgURIFile) {
+                        imgURIFile.removeSync();
+                    }
+                    // // Todo : to be removed later
+                    // const imgUriContourPath = imgURI.substring(0, imgURI.indexOf('_transformed')) + '_contour.jpg';
+                    // const imgURIContourFile: fs.File = fs.File.fromPath(imgUriContourPath);
+                    // if (imgURIContourFile) {
+                    //     imgURIContourFile.removeSync();
+                    //     SendBroadcastImage(imgUriContourPath);
+                    // }
+                    // // Todo - End
+
+                    this.refreshCapturedImagesinMediaStore(transformedImg, transformedImg, 'Remove');
+                };
+            }
+            this.cam.camera.startPreview();
+            // this.setCameraLightOnOff(this.cam.camera);
+        } catch (error) {
+            Toast.makeText(localize('could_not_delete_the_capture_image') + error, 'long').show();
+            this.logger.error(module.filename + ': removeCapturedImagesFromStorage :' + error);
+            this.cam.camera.startPreview();
+            // this.setCameraLightOnOff(this.cam.camera);
+        }
     }
     /**
      * Sets the transformed image in gallery image button.
@@ -1069,7 +1128,7 @@ export class CaptureComponent implements OnInit {
                 this.imageSource = imgURIParam;
                 SendBroadcastImage(this.imgURI);
             } catch (error) {
-                Toast.makeText(this.locale.transform('error_while_setting_image_in_preview_area') + error, 'long').show();
+                Toast.makeText(localize('error_while_setting_image_in_preview_area') + error, 'long').show();
                 this.logger.error(module.filename + ': ' + error);
             }
         }
@@ -1143,7 +1202,7 @@ export class CaptureComponent implements OnInit {
                 SendBroadcastImage(thumnailOrgPath);
             }
         } catch (error) {
-            Toast.makeText(this.locale.transform('could_not_sync_the_captured_image_file') + error, 'long').show();
+            Toast.makeText(localize('could_not_sync_the_captured_image_file') + error, 'long').show();
             this.logger.error(module.filename + ': ' + error);
         }
     }
@@ -1154,14 +1213,15 @@ export class CaptureComponent implements OnInit {
      */
     private createThumbNailImage(imgURI: string): any {
         try {
-            const thumbnailImagePath = opencv.createThumbnailImage(imgURI);
+            // const thumbnailImagePath = opencv.createThumbnailImage(imgURI);
+            const thumbnailImagePath = org.opencv.android.JavaCameraView.createThumbnailImage(imgURI);
             // var thumbnailImagePath = com.maas.opencv4nativescript.OpenCVUtils.createThumbnailImage(imgURI);
             // com.maas.opencv4nativescript.OpenCVUtils.createThumbnailImage(dstImgURI);
 
             const uri = android.net.Uri.parse('file://' + thumbnailImagePath);
             this.galleryBtn.setImageURI(uri);
         } catch (error) {
-            Toast.makeText(this.locale.transform('error_while_creating_thumbnail_image') + error, 'long').show();
+            Toast.makeText(localize('error_while_creating_thumbnail_image') + error, 'long').show();
             this.logger.error(module.filename + ': ' + error);
         }
     }
@@ -1196,26 +1256,28 @@ export class CaptureComponent implements OnInit {
             const rectanglePointsStr = 'RPTSTR'; //imgURITemp.substring(imgURITemp.indexOf('RPTSTR'));
             // this.imgURI = this.cam.ocvCameraView.transform(filePath);
 
-            this.imgURIList = this.cam.ocvCameraView.transformMore(filePath);
-            if (!this.imgURIList.isEmpty() && this.transformedImageProvider.isContourRequired) {
-                this.imgURI = this.imgURIList.get(0);
-                for (let i = 0; i < this.imgURIList.size(); i++) {
-                    SendBroadcastImage(this.imgURIList.get(i));
+            if (this.transformedImageProvider.isContourRequired) {
+                this.imgURIList = this.cam.ocvCameraView.transformMore(filePath);
+                if (!this.imgURIList.isEmpty()) {
+                    this.imgURI = this.imgURIList.get(0);
+                    for (let i = 0; i < this.imgURIList.size(); i++) {
+                        SendBroadcastImage(this.imgURIList.get(i));
+                    }
+                    this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
+                } else {
+                    this.activityLoader.hide();
+                    Toast.makeText(localize('no_image_captured'), 'long').show();
+                    this.cam.camera.startPreview();
                 }
-                this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
-            } else if (this.imgURIList.isEmpty() && !this.transformedImageProvider.isContourRequired) {
+            } else if (!this.transformedImageProvider.isContourRequired) {
                 let srcImg = org.opencv.imgcodecs.Imgcodecs.imread(filePath, org.opencv.core.CvType.CV_8UC1);
                 this.imgURI = this.cam.ocvCameraView.performAdaptiveThreshold(filePath, srcImg, srcImg, this.transformedImageProvider.adaptiveThresholdValue);
                 SendBroadcastImage(this.imgURI);
                 this.showCapturedPictureDialog(true, filePath, this.imgURI, rectanglePointsStr);
-            } else {
-                this.activityLoader.hide();
-                Toast.makeText(this.locale.transform('no_image_captured'), 'long').show();
-                this.cam.camera.startPreview();
             }
         } catch (error) {
             this.activityLoader.hide();
-            Toast.makeText(this.locale.transform('error_while_performing_perspective_transformation'), 'long').show();
+            Toast.makeText(localize('error_while_performing_perspective_transformation'), 'long').show();
         }
     }
     /**
@@ -1246,19 +1308,19 @@ export class CaptureComponent implements OnInit {
                         });
                     } else {
                         this.imageSource = this.empty;
-                        Toast.makeText(this.locale.transform('image_source_is_bad'), 'long').show();
+                        Toast.makeText(localize('image_source_is_bad'), 'long').show();
                     }
                 },
                 (error) => {
                     this.imageSource = this.empty;
                     this.logger.error('Error getting image source from asset. ' + module.filename
                         + this.logger.ERROR_MSG_SEPARATOR + error);
-                    Toast.makeText(this.locale.transform('error_getting_image_source_from_asset'), 'long').show();
+                    Toast.makeText(localize('error_getting_image_source_from_asset'), 'long').show();
                 },
             );
         } else {
             this.logger.error('Image Asset was null. ' + module.filename);
-            Toast.makeText(this.locale.transform('image_asset_was_null'), 'long').show();
+            Toast.makeText(localize('image_asset_was_null'), 'long').show();
             this.imageSource = this.empty;
         }
     }

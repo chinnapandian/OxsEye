@@ -1,21 +1,26 @@
 <ActionBar title="Image Gallery" class="action-bar">
+    <NavigationButton text="Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
     <ActionBar.titleView>
-        <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-gallery-back">
+        <!--<Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-gallery-back1">
             <FormattedString>
                 <Span class="fa action-item-back-icon-fontsize" text="&#xf104;"></Span> 
             </FormattedString>
-        </Button>
+        </Button>-->
         <StackLayout>
-			<Label text="{{this.locale.transform('image_gallery_title')}}" class="action-bar-lable"></Label>
-		</StackLayout>
+            <Label text="{{'image_gallery_title' | L}}" class="action-bar-lable"></Label>
+        </StackLayout>
     </ActionBar.titleView>
 
-    <ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
+    <ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_share" android.position="right">
+    </ActionItem>
+    <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_delete" android.position="right">
+    </ActionItem>
+    <!--<ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
         <Button horizontalAlignment="left" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-gallery-share">
 					<FormattedString>
 						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 
 					</FormattedString>
-				</Button>
+		</Button>
     </ActionItem>
 
     <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
@@ -24,11 +29,11 @@
 						<Span class="fa action-item-icon-fontsize"  text="&#xf1f8;"></Span> 
 					</FormattedString>
 				</Button>
-    </ActionItem>
-    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? 'visible' : 'collapse' }}" text="{{this.locale.transform('select_unselect_all')}}"
+    </ActionItem>-->
+    <ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? 'visible' : 'collapse' }}" text="{{'select_unselect_all'|L}}"
         android.position="popup">
     </ActionItem>
-    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? 'visible' : 'collapse' }}" text="{{this.locale.transform('sort_by_date')}}"
+    <ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? 'visible' : 'collapse' }}" text="{{'sort_by_date'|L}}"
         android.position="popup">
     </ActionItem>
 </ActionBar>
@@ -36,7 +41,7 @@
 
 <Page (loaded)="onPageLoaded($event)" xmlns="http://schemas.nativescript.org/tns.xsd">
 
-    <ScrollView>
+    <ScrollView height="{{listHeight}}">
         <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">
             <ng-template ngFor let-i="index" let-image [ngForOf]="imageList">
                 <GridLayout class="bg-primary p-5 m-5 bordered img-rounded" width="30%" height="30%" horizontalAlignment="center" verticalAlignment="center"
@@ -45,7 +50,8 @@
                         class="img-height img-gallery-image" (longPress)="setCheckboxVisible()"></Image>
 
                     <StackLayout [visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'">
-                        <CheckBox id="checkbox-{{i}}" checked={{image.isSelected}} (checkedChange)="isChecked($event, image.filePath, i)" fillColor="red" text="" class="img-gallery-checkbox"></CheckBox>
+                        <CheckBox id="checkbox-{{i}}" checked={{image.isSelected}} (checkedChange)="isChecked($event, image.filePath, i)" fillColor="red"
+                            text="" class="img-gallery-checkbox"></CheckBox>
                     </StackLayout>
                 </GridLayout>
             </ng-template>

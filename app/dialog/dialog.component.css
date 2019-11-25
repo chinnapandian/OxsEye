@@ -8,3 +8,22 @@
     width: 40 !important;
     height: 40 !important
 }
+.img-dialog-checkbox {
+    border-width: 0;
+    /*color: red;*/
+    /*font-size : 20;*/
+    /*fill: red;*/
+    width: 30;
+    height: 40;
+    border-color: transparent;
+    background-color: transparent
+}
+
+.checkmark-icon-fontsize {
+    font-size: 30 !important;
+    color: green;
+}
+.crossmark-icon-fontsize {
+    font-size: 30 !important;
+    color: red;
+}

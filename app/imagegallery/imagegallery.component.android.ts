@@ -6,14 +6,17 @@ import { Page } from 'tns-core-modules/ui/page';
 
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { CheckBox } from 'nativescript-checkbox';
+// import { CheckBox } from 'nativescript-checkbox';
+import { CheckBox } from '@nstudio/nativescript-checkbox';
 
 import { ActivityLoader } from '../activityloader/activityloader.common';
 import { TransformedImage } from '../providers/transformedimage.common';
 
-import { L } from 'nativescript-i18n/angular';
+// import { L } from 'nativescript-i18n/angular';
+import { localize } from "nativescript-localize";
+// @ts-ignore
 import { OxsEyeLogger } from '../logger/oxseyelogger';
-
+// @ts-ignore
 import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
 import * as application from 'tns-core-modules/application';
@@ -21,6 +24,11 @@ import * as dialogs from 'tns-core-modules/ui/dialogs';
 
 import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
+import * as platform from 'tns-core-modules/platform';
+
+declare var android: any;
+declare var java: any;
+declare var org: any;
 
 /**
  * ImageGalleryComponent class is being used to display all the thumbnail
@@ -51,6 +59,7 @@ export class ImageGalleryComponent implements OnInit {
     private orderByAscDesc: string;
     /** Stores page referrence. */
     private page;
+    private listHeight = 0;
     // /** Lable for select/unselect All menu */
     // private selectUnselectAllLable: any;
     // /** Lable for sort by date menu */
@@ -69,10 +78,9 @@ export class ImageGalleryComponent implements OnInit {
         private router: Router,
         private transformedImageProvider: TransformedImageProvider,
         private activityLoader: ActivityLoader,
-        private logger: OxsEyeLogger,
-        private locale: L) {
-        // this.selectUnselectAllLable = this.locale.transform('select_unselect_all');
-        // this.sortByDateLable = this.locale.transform('sort_by_date');
+        private logger: OxsEyeLogger) {
+        // this.selectUnselectAllLable = localize('select_unselect_all');
+        // this.sortByDateLable = localize('sort_by_date');
     }
 
     /**
@@ -91,6 +99,7 @@ export class ImageGalleryComponent implements OnInit {
         // this.loadThumbnailImages();
         this.orderByAscDesc = ' DESC';
         this.loadThumbnailImagesByContentResolver(this.orderByAscDesc);
+        this.listHeight =  platform.screen.mainScreen.heightDIPs - 125;
     }
     /**
      * Gets the stored transformed thumbnail image list.
@@ -190,14 +199,14 @@ export class ImageGalleryComponent implements OnInit {
     onSelectUnSelectAllCheckBox() {
         if (this.selectedCount !== this.imageList.length && this.selectedCount > 0) {
             dialogs.action({
-                message: this.locale.transform('dialog_message'),
-                cancelButtonText: this.locale.transform('dialog_cancel_btn_text'),
-                actions: [this.locale.transform('dialog_action_select_all'), this.locale.transform('dialog_action_unselect_all')],
+                message: localize('dialog_message'),
+                cancelButtonText: localize('dialog_cancel_btn_text'),
+                actions: [localize('dialog_action_select_all'), localize('dialog_action_unselect_all')],
             }).then((result) => {
-                if (result === this.locale.transform('dialog_action_select_all')) {
+                if (result === localize('dialog_action_select_all')) {
                     this.isSelectUnselectAll = true;
                     this.performSelectUnselectAll(this.isSelectUnselectAll);
-                } else if (result === this.locale.transform('dialog_action_unselect_all')) {
+                } else if (result === localize('dialog_action_unselect_all')) {
                     this.isSelectUnselectAll = false;
                     this.performSelectUnselectAll(this.isSelectUnselectAll);
                 }
@@ -239,7 +248,7 @@ export class ImageGalleryComponent implements OnInit {
             android.Manifest.permission.INTERNET],
             'Needed for sharing files').then(() => {
                 try {
-                    const uris = new java.util.ArrayList<android.net.Uri>();
+                    const uris = new java.util.ArrayList();
                     const filesToBeAttached = '';
                     this.imageList.forEach((image) => {
                         if (image.isSelected) {
@@ -251,14 +260,15 @@ export class ImageGalleryComponent implements OnInit {
                             // application.android.context.grantUriPermission(
                             //     'oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
                             const uri = this.transformedImageProvider.getURIForFile(newFile);
+                            // const uri = newFile.toURI().toString();
                             uris.add(uri);
                             uris.add(this.transformedImageProvider.getOriginalImage(imgFileNameOrg));
-                            uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
+                     //       uris.add(this.transformedImageProvider.getOriginalImageWithRectangle(imgFileNameOrg));
                         }
                     });
                     if (uris.size() > 0) {
                         const intent = new android.content.Intent(android.content.Intent.ACTION_SEND_MULTIPLE);
-                        intent.setType('image/jpeg');
+                        intent.setType('*/*'); //('image/jpeg');
                         const message = 'Perspective correction pictures : ' + filesToBeAttached + '.';
                         intent.putExtra(android.content.Intent.EXTRA_SUBJECT, 'Perspective correction pictures...');
                         intent.putParcelableArrayListExtra(android.content.Intent.EXTRA_STREAM, uris);
@@ -272,11 +282,11 @@ export class ImageGalleryComponent implements OnInit {
                             android.content.Intent.createChooser(intent, 'Share images...'));
                     }
                 } catch (error) {
-                    Toast.makeText(this.locale.transform('error_while_sharing_images') + error).show();
+                    Toast.makeText(localize('error_while_sharing_images') + error).show();
                     this.logger.error('Error while sharing images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
             }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_giving_permission') + error).show();
+                Toast.makeText(localize('error_while_giving_permission') + error).show();
                 this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -289,10 +299,10 @@ export class ImageGalleryComponent implements OnInit {
     onDelete() {
         if (this.selectedCount > 0) {
             dialogs.confirm({
-                title: this.locale.transform('delete'),
-                message: this.locale.transform('deleting_selected_item'),
-                okButtonText: this.locale.transform('ok'),
-                cancelButtonText: this.locale.transform('cancel'),
+                title: localize('delete'),
+                message: localize('deleting_selected_item'),
+                okButtonText: localize('ok'),
+                cancelButtonText: localize('cancel'),
             }).then((result) => {
                 if (result) {
                     this.selectedCount = 0;
@@ -317,20 +327,20 @@ export class ImageGalleryComponent implements OnInit {
                                                 this.routerExtensions.back();
                                             }
                                         }).catch((error) => {
-                                            Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_images') + error).show();
+                                            Toast.makeText(localize('error_while_deleting_thumbnail_images') + error).show();
                                             this.logger.error('Error while deleting thumbnail images. ' + module.filename
                                                 + this.logger.ERROR_MSG_SEPARATOR + error);
                                         });
 
                                 }).catch((error) => {
-                                    Toast.makeText(this.locale.transform('error_while_deleting_images')).show();
+                                    Toast.makeText(localize('error_while_deleting_images')).show();
                                     this.logger.error('Error while deleting images. ' + module.filename
                                         + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }
 
                     });
-                    Toast.makeText(this.locale.transform('selected_images_deleted')).show();
+                    Toast.makeText(localize('selected_images_deleted')).show();
                 }
             });
         }
@@ -418,7 +428,7 @@ export class ImageGalleryComponent implements OnInit {
                 try {
                     capturedPicturePath = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + '/DCIM';
                 } catch (error) {
-                    Toast.makeText(this.locale.transform('error_while_getting_path') + error.toString()).show();
+                    Toast.makeText(localize('error_while_getting_path') + error.toString()).show();
                     this.logger.error('Error while getting path. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
                 const folders: Folder = Folder.fromPath(capturedPicturePath);
@@ -438,12 +448,12 @@ export class ImageGalleryComponent implements OnInit {
                         });
                     }).catch((error) => {
                         // Failed to obtain folder's contents.
-                        Toast.makeText(this.locale.transform('error_while_loading_images') + error, 'long').show();
+                        Toast.makeText(localize('error_while_loading_images') + error, 'long').show();
                         this.logger.error('Error while loading images. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
                     });
                 this.activityLoader.hide();
             }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_giving_permission') + error, 'long').show();
+                Toast.makeText(localize('error_while_giving_permission') + error, 'long').show();
                 this.logger.error('Error in giving permission. ' + module.filename + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }

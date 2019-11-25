@@ -1,14 +1,13 @@
-import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
-import { PagerModule } from 'nativescript-pager/angular';
-import { NativeScriptUIListViewModule } from 'nativescript-ui-listview/angular';
+import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NativeScriptModule } from "nativescript-angular/nativescript.module";
+
+import { AppRoutingModule } from "./app-routing.module";
+import { AppComponent } from "./app.component";
+// import { ItemsComponent } from "./item/items.component";
+// import { ItemDetailComponent } from "./item/item-detail.component";
+
 import { NativeScriptUISideDrawerModule } from 'nativescript-ui-sidedrawer/angular';
 
-import { NativeScriptI18nModule } from 'nativescript-i18n/angular';
-
-import { AppRoutingModule } from './app.routing';
-
-import { AppComponent } from './app.component';
 // @ts-ignore
 import { CaptureComponent } from './capture/capture.component';
 // @ts-ignore
@@ -24,33 +23,43 @@ import { TransformedImageProvider } from './providers/transformedimage.provider'
 // @ts-ignore
 import { OxsEyeLogger } from './logger/oxseyelogger';
 
-import { L } from 'nativescript-i18n/angular';
+import { NativeScriptLocalizeModule } from "nativescript-localize/angular";
+import { TNSCheckBoxModule } from '@nstudio/nativescript-checkbox/angular';
 
-/** This is the main application module contains all the modules used in the application. */
+// Uncomment and add to NgModule imports if you need to use two-way binding
+// import { NativeScriptFormsModule } from "nativescript-angular/forms";
+
+// Uncomment and add to NgModule imports if you need to use the HttpClient wrapper
+// import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
+import * as application from 'tns-core-modules/application';
+
 @NgModule({
     bootstrap: [
-        AppComponent,
+        AppComponent
     ],
     imports: [
         NativeScriptModule,
         AppRoutingModule,
-        PagerModule,
-        NativeScriptUIListViewModule,
+        NativeScriptLocalizeModule,
         NativeScriptUISideDrawerModule,
-        NativeScriptI18nModule,
-
+        TNSCheckBoxModule
     ],
     declarations: [
         AppComponent,
+        // ItemsComponent,
+        // ItemDetailComponent,
         CaptureComponent,
         DialogContent,
         ImageGalleryComponent,
-        ImageSlideComponent,
+        ImageSlideComponent
     ],
     entryComponents: [DialogContent],
-    providers: [TransformedImageProvider, ActivityLoader, OxsEyeLogger, L],
+    providers: [TransformedImageProvider, ActivityLoader, OxsEyeLogger],
     schemas: [
-        NO_ERRORS_SCHEMA,
-    ],
+        NO_ERRORS_SCHEMA
+    ]
 })
+/*
+Pass your application module to the bootstrapModule function located in main.ts to start your app
+*/
 export class AppModule { }

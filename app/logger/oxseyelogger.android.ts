@@ -3,6 +3,9 @@ import { File, knownFolders } from 'tns-core-modules/file-system';
 
 import * as Permissions from 'nativescript-permissions';
 import * as Toast from 'nativescript-toast';
+declare var android: any;
+declare var java: any;
+declare var org: any;
 
 /** A simple logger class, which is being used to write log information to a file OxsEye.log */
 @Injectable()
@@ -15,21 +18,23 @@ export class OxsEyeLogger {
 
   /** Constructor for OxsEyeLogger */
   public constructor() {
-    Permissions.requestPermission(
-      [android.Manifest.permission.READ_EXTERNAL_STORAGE,
+    // [android.Manifest.permission.CAMERA,
+    //   android.Manifest.permission.READ_EXTERNAL_STORAGE,
+    //   android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
+    Permissions.requestPermission([android.Manifest.permission.READ_EXTERNAL_STORAGE,
       android.Manifest.permission.WRITE_EXTERNAL_STORAGE],
       'Needed for sharing files').then(() => {
         const appRootPath = knownFolders.currentApp();
         if (!this.file) {
           this.file = File.fromPath(appRootPath.path + '/log/oxseye.log');
           this.file.removeSync((error) => {
-            Toast.makeText('Error while clearing OxsEye log file.');
+            Toast.makeText('Error while clearing OxsEye log file..');
           });
         }
         this.file = File.fromPath(appRootPath.path + '/log/oxseye.log');
-      }).catch(() => {
+      }).catch((e) => {
         Toast.makeText('Error while giving permission to oxseye.log file.', 'long').show();
-        console.log('Permission is not granted (sadface)');
+        console.log('Permission is not granted (sadface)',e);
       });
   }
   /** Method to log message in debug level

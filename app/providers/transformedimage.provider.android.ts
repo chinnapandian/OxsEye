@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { File } from 'tns-core-modules/file-system';
 
-import { L } from 'nativescript-i18n/angular';
+// import { L } from 'nativescript-i18n/angular';
+// @ts-ignore
 import { OxsEyeLogger } from '../logger/oxseyelogger';
 import { TransformedImage } from './transformedimage.common';
 
@@ -11,6 +12,12 @@ import * as Toast from 'nativescript-toast';
 
 import * as Permissions from 'nativescript-permissions';
 
+import { localize } from "nativescript-localize";
+
+declare var android: any;
+declare var androidx: any;
+declare var java: any;
+declare var org: any;
 /**
  * This is a provider class contains common functionalyties related to captured image.
  */
@@ -28,17 +35,18 @@ export class TransformedImageProvider {
     private isImageCountOnly: any;
 
 
-    private cameraLightThresholdValue = 0;
-    private cameraLightTimeOutValue = 0;
-    private adaptiveThresholdValue = 0;
-    private isContourRequired = true;
+    public cameraLightThresholdValue = 0;
+    public cameraLightTimeOutValue = 0;
+    public adaptiveThresholdValue = 0;
+    public isContourRequired = true;
     // private isContourRequiredOld = true;
 
     /**
      * Constructor for TransformedImageProvider
      */
-    constructor(private logger: OxsEyeLogger,
-        private locale: L) {
+    constructor(private logger: OxsEyeLogger
+        //private locale: L
+        ) {
         this.imageList = [];
         this.contourImageList = [];
         this.isImageCountOnly = false;
@@ -87,7 +95,7 @@ export class TransformedImageProvider {
                             this.imagesCount = cursor.getCount();
                             if (view) {
                                 view.setText(this.imagesCount + '');
-                               view.setVisibility(android.view.View.VISIBLE);
+                                view.setVisibility(android.view.View.VISIBLE);
                             }
                             console.log('Image count.. :' + this.imagesCount);
                         } else {
@@ -106,12 +114,12 @@ export class TransformedImageProvider {
                     activityLoader.hide();
                 } catch (error) {
                     activityLoader.hide();
-                    Toast.makeText(this.locale.transform('error_while_loading_gallery_images'), 'long').show();
+                    Toast.makeText(localize('error_while_loading_gallery_images'), 'long').show();
                     this.logger.error('Error while loading gallery images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
             }).catch((error) => {
                 activityLoader.hide();
-                Toast.makeText(this.locale.transform('error_while_giving_permission'), 'long').show();
+                Toast.makeText(localize('error_while_giving_permission'), 'long').show();
                 this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -127,8 +135,11 @@ export class TransformedImageProvider {
     getThumbnailImagesCountByContentResolver(orderByAscDesc: string, activityLoader: any, view: any) {
         this.isImageCountOnly = true;
         this.loadThumbnailImagesByContentResolver(orderByAscDesc, activityLoader, view);
-        console.log('Image count..1 :' + this.imagesCount);
+        console.log('Image count...1 :' + this.imagesCount);
         // return this.imageCount;
+    }
+    get contourList():any{
+        return this.contourImageList;
     }
     /**
      * Loads possible contour images
@@ -209,20 +220,20 @@ export class TransformedImageProvider {
                                 .then(() => {
                                     SendBroadcastImage(imageUri);
                                 }).catch((error) => {
-                                    Toast.makeText(this.locale.transform('error_while_deleting_temporary_images')).show();
+                                    Toast.makeText(localize('error_while_deleting_temporary_images')).show();
                                     this.logger.error('Error while deleting temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                                 });
                         }
                     }
                 } catch (error) {
                     //           activityLoader.hide();
-                    Toast.makeText(this.locale.transform('error_while_loading_temporary_images'), 'long').show();
+                    Toast.makeText(localize('error_while_loading_temporary_images'), 'long').show();
                     this.logger.error('Error while loading temporary images. ' + this.logger.ERROR_MSG_SEPARATOR + error);
                 }
 
             }).catch((error) => {
                 //   activityLoader.hide();
-                Toast.makeText(this.locale.transform('error_while_giving_permission'), 'long').show();
+                Toast.makeText(localize('error_while_giving_permission'), 'long').show();
                 this.logger.error('Error in giving permission. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -237,7 +248,7 @@ export class TransformedImageProvider {
             .then(() => {
                 SendBroadcastImage(fileURI);
             }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_deleting_temporary_files')).show();
+                Toast.makeText(localize('error_while_deleting_temporary_files')).show();
                 this.logger.error('Error while deleting temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -256,7 +267,7 @@ export class TransformedImageProvider {
                 SendBroadcastImage(fileURI);
                 SendBroadcastImage(renameFileto);
             }).catch((error) => {
-                Toast.makeText(this.locale.transform('error_while_renaming_temporary_file')).show();
+                Toast.makeText(localize('error_while_renaming_temporary_file')).show();
                 this.logger.error('Error while renaming temporary files. ' + this.logger.ERROR_MSG_SEPARATOR + error);
             });
     }
@@ -302,9 +313,17 @@ export class TransformedImageProvider {
      * @returns URI Returns the URI of given file name
      */
     getURIForFile(newFile: any): any {
-        const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+        // const uri = android.support.v4.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
+        const uri = androidx.core.content.FileProvider.getUriForFile(application.android.context, 'oxs.eye.fileprovider', newFile);
         application.android.context.grantUriPermission('oxs.eye.fileprovider', uri, android.content.Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        return uri;
+        return uri; //newFile.toURI().toString();
+    }
+
+    /**
+     * Temporary method, not used.
+     * @param dataToShare data to be shared
+     */
+    shareData(dataToShare: any) {
     }
 }
 /**

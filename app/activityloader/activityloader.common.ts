@@ -1,8 +1,11 @@
+//@ts-ignore
 import { OxsEyeLogger } from '../logger/oxseyelogger';
 
-import { L } from 'nativescript-i18n/angular';
+// import { L } from 'nativescript-i18n/angular';
 
-import { LoadingIndicator } from 'nativescript-loading-indicator';
+import { LoadingIndicator, Mode, OptionsCommon } from '@nstudio/nativescript-loading-indicator';
+import { localize } from "nativescript-localize";
+declare var android:any;
 
 /**
  * LoadingIndicator Instance variable.
@@ -19,7 +22,7 @@ export class ActivityLoader {
     private logger = new OxsEyeLogger();
 
     /**Localization variable */
-    private locale = new L();
+    // private locale = new L();
 
     /**
      * Gets LoadingIndicator options for both android and ios.
@@ -27,30 +30,28 @@ export class ActivityLoader {
      */
     private getOptions(): any {
         const options = {
-            message: this.locale.transform('activity_loader_message'),
+            message: localize('activity_loader_message'), //this.locale.transform('activity_loader_message'),
             progress: 0.65,
+            margin: 10,
+            dimBackground: true,
+            color: '#4B9ED6', // color of indicator and labels
+            // background box around indicator
+            // hideBezel will override this if true
+            backgroundColor: 'yellow',
+            userInteractionEnabled: false, // default true. Set false so that the touches will fall through it.
+            hideBezel: true, // default false, can hide the surrounding bezel
+            mode: Mode.AnnularDeterminate, // see options below
             android: {
-                indeterminate: true,
+         //       view: android.view.View, // Target view to show on top of (Defaults to entire window)
                 cancelable: true,
-                cancelListener(dialog) { console.log('Loading cancelled'); },
-                max: 100,
-                progressNumberFormat: '%1d/%2d',
-                progressPercentFormat: 0.53,
-                progressStyle: 1,
-                secondaryProgress: 1,
+                cancelListener: function (dialog) {
+                    console.log('Loading cancelled');
+                }
             },
             ios: {
-                details: 'Additional detail note!',
-                margin: 10,
-                dimBackground: true,
-                color: '#4B9ED6', // color of indicator and labels
-                // background box around indicator
-                // hideBezel will override this if true
-                backgroundColor: 'yellow',
-                hideBezel: true, // default false, can hide the surrounding bezel
-                // view: UIView // Target view to show on top of (Defaults to entire window)
-                //  mode: // see iOS specific options below
-            },
+             //   view: someButton.ios, // Target view to show on top of (Defaults to entire window)
+                square: false
+            }
         };
         return options;
     }

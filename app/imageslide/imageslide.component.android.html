@@ -1,46 +1,58 @@
-
-    <!--<ActionBar title="Image List" class="action-bar">
+<!--<ActionBar title="Image List" class="action-bar">
         <NavigationButton android.systemIcon="ic_menu_back" text="Back" (tap)="goBack()"></NavigationButton>
 
         <ActionItem tap="onShare" ios.systemIcon="9" ios.position="left" android.systemIcon="ic_menu_share" android.position="actionBar"></ActionItem>
         <ActionItem (tap)="onDelete()" ios.systemIcon="16" ios.position="right" android.systemIcon="ic_menu_delete" android.position="actionBar"></ActionItem>
     </ActionBar>-->
-    <Page.actionBar>
-        <ActionBar title="Image Slide" class="action-bar">
-            <!--<Label text="&#xf177;" class="fa p-5 m-3"></Label>-->
-            <ActionBar.titleView>
-                <!--<Label (tap)="goBack()" text="&#xf104;" class="fa"></Label>-->
-                <Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-back">
+<Page.actionBar>
+    <ActionBar title="Image Slide" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+
+        <ActionBar.titleView>
+            <!--<Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-back1">
 					<FormattedString>
 						<Span class="fa action-item-back-icon-fontsize" text="&#xf104;"></Span> 
 					</FormattedString>
-				</Button>
-                <StackLayout>
-                    <Label text="{{this.locale.transform('image_slide_title')}}" class="action-bar-lable"></Label>
-                </StackLayout>
-            </ActionBar.titleView>
+				</Button>-->
 
-            <ActionItem (tap)="onShare()" android.position="actionBar" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
-                <!--<Label text="&#xf1e1;" class="fa p-5 m-3"></Label>-->
-                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-share">
+            <StackLayout>
+                <Label text="{{'image_slide_title'|L}}" class="action-bar-lable"></Label>
+            </StackLayout>
+        </ActionBar.titleView>
+
+        <ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_share" android.position="right">
+        </ActionItem>
+        <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_delete"
+            android.position="right">
+        </ActionItem>
+
+        <!--<ActionItem (tap)="onShare()" android.position="actionBar" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
+            <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-share">
 					<FormattedString>
 						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 
 					</FormattedString>
 				</Button>
-            </ActionItem>
-            <ActionItem (tap)="onDelete($event)" android.position="actionBar" visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
-                <!--<Label text="&#xf1f8;" class="fa p-5 m-3 btn-active"></Label>-->
-                <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-delete">
+        </ActionItem>
+        <ActionItem (tap)="onDelete($event)" android.position="actionBar" visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
+            <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-delete">
 					<FormattedString>
 						<Span class="fa action-item-icon-fontsize" text="&#xf1f8;"></Span> 
 					</FormattedString>
 				</Button>
-            </ActionItem>
-        </ActionBar>
-    </Page.actionBar>
-    
+        </ActionItem>-->
+    </ActionBar>
+</Page.actionBar>
+<!--(onTouch)="onTouch($event)"-->
+<!--(pinch)="onPinch($event)"-->
+<!--(pan)="onPan($event)"-->
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">
-    <GridLayout #container horizontalAlignment="center" verticalAlignment="center"  (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap($event)"    backgroundColor="gray">
-        <Image src="{{ imageSource }}"  #imgSlideId  (pan)="onPan($event)" (pinch)="onPinch($event)" backgroundColor="gray"></Image>  
-    </GridLayout>
+    <!--<GridLayout #container horizontalAlignment="center" verticalAlignment="center"  (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap($event)"    backgroundColor="gray">-->
+    <!--<Image src="{{ imageSource }}"  #imgSlideId loadMode="async" stretch="aspectFit"  (onTouch)="onTouch($event)"  backgroundColor="gray"></Image>  -->
+    <!--</GridLayout>-->
+    <ImageSwipe [items]="imageUrlList" #imgSlideId imageUrlProperty="imageUrl" [pageNumber]="pageNumber" (pageChanged)="pageChanged($event)"
+        backgroundColor="#000000">
+    </ImageSwipe>
+    <!--<CustomScrollView>
+        <Image src="{{ imageSource }}"></Image>
+    </CustomScrollView>-->
 </Page>

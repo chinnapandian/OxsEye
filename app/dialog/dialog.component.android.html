@@ -1,18 +1,43 @@
 <Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">
-    <StackLayout  class="modal-view-style" orientation="vertical" margin="10" horizontalAlignment="center" verticalAlignment="center">
-        <GridLayout id="imgGridId" height="83%" (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap()" borderLeftWidth="1" borderBottomWidth="1"
+    <StackLayout class="modal-view-style" orientation="vertical" margin="10" horizontalAlignment="center" verticalAlignment="center">
+        <GridLayout id="imgGridId" height="83%"  borderLeftWidth="1" borderBottomWidth="1"
             borderRightWidth="1" borderTopWidth="1" backgroundColor="gray">
-            <Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"    id="imgViewId" (longPress)="enableDelete()"  (pan)="onPan($event)" (pinch)="onPinch($event)"
-                 backgroundColor="gray"></Image>
-            <Button horizontalAlignment="center" verticalAlignment="bottom" marginBottom="5" (Tap)="onDelete($event)" visibility="{{ isDeleting ? 'visible' : 'collapse' }}" class="btn-active btn-rounded-lg  btn-outline btn-delete">
-                <FormattedString>
-                    <Span class="fa delete-icon-fontsize" text="&#xf1f8;"></Span>
-                </FormattedString>
-            </Button>
+            <!--<Image src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"   id="imgViewId" (longPress)="enableDelete()" (pan)="onPan($event)"
+                (pinch)="onPinch($event)"  backgroundColor="gray"></Image>-->
+                <ImageSwipe [items]="imageUrlList0"  id="imgViewId" imageUrlProperty="imageUrl" (longPress)="enableDelete()" [pageNumber]="pageNumber"
+                    (pageChanged)="pageChanged($event)" backgroundColor="lightgray">
+                </ImageSwipe>
+                <!--<GridLayout >-->
+                <!--<PhotoZoom [src]="imageSource" id="imgViewId" (swipe)="onSwipe($event)" placeholder="res://placeholder" (finalImageSet)="onFinalImageSet($event)" (failure)="onFailure($event)"
+                    (scaleChanged)="onScaleChanged($event)"></PhotoZoom>-->
+                <!--</GridLayout>-->
+                <!--<ImageZoom src="{{ imageSource }}" id="imgViewId"  maxZoom="5" minZoom="2"></ImageZoom>-->
+                <!--[visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'"-->
+                <!--visibility="{{ isDeleting ? 'visible' : 'collapse' }}"-->
+                <!--<StackLayout horizontalAlignment="center" verticalAlignment="bottom">-->
+                    <Button (tap)="isChecked($event)" horizontalAlignment="center" verticalAlignment="bottom" marginBottom="5" class="btn-active btn-rounded-lg  btn-outline btn-delete">
+                        <FormattedString>
+                            <Span class="fa delete-icon-fontsize"  text="&#xf1f8;"></Span>
+                        </FormattedString>
+                    </Button>
+                    <!--<CheckBox horizontalAlignment="center" verticalAlignment="bottom" id="checkbox-delete" [checked]="isSelected" (checkedChange)="isChecked($event)" fillColor="red"
+                        text="" class="img-dialog-checkbox m-b-7">
+                    </CheckBox>-->
+                    <label [visibility]="isCheckMarkVisible ? 'visible' : 'collapsed'" text=""  marginBottom="5" horizontalAlignment="center" verticalAlignment="bottom" >
+                        <FormattedString>
+                            <Span class="fa checkmark-icon-fontsize" text="&#xf00c;"></Span>
+                        </FormattedString>
+                    </label>
+                    <label [visibility]="isCrossMarkVisible ? 'visible' : 'collapsed'" marginBottom="5" text="" horizontalAlignment="center" verticalAlignment="bottom" >
+                        <FormattedString>
+                            <Span class="fa crossmark-icon-fontsize"  text="&#xf00d;"></Span>
+                        </FormattedString>
+                    </label>
+                <!--</StackLayout>-->
         </GridLayout>
         <ScrollView orientation="horizontal" height="7%" marginTop="5">
             <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">
-                <ng-template ngFor let-i="index" let-image [ngForOf]="imageList">
+                <ng-template ngFor let-i="index" let-image [ngForOf]="imageList0">
                     <GridLayout id="img-grid-{{i}}" class="bg-primary p-5 m-5 bordered img-rounded" width="90%" height="90%" horizontalAlignment="center"
                         verticalAlignment="center" backgroundColor="gray">
                         <Image src="{{ image.thumbnailPath }}" loadMode="async" stretch="aspectFill" (Tap)="selectImage(image.filePath,i, $event)"
@@ -22,14 +47,14 @@
             </WrapLayout>
         </ScrollView>
         <StackLayout height="10%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="5">
-            <Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform('retake')}}" (tap)="close('')"></Button>
-            <Button class="save-btn btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform('save')}}" (tap)="close(imageList)"></Button>
-               <!--<Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform(manualBtnText.toLowerCase())}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection() : showOriginalImage()"></Button>-->
+            <Button class="btn-outline btn-active btn-rounded-lg" text="{{'retake'|L}}" (tap)="close('')"></Button>
+            <Button class="save-btn btn-outline btn-active btn-rounded-lg" text="{{'save'|L}}" (tap)="close(imageList)"></Button>
+            <!--<Button class="btn-outline btn-active btn-rounded-lg" text="{{this.locale.transform(manualBtnText.toLowerCase())}}" (tap)="(manualBtnText == 'Perform') ? performManualCorrection() : showOriginalImage()"></Button>-->
         </StackLayout>
     </StackLayout>
 </Page>
-  
-    <!--<Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 chevron-btn-left img-gallery-back1">
+
+<!--<Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 chevron-btn-left img-gallery-back1">
                 <FormattedString>
                     <Span class="fa previous-image-icon-fontsize" text="&#xf053;"></Span> 
                 </FormattedString>

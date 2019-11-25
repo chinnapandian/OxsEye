@@ -1,30 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 import { setTimeout } from 'tns-core-modules/timer';
 import { GestureEventData, PanGestureEventData, PinchGestureEventData, SwipeGestureEventData } from 'tns-core-modules/ui/gestures';
+// @ts-ignore
+import { SendBroadcastImage, TransformedImageProvider } from '../providers/transformedimage.provider';
 
-import { SendBroadcastImage, TransformedImage, TransformedImageProvider } from '../providers/transformedimage.provider';
-
+import { TransformedImage } from '../providers/transformedimage.common';
 import { File, Folder } from 'tns-core-modules/file-system';
-
+// @ts-ignore
 import { OxsEyeLogger } from '../logger/oxseyelogger';
+import { PageChangeEventData, ImageSwipe } from "nativescript-image-swipe";
+import { Page } from 'tns-core-modules/ui/page';
+import { CheckBox } from '@nstudio/nativescript-checkbox';
 
-import { L } from 'nativescript-i18n/angular';
+// import { L } from 'nativescript-i18n/angular';
 
-import * as orientation from 'nativescript-orientation';
+// import * as orientation from 'nativescript-orientation';
 import * as Toast from 'nativescript-toast';
 import * as platform from 'tns-core-modules/platform';
 import * as formattedStringModule from 'tns-core-modules/text/formatted-string';
 import * as buttons from 'tns-core-modules/ui/button';
 import * as dialogs from 'tns-core-modules/ui/dialogs';
 
-import * as opencv from 'nativescript-opencv-plugin';
+import { localize } from "nativescript-localize";
+import { ObservableArray } from "tns-core-modules/data/observable-array";
+import { EventData, Observable } from "tns-core-modules/data/observable";
+
+declare var android: any;
+declare var java: any;
+
+// import * as opencv from 'nativescript-opencv-plugin';
 
 /** Lable for 'Manual' text */
 const LABLE_MANUAL = 'Manual';
 /** Lable for 'Perform' text */
 const LABLE_PERFORM = 'Perform';
 
+let matrix = new android.graphics.Matrix();
+let viewModel: Observable;
 /**
  * Dialog content class.
  */
@@ -34,7 +47,7 @@ const LABLE_PERFORM = 'Perform';
     styleUrls: ['./dialog.component.css'],
     templateUrl: './dialog.component.html',
 })
-export class DialogContent {
+export class DialogContent implements OnInit {
     /** Transformed Image source. */
     public imageSource: any;
     /** Original Image source. */
@@ -87,6 +100,14 @@ export class DialogContent {
     private imgNext = 0;
     /** Boolean value to make the deleting menu visible or not. */
     public isDeleting: boolean;
+
+    private isCheckMarkVisible = false;
+    private isCrossMarkVisible = false;
+
+    private imageUrlList = new ObservableArray();// any[] = [];
+    private pageNumber: number = 3;
+    private isSelected: boolean;
+    private imageList: any;
     /** Lable for Manua/Perform button */
     // private manualPerformBtnLable: any;
     // private _dragImageItem: Image;
@@ -103,14 +124,60 @@ export class DialogContent {
     constructor(private params: ModalDialogParams,
         private transformedImageProvider: TransformedImageProvider,
         private logger: OxsEyeLogger,
-        private locale: L) {
+        private page: Page
+        // private locale: L
+    ) {
         this.manualBtnText = LABLE_MANUAL;
-        // this.manualPerformBtnLable = this.locale.transform('manual');
+        // this.manualPerformBtnLable = localize('manual');
         this.points = [];
         this.pointsCounter = 0;
         this.circleBtnList = [];
         // this._dragImageItem = <Image>this._dragImage.nativeElement;
     }
+
+    ngOnInit(): void {
+        this.imageSource = this.params.context.imageSource;
+        this.imageSourceOrg = this.params.context.imageSourceOrg;
+        this.imageSourceOrgOld = this.params.context.imageSourceOrg;
+        this.isAutoCorrection = this.params.context.isAutoCorrection;
+        this.imageSourceOld = this.params.context.imageSource;
+        const recPointsStrTemp = this.params.context.rectanglePoints;
+        this.imgNext = 0;
+        const fileName = this.imageSource.substring(this.imageSource.lastIndexOf('PT_IMG'), this.imageSource.lastIndexOf('transformed'))
+        this.transformedImageProvider.LoadPossibleContourImages(fileName);
+        // this.imageList = this.transformedImageProvider.contourList;
+        // this.imageUrlList.splice(0, this.imageUrlList.length);
+        // this.transformedImageProvider.contourImageList.forEach(img => {
+        //     const imageFile = new java.io.File(img.filePath);
+        //     this.imageUrlList.push({ imageUrl: imageFile.toURL().toString() });
+        // });
+        this.pageNumber = this.imgNext;
+        viewModel = new Observable();
+        viewModel.set("imageUrlList", this.imageUrlList);
+        viewModel.set("pageNumber", this.imgNext);
+
+        this.page.bindingContext = viewModel;
+        this.isSelected = false;
+        this.isCheckMarkVisible = false;
+        this.isCrossMarkVisible = true;
+    }
+
+    public pageChanged(args: PageChangeEventData) {
+        console.log(`Page changed.....  to ${args.page}.`);
+        this.imgNext = args.page;
+        this.pageNumber = this.imgNext;
+        this.isSelected = this.imageList[this.imgNext].isSelected;
+        viewModel.set("imageUrlList", this.imageUrlList);
+        viewModel.set("pageNumber", this.imgNext);
+        // viewModel.set("isSelected", this.isSelected);
+        this.page.bindingContext = viewModel;
+        const imgSwipe: any = args.object;
+        // const checkBox = imgSwipe.parent.getViewById('checkbox-delete') as CheckBox;
+        // checkBox.checked = this.imageList[this.imgNext].isSelected;
+        this.imageSource = this.transformedImageProvider.contourImageList[this.imgNext].filePath;
+        this.setImageSelected(this.imgNext, this.transformedImageProvider.contourImageList.length, imgSwipe.parent.parent);
+    }
+
     /**
      * Close method, which close the dialog window opened after captured image from camera.
      * And returns back to the place where the dialog window got triggered, along with
@@ -118,7 +185,7 @@ export class DialogContent {
      * @param result Which is nothing but empty string or transformed image URI string
      */
     close(result: string) {
-        orientation.enableRotation();
+        // orientation.enableRotation();chinna
         this.params.closeCallback(result);
     }
     /**
@@ -150,8 +217,8 @@ export class DialogContent {
             + this.points[2].x + '-' + (+this.points[2].y + this.circleRadius) + '#'
             + this.points[3].x + '-' + (+this.points[3].y + this.circleRadius);
         this.imageSourceOld = this.imageSource;
-        this.imageSource = opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
-            this.imageActualSize.width + '-' + this.imageActualSize.height);
+        // this.imageSource = opencv.performPerspectiveCorrectionManual(this.imageSourceOrg, rectanglePoints,
+        //     this.imageActualSize.width + '-' + this.imageActualSize.height);
         SendBroadcastImage(this.imageSource);
         setTimeout(() => {
             this.transformedImageProvider.deleteFile(this.imageSourceOld);
@@ -159,7 +226,7 @@ export class DialogContent {
         this.imageSourceOrg = this.imageSourceOrgOld;
         this.isAutoCorrection = true;
         this.manualBtnText = LABLE_MANUAL;
-        // this.manualPerformBtnLable = this.locale.transform('manual');
+        // this.manualPerformBtnLable = localize('manual');
         this.removeCircles();
         // this.pointsCounter = 0;
         this.transformedImageProvider.DeleteFiles();
@@ -193,10 +260,13 @@ export class DialogContent {
     //     }
     // }
 
-    get imageList(): Array<TransformedImage> {
+    get imageList0(): Array<TransformedImage> {
         console.log("imageList:" + JSON.stringify(this.transformedImageProvider.contourImageList));
         return this.transformedImageProvider.contourImageList;
         // return this.contourList;
+    }
+    get imageUrlList0(): any {
+        return this.imageUrlList;
     }
     /**
      * Show original image, is being used to show original captured image
@@ -209,10 +279,10 @@ export class DialogContent {
         this.onDoubleTap();
         if (this.circleBtnList.length === 0) {
             this.initPoints();
-            Toast.makeText(this.locale.transform('rectangle_points_info'), 'long').show();
+            Toast.makeText(localize('rectangle_points_info'), 'long').show();
         }
         this.manualBtnText = LABLE_PERFORM;
-        // this.manualPerformBtnLable = this.locale.transform('perform');
+        // this.manualPerformBtnLable = localize('perform');
         this.pointsCounter = 0;
         this.addCircles();
     }
@@ -229,16 +299,25 @@ export class DialogContent {
 
             // let oldOriginX = this.imgView.originX * this.imgView.getMeasuredWidth();
             // let oldOriginY = this.imgView.originY * this.imgView.getMeasuredHeight();
+
+            // this.imgView._androidView.setScaleType(android.widget.ImageView.ScaleType.MATRIX);
+            // this.imgView._androidView.setImageMatrix(matrix);
+            // this.imgView._androidView.invalidate();
             this.startScale = this.imgView.scaleX;
         } else if (args.scale && args.scale !== 1) {
             this.newScale = this.startScale * args.scale;
-            this.newScale = Math.min(8, this.newScale);
-            this.newScale = Math.max(0.125, this.newScale);
+            this.newScale = Math.min(5, this.newScale);
+            this.newScale = Math.max(0.9, this.newScale);
 
             this.imgView.scaleX = this.newScale;
             this.imgView.scaleY = this.newScale;
             this.imgView.width = this.imgView.getMeasuredWidth() * this.newScale;
             this.imgView.height = this.imgView.getMeasuredHeight() * this.newScale;
+            // matrix.setScale(this.newScale,this.newScale);
+            matrix.postScale(this.newScale, this.newScale, this.imgView.getMeasuredWidth() / 2, this.imgView.getMeasuredHeight() / 2);
+            // matrix.setTranslate(this.oldTranslateX, this.oldTranslateY);
+            this.imgView._androidView.setImageMatrix(matrix);
+            this.imgView._androidView.invalidate();
         }
     }
     /**
@@ -296,6 +375,9 @@ export class DialogContent {
                         }
                         this.imgView.translateY = this.oldTranslateY;
                     }
+                    // matrix.postTranslate(this.oldTranslateX, this.oldTranslateY);
+                    // this.imgView._androidView.setImageMatrix(matrix);
+                    // this.imgView._androidView.invalidate();
                 }
                 this.prevDeltaX = args.deltaX;
                 this.prevDeltaY = args.deltaY;
@@ -308,21 +390,35 @@ export class DialogContent {
      * circle points if it is original image.
      */
     onDoubleTap() {
-        if (this.manualBtnText !== LABLE_PERFORM) {
-            this.imgView.animate({
-                translate: { x: 0, y: 0 },
-                scale: { x: 1, y: 1 },
-                curve: 'easeOut',
-                duration: 10,
-            });
-            this.newScale = 1;
-            this.oldTranslateY = 0;
-            this.oldTranslateX = 0;
-        } else {
-            // this.initPoints();
-            this.removeCircles();
-            this.addCircles();
-        }
+        // if (this.manualBtnText !== LABLE_PERFORM) {
+        this.imgView.animate({
+            translate: { x: 0, y: 0 },
+            scale: { x: 1, y: 1 },
+            curve: 'easeOut',
+            duration: 10,
+        });
+        this.newScale = 1;
+        this.oldTranslateY = 0;
+        this.oldTranslateX = 0;
+        // } else {
+        //     // this.initPoints();
+        //     this.removeCircles();
+        //     this.addCircles();
+        // }
+    }
+    /**
+     * Checks whether the checkBox is been selected or not. If it is selected,
+     * the delete/share menus are visible, otherwise they are not visible.
+     * And also sets the same value in the image list.
+     *
+     * @param event Checkbox event data
+     * @param imagePath transformed image file path
+     * @param index image index in the list
+     */
+    isChecked(event) {
+        this.imageList[this.pageNumber].isSelected = !this.imageList[this.pageNumber].isSelected;
+        this.isCheckMarkVisible = this.imageList[this.pageNumber].isSelected;
+        this.isCrossMarkVisible = !this.isCheckMarkVisible;
     }
     /**
      * Page loaded method which is been called when dialog window is loaded,
@@ -351,14 +447,23 @@ export class DialogContent {
         this.imgView.scaleX = 1;
         this.imgView.scaleY = 1;
         // this.imgView.rotate = 90;
-        orientation.setOrientation('portrait');
+        // orientation.setOrientation('portrait');chinna
         this.imgNext = 0;
         const fileName = this.imageSource.substring(this.imageSource.lastIndexOf('PT_IMG'), this.imageSource.lastIndexOf('transformed'))
         this.transformedImageProvider.LoadPossibleContourImages(fileName);
         setTimeout(() => {
+            this.imageList = this.transformedImageProvider.contourList;//contourImageList; //;
+            this.imageUrlList.splice(0, this.imageUrlList.length);
+            this.imageList.forEach(img => {
+                const imageFile = new java.io.File(img.filePath);
+                this.imageUrlList.push({ imageUrl: imageFile.toURL().toString() });
+            });
+            viewModel.set("imageUrlList", this.imageUrlList);
+            viewModel.set("pageNumber", this.imgNext);
+            this.page.bindingContext = viewModel;
             const selectedImgGrid = page.getViewById('img-grid-0');
             selectedImgGrid.backgroundColor = 'Black';
-        }, 500);
+        }, 300);
         this.isDeleting = false;
         //  setTimeout(() => {
         //    page.actionBarHidden = true;
@@ -379,10 +484,10 @@ export class DialogContent {
     private onDelete(event: any) {
         // if (this.selectedCount > 0) {
         dialogs.confirm({
-            title: this.locale.transform('delete'),
-            message: this.locale.transform('deleting_selected_item'),
-            okButtonText: this.locale.transform('ok'),
-            cancelButtonText: this.locale.transform('cancel'),
+            title: localize('delete'),
+            message: localize('deleting_selected_item'),
+            okButtonText: localize('ok'),
+            cancelButtonText: localize('cancel'),
         }).then((result) => {
             if (result) {
                 this.isDeleting = false;
@@ -398,7 +503,7 @@ export class DialogContent {
 
                                 // this.pageLoaded(event);
                                 // }).catch((error) => {
-                                //     Toast.makeText(this.locale.transform('error_while_deleting_thumbnail_images') + error).show();
+                                //     Toast.makeText(localize('error_while_deleting_thumbnail_images') + error).show();
                                 //     this.logger.error('Error while deleting thumbnail images. ' + module.filename
                                 //         + this.logger.ERROR_MSG_SEPARATOR + error);
                                 // });
@@ -410,11 +515,11 @@ export class DialogContent {
                                 // }
                                 // if (this.imgNext >= 0) {
                                 this.imageSource = this.transformedImageProvider.contourImageList[this.imgNext].filePath;
-                                this.setImageSelected(this.imgNext, this.transformedImageProvider.contourImageList.length, event);
+                                this.setImageSelected(this.imgNext, this.transformedImageProvider.contourImageList.length, event.view.page);
                                 // }
                                 if (imgIdx >= 0) {
                                     this.imageList.splice(imgIdx, 1);
-                                    Toast.makeText(this.locale.transform('selected_images_deleted')).show();
+                                    Toast.makeText(localize('selected_images_deleted')).show();
                                 }
                                 if (this.imageList.length == 0) {
                                     this.imageSource = '';
@@ -422,7 +527,7 @@ export class DialogContent {
                                 }
 
                             }).catch((error) => {
-                                Toast.makeText(this.locale.transform('error_while_deleting_images')).show();
+                                Toast.makeText(localize('error_while_deleting_images')).show();
                                 this.logger.error('Error while deleting images. ' + module.filename
                                     + this.logger.ERROR_MSG_SEPARATOR + error);
                             });
@@ -468,10 +573,10 @@ export class DialogContent {
         // // this.imgIndex = this.imgNext;
         // if (this.imageFileList.length > 0) {
         this.imageSource = this.transformedImageProvider.contourImageList[this.imgNext].filePath;
-        this.setImageSelected(this.imgNext, this.transformedImageProvider.contourImageList.length, args);
+        this.setImageSelected(this.imgNext, this.transformedImageProvider.contourImageList.length, args.view.page);
         // } else {
         //     this.imageSource = null;
-        //     Toast.makeText(this.locale.transform('no_image_available')).show();
+        //     Toast.makeText(localize('no_image_available')).show();
         // }
 
         // this.onDoubleTap(args);
@@ -504,15 +609,21 @@ export class DialogContent {
      */
     private selectImage(imgURIPath: any, index: any, event: any) {
         this.imageSource = imgURIPath;
-        this.setImageSelected(index, event.view.parent.parent._childrenCount, event);
+        this.setImageSelected(index, event.view.parent.parent._childrenCount, event.view.page);
     }
 
-    private setImageSelected(index: any, noOfImages: any, event: any) {
+    private setImageSelected(index: any, noOfImages: any, eventPage: any) {
         for (let i = 0; i < noOfImages; i++) {
-            const selectedImgGrid = event.view.page.getViewById('img-grid-' + i);
+            const selectedImgGrid = eventPage.getViewById('img-grid-' + i);
             selectedImgGrid.backgroundColor = 'gray';
             if (i == index) {
                 selectedImgGrid.backgroundColor = 'Black';
+                this.imgNext = index;
+                this.pageNumber = this.imgNext;
+                // const checkBox = eventPage.getViewById('checkbox-delete') as CheckBox;
+                // checkBox.checked = this.imageList[this.imgNext].isSelected;
+                this.isCheckMarkVisible = this.imageList[this.imgNext].isSelected;
+                this.isCrossMarkVisible = !this.imageList[this.imgNext].isSelected;
             }
         }
     }

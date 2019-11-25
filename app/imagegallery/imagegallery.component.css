@@ -23,7 +23,8 @@
     vertical-align: center;
 }
 .img-gallery-back {
-    width: 15 !important;
+    /*width: 25 !important;*/
+    margin-left: 1 !important;
 }
 .img-gallery-checkbox-ios {
     border-width: 1;
