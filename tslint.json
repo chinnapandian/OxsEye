@@ -3,6 +3,9 @@
 // }
 {
   "defaultSeverity": "error",
+  "jsRules": {
+    "no-empty": true
+},
   "extends": [
         "tslint:recommended"
     ],

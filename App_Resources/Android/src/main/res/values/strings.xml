@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="no_image_selected">"No image selected"</string>
   <string name="no_image_captured">"No image captured. Please retake when the rectangle in green color being displayed continuously for bit time"</string>
   <string name="image_slide_title">"Image Slide"</string>
   <string name="image_gallery_title">"Image Gallery"</string>

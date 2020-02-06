@@ -1,0 +1,90 @@
+.preview-image {
+	height: 55;
+
+}
+.bordered {
+    border-width: 2; 
+    /*border-color: red;*/
+}
+.btn-img{
+    border-radius: 5;
+    border-width: 1;
+    color: white;
+    margin: 1;
+    font-size: 22;
+    border-color: #2b3c6a;
+    background-color: darkgray;
+}
+.img-preview-fontsize {
+  font-size: 17;
+  text-align: center;
+  font-weight: bold;
+}
+.threshold-label {
+    background-color: transparent;;
+    color: whitesmoke;
+    font-size: 65;
+    padding: 8;
+    text-align: center;
+    vertical-align: middle;
+    width: 90%;
+}
+.bulb-icon-fontsize {
+    font-size: 30 !important;
+    color: whitesmoke;
+}
+.bulb-icon-fontsize-off {
+    font-size: 40 !important;
+    color: black;
+}
+
+
+button {
+    font-size: 15;
+    /*horizontal-align: center;*/
+}
+
+.drawerContentText {
+    font-size: 13;
+    padding: 10;
+}
+
+.drawerContentButton {
+    margin: 10;
+    /*horizontal-align: left;*/
+}
+
+/*.drawerMenuIcon {
+    margin: 10;
+    background-color: transparent;
+    width: 50;
+    height: 50;
+    horizontal-align: left;
+    color: white;
+    font-size:24px;
+    font-weight: bold;
+    border-width: 1;
+    border-color: lightslategray;
+}*/
+
+.sideStackLayout {
+    background-color: gray;
+}
+
+.sideTitleStackLayout {
+    height: 56;
+    text-align: center;
+    vertical-align: center;
+}
+
+.sideLabel {
+    padding: 10;
+    color: white;
+    /*font-weight: bold;*/
+}
+
+.sideLightGrayLabel {
+    padding: 5;
+    background-color: lightgray;
+    color: black;
+}

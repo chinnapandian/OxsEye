@@ -1,0 +1,65 @@
+.captured-img-height {
+    height: 100;
+}
+.delete-icon-fontsize {
+    font-size: 30 !important;
+}
+.btn-delete {
+    width: 40 !important;
+    height: 40 !important
+}
+.img-dialog-checkbox {
+    border-width: 0;
+    /*color: red;*/
+    /*font-size : 20;*/
+    /*fill: red;*/
+    width: 30;
+    height: 40;
+    border-color: transparent;
+    background-color: transparent
+}
+
+.checkmark-icon-fontsize {
+    font-size: 30 !important;
+    color: green;
+}
+.crossmark-icon-fontsize {
+    font-size: 30 !important;
+    color: red;
+}
+
+.plus-minus-icon-fontsize {
+    font-size: 25 !important;
+    /*color: red;*/
+}
+@keyframes show {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.dialogOpen .content {
+    opacity: 0.2;
+}
+.dialogOpen .dialog-wrapper {
+    visibility: visible;
+    animation-name: show;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+.dialog-wrapper {
+    visibility: collapse;
+    opacity: 0;
+}
+
+.dialog {
+    border-width: 1 0 1 0;
+    border-color: black;
+    background-color: white;
+    width: 100%;
+    margin-top: 100;
+    padding: 30;
+}
+.dialog Label {
+    margin: 0 15 15 15;
+    color: black;
+}

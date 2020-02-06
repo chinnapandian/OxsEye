@@ -1,0 +1,73 @@
+<!--<Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">-->
+<!--<GridLayout class="page" [class.dialogOpen]="dialogOpen">-->
+<!--<AbsoluteLayout class="dialog-wrapper">-->
+<StackLayout (loaded)="pageLoaded($event)" width="100%" class="modal-view-style dialog1" orientation="vertical"
+    margin="1"  backgroundColor="darkgray">
+    <GridLayout columns="*" id="imgGridId" height="80%" width="100%" borderLeftWidth="1" borderBottomWidth="1" borderRightWidth="1" borderTopWidth="1"
+        backgroundColor="gray" class="m-5">
+        <!--<ImageSwipe marginTop="20" marginLeft="2" marginBottom="2" marginRight="2" [items]="imageUrlList0"  id="imgViewId" imageUrlProperty="imageUrl" [pageNumber]="pageNumber"
+            (pageChanged)="pageChanged($event)" backgroundColor="lightgray">
+        </ImageSwipe>-->
+        <Pager horizontalAlignment="center" verticalAlignment="center" spacing="2%" transformers="scale" [items]="imageUrlList0" indicator="flat" showIndicator="true" #pager [selectedIndex]="currentPagerIndex"
+            (selectedIndexChange)="onIndexChanged($event)" class="pager" backgroundColor="darkgray">
+            <ng-template let-i="index" let-item="item">
+                <GridLayout (loaded)="loaded(i)" class="pager-item" rows="auto, *" columns="auto" backgroundColor="darkgray">
+                    <!--<Label [text]="item.fileName"></Label>-->
+                    <!--<ImageCacheIt height="300" width="300" (loaded)="loadedImage($event)" stretch="fill" row="1" [src]="item.imageUrl"></ImageCacheIt>-->
+                    <!--<ImageZoom height="100%" width="100%"  src="{{item.imageUrl}}" maxZoom="5" minZoom="1"></ImageZoom>-->
+                    <!--https://vignette.wikia.nocookie.net/inuyasha/images/b/b5/Inuyasha.png-->
+                    <PhotoZoom height="100%" width="100%" src="{{item.imageUrl}}" placeholder="res://placeholder" (scaleChanged)="onScaleChanged($event)"></PhotoZoom>
+                </GridLayout>
+            </ng-template>
+        </Pager>
+        <!--<Image (doubleTap)="testZoom()" src="{{ isAutoCorrection ? imageSource : imageSourceOrg }}"   id="imgViewId" (longPress)="enableDelete()" (pan)="onPan($event)">
+        </Image>-->
+        <Button (tap)="isChecked($event)" horizontalAlignment="center" verticalAlignment="bottom" marginBottom="20" class="btn-active btn-rounded-lg  btn-outline btn-delete">
+                        <FormattedString>
+                            <Span class="fa delete-icon-fontsize"  text="&#xf1f8;"></Span>
+                        </FormattedString>
+                    </Button>
+        <label [visibility]="isCheckMarkVisible ? 'visible' : 'collapsed'" text="" marginBottom="23" horizontalAlignment="center"
+            verticalAlignment="bottom">
+                        <FormattedString>
+                            <Span class="fa checkmark-icon-fontsize" text="&#xf00c;"></Span>
+                        </FormattedString>
+                    </label>
+        <label [visibility]="isCrossMarkVisible ? 'visible' : 'collapsed'" marginBottom="23" text="" horizontalAlignment="center"
+            verticalAlignment="bottom">
+                        <FormattedString>
+                            <Span class="fa crossmark-icon-fontsize"  text="&#xf00d;"></Span>
+                        </FormattedString>
+                    </label>
+    </GridLayout>
+    <!--<ScrollView orientation="horizontal" height="7%" marginTop="5">
+        <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">
+            <ng-template ngFor let-i="index" let-image [ngForOf]="imageList0">
+                <GridLayout id="img-grid-{{i}}" class="bg-primary p-5 m-5 bordered img-rounded" width="90%" height="90%" horizontalAlignment="center"
+                    verticalAlignment="center" backgroundColor="gray">
+                    <Image src="{{ image.thumbnailPath }}" loadMode="async" stretch="aspectFill" (Tap)="selectImage(image.filePath,i, $event)"
+                        class="captured-img-height"></Image>
+                </GridLayout>
+            </ng-template>
+        </WrapLayout>
+    </ScrollView>-->
+
+    <StackLayout height="20%" width="100%" orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" marginTop="5">
+        <Button width="40%" class="btn-outline btn-active btn-rounded-lg m-l-20" text="{{'retake'|L}}" (tap)="close('')"></Button>
+        <Button width="40%" class="save-btn btn-outline btn-active btn-rounded-lg" text="{{'save'|L}}" (tap)="close(imageList)"></Button>
+    </StackLayout>
+    <!--<StackLayout height="10%" orientation="horizontal"  horizontalAlignment="center" marginTop="5">
+        <label (tap)="minusThresholdValue()" marginRight="0" marginTop="15" text="" horizontalAlignment="right">
+            <FormattedString>
+                <Span class="fa plus-minus-icon-fontsize"  text="&#xf068;"></Span>
+            </FormattedString>
+        </label>
+        <Slider width="155" height="100" [value]='adaptiveThresholdValue' minValue="0" maxValue="100" (loaded)="onSliderLoaded($event)"></Slider>
+        <label (tap)="plusThresholdValue()"  marginLeft="0" marginTop="15" text="" horizontalAlignment="left">
+            <FormattedString>
+                <Span class="fa plus-minus-icon-fontsize"  text="&#xf067;"></Span>
+            </FormattedString>
+        </label>
+    </StackLayout>-->
+</StackLayout>
+<!--</Page>-->

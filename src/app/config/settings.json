@@ -1,0 +1,8 @@
+{
+    "camera-light": {
+        "thresholdValue":100
+    },
+    "perspective-transformation": {
+        "thresholdValue":41
+    }
+}

@@ -1,0 +1,145 @@
+<ActionBar title="Image Gallery" class="action-bar">
+    <NavigationButton text="Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+    <ActionBar.titleView>
+        <StackLayout>
+            <Label text="{{'image_gallery_title' | L}}" class="action-bar-lable"></Label>
+        </StackLayout>
+    </ActionBar.titleView>
+
+    <!--<ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_share" android.position="right">
+    </ActionItem>
+    <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_delete"
+        android.position="right">
+    </ActionItem>-->
+    <!--{{'select_unselect_all'|L}}-->
+
+    <!--<ActionItem (tap)="onSelectUnSelectAllCheckBox()" visibility="{{ isPopUpMenu ? 'visible' : 'collapse' }}" text="" android.position="left">
+        <label text="&#xf111;" class="far share-icon-fontsize m-10"></label>
+    </ActionItem>-->
+    <!--<ActionItem (tap)="onSortByDate()" visibility="{{ isSortByDateMenu ? 'visible' : 'collapse' }}" text="{{'sort_by_date'|L}}"
+        android.position="popup">
+    </ActionItem>-->
+</ActionBar>
+
+
+<Page (loaded)="onPageLoaded($event)" xmlns="http://schemas.nativescript.org/tns.xsd">
+
+    <!--<GridLayout height="100%" backgroundColor="black">
+        <ListView #list [items]="imageList" separatorColor="transparent" [itemTemplateSelector]="templateSelector">
+            <ng-template nsTemplateKey="image" let-item="item">
+                <GridLayout class="list-item p-2 m-2 bordered img-rounded" backgroundColor="darkgray">
+                    <Image class="m-2" [src]="item.thumbnailPath" stretch="aspectFill" loadMode="async" (doubleTap)="goImageSlide(image.filePath,i)"></Image>
+                    <DockLayout class="item-title img-rounded" stretchLastChild="false">
+
+
+                        <label class="p-l-30" width="20%" dock="right" text="" marginBottom="5" verticalAlignment="bottom">
+                        <FormattedString>
+                            <Span class="fa share-icon-fontsize" text="&#xf1e0;"></Span>
+                        </FormattedString>
+                    </label>
+                        <Label width="60%" dock="right" text="" class="m-2" verticalAlignment="bottom">
+                            <FormattedString>
+                            <Span class="fa share-icon-fontsize" text=""></Span>
+                        </FormattedString>
+                        </Label>
+                        <label class="p-l-10" width="20%" dock="right" marginBottom="5" text="" verticalAlignment="bottom">
+                        <FormattedString>
+                            <Span class="fa trash-icon-fontsize"  text="&#xf1f8;"></Span>
+                        </FormattedString>
+                    </label>
+
+                    </DockLayout>
+               </GridLayout>
+            </ng-template>
+
+            <ng-template nsTemplateKey="banner" let-item="item">
+                <Label class="h3 text-center p-10 banner" backgroundColor="lightgreen" [text]="item.date" textWrap="true"></Label>
+            </ng-template>
+        </ListView>
+        <AbsoluteLayout #animatingImageContainer opacity="0" class="animating-image-container">
+            <Image #animatingImage width="100%"></Image>
+        </AbsoluteLayout>
+    </GridLayout>-->
+    <!--<WrapLayout orientation="horizontal"  backgroundColor="lightgray">
+        <label  id="checkbox-all" (tap)="btnAllChecked($event)"
+            text="&#xf058;" class="far share-icon-fontsize m-10" border="0" verticalAlignment="top"
+            backgroundColor="green">
+    </label>
+      </WrapLayout>-->
+    <GridLayout height="100%">
+        <ListView #list [items]="imageList">
+            <ng-template let-i="index" let-item="item">
+                <GridLayout rows="auto,auto" backgroundColor="darkgray">
+                    <Label [row]="item.displayStyle=='banner' ? '0' : '0'" [visibility]="item.displayStyle=='banner' ? 'visible' : 'collapsed'"
+                        class="h3 text-center p-10 banner" backgroundColor="green" [text]="getDate(item.date)" textWrap="true"></Label>
+
+                    <!--<GridLayout columns="3/4*, 2/4*" [row]="item.displayStyle=='banner' ? '1' : '0'" class="list-item p-2 m-2 bordered img-rounded" backgroundColor="darkgray">-->
+                    <GridLayout  rows="*" columns="*" [row]="item.displayStyle=='banner' ? '1' : '0'" class="list-item  bordered img-rounded"
+                        backgroundColor="darkgray">
+                        <!--decodeWidth="400" decodeHeight="300"-->
+                        <!--<StackLayout col="0" class="m11-5">-->
+                        <Image row="0" col="0" class="img-rounded thumb1 m-2" [src]="item.thumbnailPath" stretch="aspectFit" loadMode="async" (tap)="selectImage(item.isSelected,i)"
+                            (longPress)="setCheckboxVisible(item.isSelected, i)" (doubleTap)="goImageSlide(item.filePath,i)"></Image>
+                        <!--<DockLayout row="0" col="0" orientation="horizontal" [visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'" col="0" class="item-title img-rounded" stretchLastChild="false">
+                                <label id="checkbox-{{i}}" (tap)="btnChecked(item.isSelected, i)" width="30%" dock="left" [text]="item.isSelected? '&#xf058;' : '&#xf111;'"
+                                    class="far share-icon-fontsize m-10" border="0" verticalAlignment="center">
+                                </label>
+                                <label width="30%" dock="left" (tap)="onShare()" text="&#xf1e0;" class="fa share-icon-fontsize m-10 -active" border="0" verticalAlignment="center">
+                                  </label>
+                                <label width="30%" dock="left" (tap)="onDelete()" text="&#xf1f8;" class="fa trash-icon-fontsize m-10" border="0" verticalAlignment="center">
+                                  </label>
+                            </DockLayout>-->
+                        <!--</StackLayout>-->
+                        <!--<Label col="1" class="h2" verticalAlignment="center" [text]="" textWrap="true"></Label>-->
+                    </GridLayout>
+                    <DockLayout [row]="item.displayStyle=='banner' ? '1' : '0'" col="0" orientation="horizontal" [visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'" col="0" class="item-title img-rounded"
+                        stretchLastChild="false">
+                        <label id="checkbox-{{i}}" (tap)="btnChecked(item.isSelected, i)" width="30%" dock="left" [text]="item.isSelected? '&#xf058;' : '&#xf111;'"
+                            class="far share-icon-fontsize m-10" border="0" verticalAlignment="center">
+                                </label>
+                        <label width="30%" dock="left" (tap)="onShare()" text="&#xf1e0;" class="fa share-icon-fontsize m-10 -active" border="0" verticalAlignment="center">
+                                  </label>
+                        <label width="30%" dock="left" (tap)="onDelete()" text="&#xf1f8;" class="fa trash-icon-fontsize m-10" border="0" verticalAlignment="center">
+                                  </label>
+                    </DockLayout>
+                    <!--<StackLayout class="hr m-10"></StackLayout>-->
+                </GridLayout>
+            </ng-template>
+        </ListView>
+        <AbsoluteLayout #animatingImageContainer opacity="0" class="animating-image-container">
+            <Image #animatingImage width="100%"></Image>
+        </AbsoluteLayout>
+        <AbsoluteLayout (tap)="onSelectUnSelectAllCheckBox()" [visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'" height="55"
+            class="check-all" verticalAlignment="top">
+            <label id="checkbox-all" left="9" [text]="isCheckedAll? '&#xf058;' : '&#xf111;'" class="far checkall-icon-fontsize m-10"
+                border="0" verticalAlignment="top">
+            </label>
+            <label [text]="selectedCount + ' selected'" left="60" margin="10" color="white"></label>
+            <label text="All" left="5" top="15" margin="15" color="white"></label>
+        </AbsoluteLayout>
+    </GridLayout>
+    <!--<AbsoluteLayout orientation="horizontal"  backgroundColor="lightgray">
+        <label height="10%"  id="checkbox-all" (tap)="btnAllChecked($event)"
+            text="&#xf058;" class="far share-icon-fontsize m-10" border="0" verticalAlignment="top"
+            backgroundColor="green">
+    </label>
+      </AbsoluteLayout>-->
+
+    <!--<ScrollView height="{{listHeight}}">
+        <WrapLayout orientation="horizontal" horizontalAlignment="center" verticalAlignment="center" backgroundColor="lightgray">
+            <ng-template ngFor let-i="index" let-image [ngForOf]="imageList">
+                <GridLayout class="bg-primary p-5 m-5 bordered img-rounded" width="30%" height="30%" horizontalAlignment="center" verticalAlignment="center"
+                    backgroundColor="Black">
+                    <Image src="{{ image.thumbnailPath }}" loadMode="async" stretch="aspectFill" (doubleTap)="goImageSlide(image.filePath,i)"
+                        class="img-height img-gallery-image" (longPress)="setCheckboxVisible()"></Image>
+
+                    <StackLayout [visibility]="isCheckBoxVisible ? 'visible' : 'collapsed'">
+                        <CheckBox id="checkbox-{{i}}" checked={{image.isSelected}} (checkedChange)="isChecked($event, image.filePath, i)" fillColor="red"
+                            text="" class="img-gallery-checkbox"></CheckBox>
+                    </StackLayout>
+                </GridLayout>
+            </ng-template>
+        </WrapLayout>
+    </ScrollView>-->
+
+</Page>

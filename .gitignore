@@ -1,0 +1,11 @@
+
+*/.DS_Store
+app/App_Resources/.DS_Store
+app/App_Resources/iOS/.DS_Store
+app/App_Resources/Android/src/main/.DS_Store
+app/App_Resources/Android/src/.DS_Store
+app/App_Resources/Android/.DS_Store
+.DS_Store
+node_modules/*
+node_modules/.DS_Store
+app/.DS_Store

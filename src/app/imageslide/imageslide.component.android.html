@@ -1,0 +1,72 @@
+<!--<ActionBar title="Image List" class="action-bar">
+        <NavigationButton android.systemIcon="ic_menu_back" text="Back" (tap)="goBack()"></NavigationButton>
+
+        <ActionItem tap="onShare" ios.systemIcon="9" ios.position="left" android.systemIcon="ic_menu_share" android.position="actionBar"></ActionItem>
+        <ActionItem (tap)="onDelete()" ios.systemIcon="16" ios.position="right" android.systemIcon="ic_menu_delete" android.position="actionBar"></ActionItem>
+    </ActionBar>-->
+<Page.actionBar>
+    <ActionBar title="Image Slide" class="action-bar">
+        <NavigationButton text="Back" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+
+        <ActionBar.titleView>
+            <!--<Button horizontalAlignment="left" verticalAlignment="center" (tap)="goBack()" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-back1">
+					<FormattedString>
+						<Span class="fa action-item-back-icon-fontsize" text="&#xf104;"></Span> 
+					</FormattedString>
+				</Button>-->
+
+            <StackLayout>
+                <Label text="{{'image_slide_title'|L}}" class="action-bar-lable"></Label>
+            </StackLayout>
+        </ActionBar.titleView>
+
+        <ActionItem (tap)="onShare()" visibility="{{ isSharing ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_share" android.position="right">
+        </ActionItem>
+        <ActionItem (tap)="onDelete()" visibility="{{ isDeleting ? 'visible' : 'collapse' }}" android.systemIcon="ic_menu_delete"
+            android.position="right">
+        </ActionItem>
+
+        <!--<ActionItem (tap)="onShare()" android.position="actionBar" visibility="{{ isSharing ? 'visible' : 'collapse' }}">
+            <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-share">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize" text="&#xf1e1;"></Span> 
+					</FormattedString>
+				</Button>
+        </ActionItem>
+        <ActionItem (tap)="onDelete($event)" android.position="actionBar" visibility="{{ isDeleting ? 'visible' : 'collapse' }}">
+            <Button horizontalAlignment="center" verticalAlignment="center" class="btn-active btn-rounded-lg  btn-outline1 activebar-btn img-slide-delete">
+					<FormattedString>
+						<Span class="fa action-item-icon-fontsize" text="&#xf1f8;"></Span> 
+					</FormattedString>
+				</Button>
+        </ActionItem>-->
+    </ActionBar>
+</Page.actionBar>
+<!--(onTouch)="onTouch($event)"-->
+<!--(pinch)="onPinch($event)"-->
+<!--(pan)="onPan($event)"-->
+<!--<Page xmlns="http://schemas.nativescript.org/tns.xsd" (loaded)="pageLoaded($event)">-->
+    <!--<GridLayout #container horizontalAlignment="center" verticalAlignment="center"  (swipe)="onSwipe($event)" (doubleTap)="onDoubleTap($event)"    backgroundColor="gray">-->
+    <!--<Image src="{{ imageSource }}"  #imgSlideId loadMode="async" stretch="aspectFit"  (onTouch)="onTouch($event)"  backgroundColor="gray"></Image>  -->
+    <!--</GridLayout>-->
+    <!--<ImageSwipe [items]="imageUrlList" #imgSlideId imageUrlProperty="imageUrl" [pageNumber]="pageNumber" (pageChanged)="pageChanged($event)"
+        backgroundColor="#000000">
+    </ImageSwipe>-->
+    <!--<CustomScrollView>
+        <Image src="{{ imageSource }}"></Image>
+    </CustomScrollView>-->
+    <!--peaking="10%"-->
+    <!--loadMoreCount="5"-->
+    <Pager spacing="2%"  transformers="scale" [items]="imageUrlList" showIndicator="true"  #pager [selectedIndex]="currentPagerIndex" (selectedIndexChange)="onIndexChanged($event)" class="pager"
+        backgroundColor="green">
+        <ng-template let-i="index" let-item="item">
+            <GridLayout (loaded)="loaded(i)" class="pager-item" rows="auto, *" columns="*" backgroundColor="green">
+                <!--<Label [text]="item.fileName"></Label>-->
+                <!--<ImageCacheIt height="300" width="300" (loaded)="loadedImage($event)" stretch="fill" row="1" [src]="item.imageUrl"></ImageCacheIt>-->
+                 <!--<ImageZoom height="100%" width="100%"  src="{{item.imageUrl}}" maxZoom="5" minZoom="1"></ImageZoom>-->
+                 <!--https://vignette.wikia.nocookie.net/inuyasha/images/b/b5/Inuyasha.png-->
+                  <PhotoZoom height="100%" width="100%"  src="{{item.imageUrl}}" placeholder="res://placeholder"  (scaleChanged)="onScaleChanged($event)"></PhotoZoom>
+            </GridLayout>
+        </ng-template>
+    </Pager>
+<!--</Page>-->

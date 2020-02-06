@@ -1,0 +1,101 @@
+.bordered {
+    border-width: 2; 
+    border-color: white;
+}
+.img-height {
+    height: 50%;
+}
+/*ActionBar {
+    background-color:  #cbfd3c;
+    color: black;
+}*/
+
+.action-image {
+    width: 40;
+    height: 40;
+    vertical-align: center;
+}
+
+.action-label {
+    color: #3C5AFD;
+    font-size: 24;
+    font-weight: bold;
+    vertical-align: center;
+}
+.img-gallery-back {
+    /*width: 25 !important;*/
+    margin-left: 1 !important;
+}
+.img-gallery-checkbox-ios {
+    border-width: 1;
+    /*color: red;*/
+    /*font-size : 20;*/
+    /*fill: red;*/
+    width: 17;
+    height: 18;
+    border-color: black;
+    background-color: white
+}
+Label :active {
+    color:  red;
+}
+.img-rounded {
+    border-radius: 17;
+}
+
+.share-icon-fontsize {
+    font-size: 20 !important;
+    color: whitesmoke;
+    /*text-align: center;
+    text-justify: auto;*/
+}
+.trash-icon-fontsize {
+    font-size: 20 !important;
+    color: whitesmoke;
+    /*text-align: center;
+    text-justify: auto;*/
+}
+.checkall-icon-fontsize {
+    font-size: 20 !important;
+    color: whitesmoke;
+    border-radius: 17;
+    /*width: 30;
+    height: 30;*/
+    /*text-align: center;
+    text-justify: auto;*/
+}
+.main-layout {
+    margin-top: 0;
+    margin-bottom: -2;
+}
+
+.animating-image-container {
+    vertical-align: top;
+}
+
+.list-item {
+    margin-bottom: 2;
+}
+
+.item-title {
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    vertical-align: bottom;
+    padding: 3;
+    font-size: 15;
+}
+.check-all {
+    background-color: rgba(0,0,0,0.4);
+    color: white;
+    vertical-align: top;
+    padding: 3;
+    font-size: 15;
+}
+.banner{
+    color: whitesmoke;
+}
+.search-bar {
+    background-color: darkgray;
+    /*font-family: 'Halcom', 'Halcom_Regular';*/
+   font-family: "Font Awesome 5 Free", "fa-regular-400";
+}

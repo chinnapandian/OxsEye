@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="no_image_selected">"Kein Bild ausgewählt"</string>
   <string name="no_image_captured">"Es wurde kein Bild aufgenommen. Bitte wiederholen Sie den Vorgang, wenn das grüne Rechteck für eine gewisse Zeit ununterbrochen angezeigt wird"</string>
   <string name="image_slide_title">"Bildfolie"</string>
   <string name="image_gallery_title">"Bildergalerie"</string>

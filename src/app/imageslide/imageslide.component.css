@@ -1,0 +1,15 @@
+.bordered {
+    border-width: 2; 
+    border-color: red;
+}
+
+#imgSlideId, .imgSlideId {
+    vertical-align: top;
+    /*horizontal-align: left;*/
+}
+.img-slide-back {
+    width: 15 !important;
+}
+.img-slide-delete {
+       margin-right: 10 !important;
+}
